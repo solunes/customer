@@ -1,6 +1,6 @@
 <?php
 
-namespace Todotix\Customer;
+namespace Solunes\Customer;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -28,11 +28,11 @@ class CustomerServiceProvider extends ServiceProvider {
 
         /* Registrar Alias */
         $loader = \Illuminate\Foundation\AliasLoader::getInstance();
-        $loader->alias('Customer', '\Todotix\Customer\App\Helpers\Customer');
+        $loader->alias('Customer', '\Solunes\Customer\App\Helpers\Customer');
 
         /* Comandos de Consola */
         $this->commands([
-            \Todotix\Customer\App\Console\GeneralTest::class,
+            \Solunes\Customer\App\Console\GeneralTest::class,
         ]);
 
         $this->mergeConfigFrom(

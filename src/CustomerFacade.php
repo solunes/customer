@@ -1,5 +1,5 @@
 <?php
-namespace Todotix\Customer;
+namespace Solunes\Customer;
 
 use Illuminate\Support\Facades\Facade;
 
