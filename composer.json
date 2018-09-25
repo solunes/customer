@@ -23,7 +23,7 @@
             "src/app/Console"
        ],
         "psr-4": {
-            "Todotix\\Customer\\": "src/"
+            "Solunes\\Customer\\": "src/"
         }
     },
     "minimum-stability": "dev",
