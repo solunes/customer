@@ -85,7 +85,6 @@ class ProcessController extends Controller {
 	    }
     }
 
-
     public function getCheckCi($ci_number) {
 	    if($customer = \Solunes\Customer\App\Customer::where('ci_number', $ci_number)->first()){
 	      // Send Mail

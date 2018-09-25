@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class NodesCustomer extends Migration
+class SolunesCustomer extends Migration
 {
     /**
      * Run the migrations.
@@ -24,6 +24,7 @@ class NodesCustomer extends Migration
             $table->string('email')->nullable(); // Obligatorio
             $table->string('phone')->nullable(); // Obligatorio
             $table->string('address')->nullable(); // Obligatorio
+            $table->string('address_extra')->nullable();
             $table->string('nit_number')->nullable(); // Obligatorio
             $table->string('nit_name')->nullable(); // Obligatorio
             $table->date('birth_date')->nullable(); // Obligatorio
@@ -47,6 +48,9 @@ class NodesCustomer extends Migration
             if(config('customer.fields.emergency_long')){
                 $table->string('emergency_name')->nullable();
                 $table->string('emergency_number')->nullable();
+            }
+            if(config('customer.recieve_from_api')){
+                $table->integer('external_id')->nullable();
             }
             $table->timestamps();
         });
