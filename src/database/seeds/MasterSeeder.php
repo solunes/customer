@@ -15,9 +15,9 @@ class MasterSeeder extends Seeder {
     {
 
         // Módulo General de Empresa ERP
-        $node_customer = \Solunes\Master\App\Node::create(['name'=>'customer', 'location'=>'customer', 'folder'=>'todotix']);
+        $node_customer = \Solunes\Master\App\Node::create(['name'=>'customer', 'location'=>'customer', 'folder'=>'business']);
         if(config('customer.dependants')){
-            $node_customer_dependant = \Solunes\Master\App\Node::create(['name'=>'customer-dependant', 'location'=>'customer', 'folder'=>'todotix']);
+            $node_customer_dependant = \Solunes\Master\App\Node::create(['name'=>'customer-dependant', 'location'=>'customer', 'folder'=>'business']);
         }
         
         if($node_customer = \Solunes\Master\App\Node::where('name', 'customer')->first()){
@@ -33,8 +33,10 @@ class MasterSeeder extends Seeder {
         $dashboard_perm = \Solunes\Master\App\Permission::where('name','dashboard')->first();
         if(!\Solunes\Master\App\Permission::where('name','solunes')->first()){
             $customer_perm = \Solunes\Master\App\Permission::create(['name'=>'solunes', 'display_name'=>'Solunes']);
-            $members_perm = \Solunes\Master\App\Permission::create(['name'=>'members', 'display_name'=>'Miembros']);
             $admin->permission_role()->attach([$customer_perm->id]);
+        }
+        if(!\Solunes\Master\App\Permission::where('name','members')->first()){
+            $members_perm = \Solunes\Master\App\Permission::create(['name'=>'members', 'display_name'=>'Miembros']);
             $member->permission_role()->attach([$dashboard_perm->id, $members_perm->id]);
         }
 
