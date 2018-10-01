@@ -23,6 +23,7 @@ return [
     'name' => 'Nombre',
     'nit_name' => 'Razón Social - NIT',
     'nit_number' => 'Número - NIT',
+    'cellphone' => 'Teléfono Celular',
     'phone' => 'Teléfono',
     'updated_at' => 'Fecha de Edición',
     'user' => 'Usuario',

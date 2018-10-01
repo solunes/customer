@@ -28,8 +28,8 @@ class ApiServerController extends Controller {
         }
     }
 
-    public function getCustomerByParameters($ci_number, $email, $phone) {
-        if($customer = \Solunes\Customer\App\Customer::where('ci_number', $ci_number)->orWhere('email', $email)->orWhere('phone', $phone)->first()){
+    public function getCustomerByParameters($ci_number, $email, $cellphone) {
+        if($customer = \Solunes\Customer\App\Customer::where('ci_number', $ci_number)->orWhere('email', $email)->orWhere('cellphone', $cellphone)->first()){
             $customer = $customer->toArray();
             unset($customer['member_code']);
             return $customer;
@@ -44,7 +44,7 @@ class ApiServerController extends Controller {
             $customer->first_name = $request->input('first_name');
             $customer->last_name = $request->input('last_name');
             $customer->email = $request->input('email');
-            $customer->phone = $request->input('phone');
+            $customer->cellphone = $request->input('cellphone');
             $customer->ci_number = $request->input('ci_number');
             $customer->ci_expedition = $request->input('ci_expedition');
             $customer->address = $request->input('address');
@@ -66,7 +66,7 @@ class ApiServerController extends Controller {
             $customer->first_name = $request->input('first_name');
             $customer->last_name = $request->input('last_name');
             $customer->email = $request->input('email');
-            $customer->phone = $request->input('phone');
+            $customer->cellphone = $request->input('cellphone');
             $customer->ci_number = $request->input('ci_number');
             $customer->ci_expedition = $request->input('ci_expedition');
             $customer->address = $request->input('address');

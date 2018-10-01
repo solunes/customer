@@ -36,7 +36,7 @@
           <td>-</td>
           @endif
           <td>{{ $customer_payment->customer->email }}</td>
-          <td>{{ $customer_payment->customer->phone }}</td>
+          <td>{{ $customer_payment->customer->cellphone }}</td>
           <td>{{ $customer_payment->created_at->format('d/m/Y') }}</td>
           <td>{{ $customer_payment->amount }}</td>
           <td>

@@ -26,7 +26,7 @@
             <td>{{ $customer->customer->email }}</td>
             <td>{{ $customer->customer->ci_number.' '.$customer->customer->ci_expedition }}</td>
             <td>{{ $customer->shirt }}</td>
-            <td>{{ $customer->customer->phone }}</td>
+            <td>{{ $customer->customer->cellphone }}</td>
             @if($first = $customer->customer->paid_payments()->first())
               <td class="edit"><a target="_blank" href="{{ url('admin/model/customer-payment/view/'.$first->id.'/es') }}">Ver Pago</a></td>
             @else

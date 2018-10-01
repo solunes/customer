@@ -17,7 +17,7 @@
                 $('#nationality').val(customer['nationality']);
                 $('#email').val(customer['email']);
                 $('#address').val(customer['address']);
-                $('#phone').val(customer['phone']);
+                $('#cellphone').val(customer['cellphone']);
                 @if(config('customer.fields.shirt'))
                     $('#shirt').val(customer['shirt']);
                 @endif

@@ -28,7 +28,7 @@ return [
     ],
 
     // API
-    'api_slave' => true,
+    'api_slave' => false,
     'api_master' => false,
     'main_server_url' => 'http://master.test/customer-api/',
     'main_server_app_key' => '61b7109893d07a55bccb86e6a5817a1cb9ad5c6d',
