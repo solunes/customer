@@ -23,13 +23,23 @@ class SolunesCustomer extends Migration
             $table->enum('ci_expedition', ['LP','SC','CB','CH','TA','OR','PO','BE','PA','OTRO'])->default('OTRO'); // Obligatorio
             $table->string('email')->nullable(); // Obligatorio
             $table->string('phone')->nullable(); // Obligatorio
-            $table->string('address')->nullable(); // Obligatorio
-            $table->string('address_extra')->nullable();
             $table->string('nit_number')->nullable(); // Obligatorio
             $table->string('nit_name')->nullable(); // Obligatorio
             $table->date('birth_date')->nullable(); // Obligatorio
             $table->string('password')->nullable(); // Obligatorio
             $table->boolean('active')->default(0); // Obligatorio
+            if(config('customer.fields.city')||config('sales.delivery_city')){
+                $table->integer('city_id')->nullable();
+                $table->string('city_other')->nullable();
+            }
+            if(config('customer.fields.address')||config('sales.ask_address')){
+                $table->string('address')->nullable(); // Obligatorio
+                $table->string('address_extra')->nullable();
+            }
+            if(config('customer.fields.coordinates')||config('sales.ask_coordinates')){
+                $table->string('latitude')->nullable(); // Obligatorio
+                $table->string('longitude')->nullable();
+            }
             if(config('customer.fields.member_code')){
                 $table->string('member_code')->nullable();
             }

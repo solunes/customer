@@ -7,6 +7,10 @@ return [
     'dependants' => false,
     'enable_test' => true,
     'fields' => [
+        'city'=> false,
+        'address'=> false,
+        'coordinates'=> false,
+        'member_code'=> true,
         'password'=> true,
         'age'=> true,
         'shirt'=> false,
@@ -24,8 +28,8 @@ return [
     ],
 
     // API
-    'recieve_from_api' => false,
-    'feeds_through_api' => false,
+    'api_slave' => true,
+    'api_master' => false,
     'main_server_url' => 'http://master.test/customer-api/',
     'main_server_app_key' => '61b7109893d07a55bccb86e6a5817a1cb9ad5c6d',
 
