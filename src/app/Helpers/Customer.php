@@ -211,7 +211,7 @@ class Customer {
     }
 
     public static function checkExternalCustomerById($external_id) {
-        $api = app('\Solunes\App\Controllers\WebServiceController')->getCustomerByExternalId($external_id);
+        $api = app('\Solunes\Customer\App\Controllers\WebServiceController')->getCustomerByExternalId($external_id);
         if($api){
             return true;
         } else {
@@ -220,7 +220,7 @@ class Customer {
     }
 
     public static function checkExternalCustomerByParameters($request) {
-        $api = app('\Solunes\App\Controllers\WebServiceController')->getCustomerByParameters($request->input('email'), $request->input('ci_number'), $request->input('cellphone'));
+        $api = app('\Solunes\Customer\App\Controllers\WebServiceController')->getCustomerByParameters($request->input('email'), $request->input('ci_number'), $request->input('cellphone'));
         if($api){
             return true;
         } else {
@@ -229,7 +229,7 @@ class Customer {
     }
       
     public static function registerExternalCustomer($request) {
-        $api = app('\Solunes\App\Controllers\WebServiceController')->registerCustomer($request->input('email'), $request->input('ci_number'), $request->input('cellphone'), $request->input('birth_date'), $request->input('first_name'), $request->input('last_name'), $request->input('ci_expedition'), $request->input('address'), $request->input('nit_number'), $request->input('nit_name'), $request->input('password'));
+        $api = app('\Solunes\Customer\App\Controllers\WebServiceController')->registerCustomer($request->input('email'), $request->input('ci_number'), $request->input('cellphone'), $request->input('birth_date'), $request->input('first_name'), $request->input('last_name'), $request->input('ci_expedition'), $request->input('address'), $request->input('nit_number'), $request->input('nit_name'), $request->input('password'));
         if($api){
             return $api->id;
         } else {
@@ -238,7 +238,7 @@ class Customer {
     }
       
     public static function updateExternalCustomer($external_id, $request) {
-        $api = app('\Solunes\App\Controllers\WebServiceController')->updateCustomerData($external_id, $request->input('email'), $request->input('ci_number'), $request->input('cellphone'), $request->input('birth_date'), $request->input('first_name'), $request->input('last_name'), $request->input('ci_expedition'), $request->input('address'), $request->input('nit_number'), $request->input('nit_name'), $request->input('password'));
+        $api = app('\Solunes\Customer\App\Controllers\WebServiceController')->updateCustomerData($external_id, $request->input('email'), $request->input('ci_number'), $request->input('cellphone'), $request->input('birth_date'), $request->input('first_name'), $request->input('last_name'), $request->input('ci_expedition'), $request->input('address'), $request->input('nit_number'), $request->input('nit_name'), $request->input('password'));
         if($api){
             return true;
         } else {

@@ -59,7 +59,7 @@ class SolunesCustomer extends Migration
                 $table->string('emergency_name')->nullable();
                 $table->string('emergency_number')->nullable();
             }
-            if(config('customer.recieve_from_api')){
+            if(config('customer.api_slave')){
                 $table->integer('external_id')->nullable();
             }
             $table->timestamps();

@@ -53,6 +53,10 @@ class Customer extends Model {
     public function user() {
         return $this->belongsTo('App\User');
     }
+    
+    public function city() {
+        return $this->belongsTo('Solunes\Business\App\City');
+    }
 
     public function customer_dependants() {
         return $this->hasMany('Solunes\Customer\App\CustomerDependant');
