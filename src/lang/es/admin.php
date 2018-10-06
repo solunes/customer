@@ -4,6 +4,7 @@ return array(
 
 	// MENU
 	'solunes' => 'Solunes',
+	'business' => 'Negocio',
 
 	// CUSTOM TRANS
 	'0' => 'No',

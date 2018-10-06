@@ -27,5 +27,9 @@ return [
     'phone' => 'Teléfono',
     'updated_at' => 'Fecha de Edición',
     'user' => 'Usuario',
-
+    'address_extra' => 'Dirección Extra',
+    'city' => 'Ciudad',
+    'city_other' => 'Ciudad (Otra)',
+    'latitude' => 'Latitud',
+    'longitude' => 'Longitud',
 ];
