@@ -6,6 +6,7 @@ return [
     'send_mail' => false,
     'dependants' => false,
     'enable_test' => true,
+    'custom_successful_payment' => false,
     'fields' => [
         'city'=> false,
         'address'=> false,

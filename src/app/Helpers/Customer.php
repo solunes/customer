@@ -203,9 +203,19 @@ class Customer {
                 $payment->status = 'paid';
                 $payment->payment_date = $date;
                 $payment->save();
-                if(config('solunes.sales')&&$sale = $payment->sale){
+                if(config('solunes.sales')&&$sale_payment = $payment->sale_payment){
+                  if($sale_payment->status!='paid'){
+                    $sale_payment->status = 'paid';
+                    $sale_payment->pending_amount = $sale_payment->pending_amount - $payment->amount;
+                    $sale_payment->save();
+                    $sale = $sale_payment->parent;
+                    $sale->paid_amount = $payment->amount;
                     $sale->status = 'paid';
                     $sale->save();
+                  }
+                }
+                if(config('customer.custom_successful_payment')){
+                    \CustomFunc::customer_successful_payment($payment);
                 }
             }
             return true;
