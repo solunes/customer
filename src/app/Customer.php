@@ -8,6 +8,7 @@ class Customer extends Model {
 	
 	protected $table = 'customers';
 	public $timestamps = true;
+    protected $fillable = ['name', 'email', 'password', 'first_name', 'last_name'];
 
 	/*if(config('customer.customer_trait')){
 		use \App\Traits\Customer;

@@ -5,10 +5,22 @@ namespace Solunes\Customer\App\Listeners;
 class CustomerSaving {
 
     public function handle($event) {
+        $user = $user_email_check = $user_username_check = $user_cellphone_check = NULL;
         $full_name = $event->first_name.' '.$event->last_name;
-        $user = \App\User::Where('username',$event->ci_number)->first();
-        $user_email_check = \App\User::where('email',$event->email)->first();
-        $user_cellphone_check = \App\User::where('cellphone',$event->cellphone)->first();
+        $user_email_check = \App\User::whereNotNull('email')->where('email',$event->email)->first();
+        if($user_email_check){
+            $user = $user_email_check;
+        } else {
+            $user_username_check = \App\User::whereNotNull('username')->where('username',$event->ci_number)->first();
+        }
+        if($user_username_check){
+            $user = $user_username_check;
+        } else {
+            $user_cellphone_check = \App\User::whereNotNull('cellphone')->where('cellphone',$event->cellphone)->first();
+        }
+        if($user_username_check){
+            $user = $user_username_check;
+        }
         if(!$user){
             if(!$event->password){
                 $password = rand(100000,999999);

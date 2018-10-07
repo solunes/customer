@@ -203,6 +203,10 @@ class Customer {
                 $payment->status = 'paid';
                 $payment->payment_date = $date;
                 $payment->save();
+                if(config('solunes.sales')&&$sale = $payment->sale){
+                    $sale->status = 'paid';
+                    $sale->save();
+                }
             }
             return true;
         } else {
