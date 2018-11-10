@@ -72,6 +72,11 @@ class CustomerSaving {
             $user->status = $event->status;
             $user->save();
         }
+        if($event->status=='normal'||$event->status=='ask_password'){
+            $event->active = 1;
+        } else {
+            $event->active = 0;
+        }
         if(!$event->user_id){
             $event->user_id = $user->id;
         }

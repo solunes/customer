@@ -5,37 +5,17 @@ namespace Solunes\Customer\App;
 use Illuminate\Database\Eloquent\Model;
 
 class Customer extends Model {
-	
-	protected $table = 'customers';
-	public $timestamps = true;
-    protected $fillable = ['name', 'email', 'password', 'first_name', 'last_name'];
+    
+    protected $table = 'customers';
+    public $timestamps = true;
+    protected $fillable = ['name', 'email', 'password', 'first_name', 'last_name', 'status'];
 
-	/*if(config('customer.customer_trait')){
-		use \App\Traits\Customer;
-	}*/
+    /*if(config('customer.customer_trait')){
+        use \App\Traits\Customer;
+    }*/
 
-	/* Creating rules */
-	public static $rules_create = array(
-		'user_id'=>'required',
-		'first_name'=>'required',
-		'last_name'=>'required',
-		'full_name'=>'required',
-        'ci_number'=>'required',
-        'ci_expedition'=>'required',
-		'member_code'=>'required',
-		'email'=>'required',
-        'cellphone'=>'required',
-        'address'=>'required',
-        'nit_number'=>'required',
-        'nit_name'=>'required',
-        'birth_date'=>'required',
-        'status'=>'required',
-        'active'=>'required',
-	);
-
-	/* Updating rules */
-	public static $rules_edit = array(
-		'id'=>'required',
+    /* Creating rules */
+    public static $rules_create = array(
         'user_id'=>'required',
         'first_name'=>'required',
         'last_name'=>'required',
@@ -51,7 +31,27 @@ class Customer extends Model {
         'birth_date'=>'required',
         'status'=>'required',
         'active'=>'required',
-	);
+    );
+
+    /* Updating rules */
+    public static $rules_edit = array(
+        'id'=>'required',
+        'user_id'=>'required',
+        'first_name'=>'required',
+        'last_name'=>'required',
+        'full_name'=>'required',
+        'ci_number'=>'required',
+        'ci_expedition'=>'required',
+        'member_code'=>'required',
+        'email'=>'required',
+        'cellphone'=>'required',
+        'address'=>'required',
+        'nit_number'=>'required',
+        'nit_name'=>'required',
+        'birth_date'=>'required',
+        'status'=>'required',
+        'active'=>'required',
+    );
     
     public function user() {
         return $this->belongsTo('App\User');

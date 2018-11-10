@@ -7,6 +7,7 @@ return [
     'dependants' => false,
     'enable_test' => true,
     'custom_successful_payment' => false,
+    'after_login_no_password' => 'account/change-password/gLW2fAst39MV',
     'fields' => [
         'city'=> false,
         'address'=> false,
