@@ -157,7 +157,7 @@ class ProcessController extends Controller {
         $now = new \DateTime();
         if ((\App\PasswordReminder::where('token', $token)->count()>0)&&(\App\PasswordReminder::where('token', $token)->first()->created_at<$now)) {
           $email = \App\PasswordReminder::where('token', $token)->first()->email;
-          \App\User::where('email', $email)->update(array('password' => $request->input('password')));
+          \App\User::where('email', $email)->update(array('password' => bcrypt($request->input('password'))));
           \App\PasswordReminder::where('token', $token)->delete();
           return redirect(config('customer.redirect_after_login'))->with('message_success', trans('master::form.password_reset_success'));        
         } else {
