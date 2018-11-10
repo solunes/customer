@@ -20,7 +20,7 @@ class SolunesCustomer extends Migration
             $table->string('first_name')->nullable(); // Obligatorio
             $table->string('last_name')->nullable(); // Obligatorio
             $table->string('ci_number')->nullable(); // Obligatorio
-            $table->enum('ci_expedition', ['LP','SC','CB','CH','TA','OR','PO','BE','PA','OTRO'])->default('OTRO'); // Obligatorio
+            $table->enum('ci_expedition', ['LP','SC','CB','CH','TA','OR','PO','BE','PA','OTRO'])->default('LP'); // Obligatorio
             $table->string('email')->nullable(); // Obligatorio
             $table->string('cellphone')->nullable(); // Obligatorio
             $table->string('nit_number')->nullable(); // Obligatorio
