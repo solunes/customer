@@ -132,7 +132,7 @@ class ProcessController extends Controller {
             $m->to($email, 'User')->subject(config('solunes.app_name').' | '.trans('master::mail.remind_password_title'));
         });
         $message = trans('master::form.password_request_success');
-        return redirect($this->prev)->with('message_success', $message);
+        return redirect('account/recovered-password/cKeaDssbRd23m9Yb');
       } else {
         return \Login::failed_try($validator, $this->prev, trans('master::form.password_request_error'));
       }
