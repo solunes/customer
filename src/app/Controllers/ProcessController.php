@@ -138,6 +138,11 @@ class ProcessController extends Controller {
       }
     }
 
+    public function getRecoveredPassword($token) {
+      $array['page'] = \Solunes\Master\App\Page::find(1);
+      return view('customer::process.recovered-password', $array);
+    }
+
     public function getResetPassword($token) {
       if (is_null($token)) return redirect('account/recover-password/')->with('message_error', trans('master::form.password_reset_error'));
       if (\App\PasswordReminder::where('token', $token)->count()>0) {

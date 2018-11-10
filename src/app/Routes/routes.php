@@ -22,6 +22,7 @@ Route::group(['prefix'=>'account'], function(){
     Route::get('login/{token}', 'ProcessController@getLogin')->middleware('guest');
     Route::get('recover-password/{token}', 'ProcessController@getRecoverPassword')->middleware('guest');
     Route::post('recover-password', 'ProcessController@postRecoverPassword')->middleware('guest');
+    Route::get('recovered-password/{token}', 'ProcessController@getRecoveredPassword')->middleware('guest');
     Route::get('reset-password/{token}', 'ProcessController@getResetPassword')->middleware('guest');
     Route::post('reset-password', 'ProcessController@postResetPassword')->middleware('guest');
     Route::get('change-password/{token}', 'ProcessController@getChangePassword')->middleware('auth');
