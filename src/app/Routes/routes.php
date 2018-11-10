@@ -17,6 +17,11 @@ Route::group(['prefix'=>'process'], function(){
 	}
     Route::get('check-ci/{ci_number}', 'ProcessController@getCheckCi');
 });
+Route::group(['prefix'=>'account'], function(){
+    // Rutas para Mi Cuenta
+    Route::get('login/{token}', 'ProcessController@getLogin');
+    Route::get('my-account/{token}', 'ProcessController@getMyAccount')->middleware('auth');
+});
 
 Route::group(['prefix'=>'customer-webservice'], function(){
     Route::get('customer-by-parameters/{email}/{ci_number}/{cellphone}', 'WebServiceController@getCustomerByParameters');

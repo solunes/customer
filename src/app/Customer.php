@@ -29,6 +29,7 @@ class Customer extends Model {
         'nit_number'=>'required',
         'nit_name'=>'required',
         'birth_date'=>'required',
+        'status'=>'required',
         'active'=>'required',
 	);
 
@@ -48,6 +49,7 @@ class Customer extends Model {
         'nit_number'=>'required',
         'nit_name'=>'required',
         'birth_date'=>'required',
+        'status'=>'required',
         'active'=>'required',
 	);
     

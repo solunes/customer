@@ -19,5 +19,9 @@ return array(
 	'BE' => 'BE',
 	'PA' => 'PA',
 	'OTRO' => 'OTRO',
+	'normal' => 'Normal',
+	'ask_password' => 'Preguntar Contraseña',
+	'pending_confirmation' => 'Confirmación Pendiente',
+	'banned' => 'Denegado',
 
 );

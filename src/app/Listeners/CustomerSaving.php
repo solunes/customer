@@ -45,6 +45,7 @@ class CustomerSaving {
               $user->address = $event->address;
               $user->address_extra = $event->address_extra;
             }
+            $user->status = $event->status;
             $user->save();
             $user->role_user()->attach(2); // Agregar como miembro
         } else {
@@ -68,6 +69,7 @@ class CustomerSaving {
               $user->address = $event->address;
               $user->address_extra = $event->address_extra;
             }
+            $user->status = $event->status;
             $user->save();
         }
         if(!$event->user_id){

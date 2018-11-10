@@ -94,4 +94,16 @@ class ProcessController extends Controller {
 	    }
     }
 
+    public function getLogin($token) {
+	    $array['page'] = \Solunes\Master\App\Page::find(1);
+	    return view('customer::process.login', $array);
+    }
+
+    public function getMyAccount($token) {
+	    $user = auth()->user();
+	    $array['page'] = \Solunes\Master\App\Page::find(1);
+	    $array['user'] = $user;
+	    return view('customer::process.my-account', $array);
+    }
+
 }

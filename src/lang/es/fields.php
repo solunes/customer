@@ -25,6 +25,7 @@ return [
     'nit_name' => 'Razón Social - NIT',
     'nit_number' => 'Número - NIT',
     'phone' => 'Teléfono',
+    'status' => 'Estado',
     'updated_at' => 'Fecha de Edición',
     'user' => 'Usuario',
     'age' => 'Edad',
