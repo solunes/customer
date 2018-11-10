@@ -27,7 +27,7 @@ class SolunesCustomer extends Migration
             $table->string('nit_name')->nullable(); // Obligatorio
             $table->date('birth_date')->nullable(); // Obligatorio
             $table->string('password')->nullable(); // Obligatorio
-            $table->enum('status', ['normal','ask_password','pending_confirmation','banned'])->default('normal'); // Obligatorio
+            $table->enum('status', ['normal','ask_password','pending_confirmation','banned'])->default('ask_password'); // Obligatorio
             $table->boolean('active')->default(0); // Obligatorio
             if(config('customer.fields.city')||config('sales.delivery_city')){
                 $table->integer('city_id')->nullable();
