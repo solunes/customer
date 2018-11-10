@@ -12,15 +12,18 @@
 */
 
 Route::group(['prefix'=>'process'], function(){
-	if(!config('customer.custom.register')){
-    	Route::post('registro', 'ProcessController@postRegistro');
-	}
+    if(!config('customer.custom.register')){
+        Route::post('registro', 'ProcessController@postRegistro');
+    }
     Route::get('check-ci/{ci_number}', 'ProcessController@getCheckCi');
 });
 Route::group(['prefix'=>'account'], function(){
     // Rutas para Mi Cuenta
     Route::get('login/{token}', 'ProcessController@getLogin')->middleware('guest');
     Route::get('recover-password/{token}', 'ProcessController@getRecoverPassword')->middleware('guest');
+    Route::post('recover-password', 'ProcessController@postRecoverPassword')->middleware('guest');
+    Route::get('reset-password/{token}', 'ProcessController@getResetPassword')->middleware('guest');
+    Route::post('reset-password', 'ProcessController@postResetPassword')->middleware('guest');
     Route::get('change-password/{token}', 'ProcessController@getChangePassword')->middleware('auth');
     Route::post('change-password', 'ProcessController@postChangePassword')->middleware('auth');
     Route::get('my-account/{token}', 'ProcessController@getMyAccount')->middleware('auth');

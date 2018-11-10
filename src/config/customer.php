@@ -8,6 +8,7 @@ return [
     'enable_test' => true,
     'custom_successful_payment' => false,
     'after_login_no_password' => 'account/change-password/gLW2fAst39MV',
+    'redirect_after_login' => 'inicio',
     'fields' => [
         'city'=> false,
         'address'=> false,

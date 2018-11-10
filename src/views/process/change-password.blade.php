@@ -12,11 +12,11 @@
     <div class="row">
       <div class="col-md-3 profile-actual">
         <div class="profile-description">
-          <h2>Prueba Prueba</h2>
-          <p><span class="p_title">Ciudad: </span>La Paz</p>
-          <p><span class="p_title">Dirección: </span>Av. Prueba #123 Calle Test</p>
-          <p><span class="p_title">NIT: </span>123456789</p>
-          <p><span class="p_title">Razón Social: </span>Prueba</p>
+          <h2>{{ $customer->name }}</h2>
+          <p><span class="p_title">Ciudad: </span>{{ $customer->city->name }}</p>
+          <p><span class="p_title">CI: </span>{{ $customer->ci_number }} {{ $customer->ci_expedition }}</p>
+          <p><span class="p_title">NIT: </span>{{ $customer->nit_number }}</p>
+          <p><span class="p_title">Razón Social: </span>{{ $customer->nit_name }}</p>
         </div>
       </div>
       <div class="col-md-9 edit-profile">
