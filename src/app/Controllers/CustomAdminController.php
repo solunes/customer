@@ -67,15 +67,12 @@ class CustomAdminController extends Controller {
 	public function getMyAccount($customer_id = NULL) {
 		$user = auth()->user();
 		$dependants = false;
-		if($customer = $user->customers()->where('id',$customer_id)->first()){
-
-		} else {
-			$customer = NULL;
+		if(!$customer = $user->customers()->where('id',$customer_id)->first()){
 			return redirect('admin')->with('message_error', 'Su cuenta no tiene un cliente asociado.');
 		}
 		$expeditions = ['LP'=>'LP','SC'=>'SC','CB'=>'CB','CH'=>'CH','PO'=>'PO','OR'=>'OR','TA'=>'TA','BE'=>'BE','PA'=>'PA','EXTRANJERO'=>'EXTRANJERO'];
-		$array = ['customer'=>$customer,'action'=>$action,'expeditions'=>$expeditions];
-		return view('content.my-account', $array);
+		$array = ['customer'=>$customer,'action'=>'edit','custom_rules'=>'asd','expeditions'=>$expeditions];
+		return view('customer::content.my-account', $array);
 	}
 
 	public function postEditAccount(Request $request) {
@@ -87,7 +84,6 @@ class CustomAdminController extends Controller {
 	        	$customer->first_name = mb_strtoupper($request->input('first_name'), 'UTF-8');
 	        	$customer->last_name = mb_strtoupper($request->input('last_name'), 'UTF-8');
 	        	$customer->email = $request->input('email');
-	        	$customer->phone = $request->input('phone');
 	        	$customer->cellphone = $request->input('cellphone');
 		        $customer->nit_number = $request->input('nit_number');
 		        $customer->nit_name = $request->input('nit_name');
