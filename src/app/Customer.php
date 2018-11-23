@@ -15,6 +15,20 @@ class Customer extends Model {
     }*/
 
     /* Creating rules */
+    public static $rules_password = array(
+        'password'=>'required|min:6|confirmed',
+        'password_confirmation'=>'required|min:6',
+    );
+
+    /* Creating rules */
+    public static $rules_send = array(
+        'first_name'=>'required',
+        'last_name'=>'required',
+        'cellphone'=>'required',
+        'birth_date'=>'required',
+    );
+
+    /* Creating rules */
     public static $rules_create = array(
         'user_id'=>'required',
         'first_name'=>'required',
@@ -22,7 +36,7 @@ class Customer extends Model {
         'full_name'=>'required',
         'ci_number'=>'required',
         'ci_expedition'=>'required',
-        'member_code'=>'required',
+        'password'=>'required',
         'email'=>'required',
         'cellphone'=>'required',
         'address'=>'required',
@@ -42,7 +56,7 @@ class Customer extends Model {
         'full_name'=>'required',
         'ci_number'=>'required',
         'ci_expedition'=>'required',
-        'member_code'=>'required',
+        'password'=>'required',
         'email'=>'required',
         'cellphone'=>'required',
         'address'=>'required',

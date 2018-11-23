@@ -47,13 +47,13 @@ class CustomAdminController extends Controller {
 		$user = auth()->user();
 		if($user->customer){
 			$customer = $user->customer;
-			$rules = \App\Customer::$rules_password;
+			$rules = \Solunes\Customer\App\Customer::$rules_password;
 	        $validator = \Validator::make($request->all(), $rules);
 	        if($validator->passes()) {
-	        	$customer->member_code = $request->input('member_code');
+	        	$customer->password = $request->input('password');
 	        	$customer->save();
 	        	$user = $customer->user;
-	        	$user->password = $request->input('member_code');
+	        	$user->password = $request->input('password');
 	        	$user->save();
 	        	return redirect($this->prev)->with('message_success', 'Su contraseña fue editada correctamente.');
 			} else {
@@ -64,105 +64,44 @@ class CustomAdminController extends Controller {
 		}
 	}
 
-	public function getMyAccount($customer_id = NULL, $action = 'edit', $dependant_id = NULL) {
+	public function getMyAccount($customer_id = NULL) {
 		$user = auth()->user();
 		$dependants = false;
 		if($customer = $user->customers()->where('id',$customer_id)->first()){
-			if($action=='create'){
-				$dependants = true;
-			} else if($dependant_id&&$customer = $customer->dependants()->where('id',$dependant_id)->first()){
-				$dependants = true;
-			}
+
 		} else {
 			$customer = NULL;
 			return redirect('admin')->with('message_error', 'Su cuenta no tiene un cliente asociado.');
 		}
-		if($dependants){
-			$custom_rules = false;
-		} else {
-			$custom_rules = true;
-		}
 		$expeditions = ['LP'=>'LP','SC'=>'SC','CB'=>'CB','CH'=>'CH','PO'=>'PO','OR'=>'OR','TA'=>'TA','BE'=>'BE','PA'=>'PA','EXTRANJERO'=>'EXTRANJERO'];
-		$array = ['parent_customer_id'=>$customer_id,'customer'=>$customer,'dependants'=>$dependants,'custom_rules'=>$custom_rules,'action'=>$action,'expeditions'=>$expeditions];
+		$array = ['customer'=>$customer,'action'=>$action,'expeditions'=>$expeditions];
 		return view('content.my-account', $array);
 	}
 
 	public function postEditAccount(Request $request) {
 		$user = auth()->user();
-		if($request->has('parent_customer_id')&&$customer = $user->customers()->where('id', $request->input('parent_customer_id'))->first()){
-			if($customer->id==$request->input('customer_id')){
-				$customer = $user->customer;
-				$dependant = false;
-			} else if($customer->dependants()->where('id',$request->input('customer_id'))->first()){
-				$customer = $customer->dependants()->where('id',$request->input('customer_id'))->first();
-				$dependant = true;
-			} else {
-				return redirect($this->prev)->with('message_error', 'Hubo un error al procesar el formulario.');
-			}
-	        $action = $request->input('action');
-	        if($action=='create'){
-				$dependant = true;
-	        }
-			$rules = \App\Customer::$rules_send;
+		if($customer = $user->customers()->where('id', $request->input('customer_id'))->first()){
+			$rules = \Solunes\Customer\App\Customer::$rules_send;
 	        $validator = \Validator::make($request->all(), $rules);
-	        $customer = \App\Customer::find($request->input('customer_id'));
-	        if($validator->passes()&&$action&&$customer) {
-	        	if($action=='create'){
-	        		$parent_customer = $customer;
-	        		$last_dependant = $parent_customer->dependants()->orderBy('id','DESC')->first();
-	        		if(!$last_dependant){
-	        			$type = 'DEPEND 1';
-	        		} else {
-	        			$explode = explode(' ', $last_dependant->type);
-	        			$type = 'DEPEND '.(intval($explode[1])+1);
-	        			//print_r($type);
-	        		}
-	        		$customer = new \App\Customer;
-	        		$customer->type = $type;
-	        		$customer->code = $parent_customer->code;
-	        		$customer->member_code = 12345678;
-	        		$customer->category_id = $parent_customer->category_id;
-	        	}
+	        if($validator->passes()&&$customer) {
 	        	$customer->first_name = mb_strtoupper($request->input('first_name'), 'UTF-8');
 	        	$customer->last_name = mb_strtoupper($request->input('last_name'), 'UTF-8');
-	        	$customer->last_name_2 = mb_strtoupper($request->input('last_name_2'), 'UTF-8');
 	        	$customer->email = $request->input('email');
 	        	$customer->phone = $request->input('phone');
 	        	$customer->cellphone = $request->input('cellphone');
-	        	if($dependant){
-		        	$customer->ci_number = $request->input('ci_number');
-		        	$customer->ci_expedition = $request->input('ci_expedition');
-	        	} else {
-		        	$customer->nit_number = $request->input('nit_number');
-		        	$customer->nit_name = $request->input('nit_name');
-	        	}
+		        $customer->nit_number = $request->input('nit_number');
+		        $customer->nit_name = $request->input('nit_name');
 	        	$customer->birth_date = $request->input('birth_date');
-	        	$customer->career = $request->input('career');
-	        	$customer->office_phone = $request->input('office_phone');
-	        	$customer->office_address = $request->input('office_address');
-	        	$full_name = $customer->first_name;
-	        	if($customer->last_name){
-	        		$full_name .= ' '.$customer->last_name;
+	        	if(config('customer.fields.city')||config('sales.delivery_city')){
+	        		$customer->city_id = $request->input('city_id');
+	        		$customer->city_other = $request->input('city_other');
 	        	}
-	        	if($customer->last_name_2){
-	        		$full_name .= ' '.$customer->last_name_2;
+	        	if(config('customer.fields.address')||config('sales.ask_address')){
+	        		$customer->address = $request->input('address');
+	        		$customer->address_extra = $request->input('address_extra');
 	        	}
-	        	$customer->full_name = $full_name;
 	        	$customer->save();
-	        	if($customer->user){
-		        	$user = $customer->user;
-		        	$user->name = $full_name;
-		        	$user->save();
-	        	}
-	        	if($action=='create'){
-	        		$url = url('admin/model/customer/edit/'.$customer->id.'/es');
-	        		$message = 'El usuario '.$user->name.' registró un dependiente que debe ser aprobado. Click para activar.';
-	        		\FuncNode::make_dashboard_notitification($message, [1,2], $url, $message);
-	        		$message = 'Su cuenta de dependiente fue creada correctamente, sin embargo debe ser aprobada primero.';
-	        	} else {
-	        		$message = 'Su cuenta fue editada correctamente.';
-	        	}
-	        	return redirect($this->prev)->with('message_success', $message);
+	        	return redirect($this->prev)->with('message_success', 'Su cuenta fue editada correctamente.');
 			} else {
 				return redirect($this->prev)->with('message_error', 'Debe llenar todos los campos.')->withInput();
 			}
