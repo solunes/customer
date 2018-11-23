@@ -24,7 +24,7 @@ class CustomAdminController extends Controller {
 	  $this->prev = $url->previous();
       $this->module = 'custom-admin';
 	}
-		
+
 	public function getRedirect() {
 		if(!auth()->check()){
 			return redirect('auth/login')->with('message_error','Debe iniciar sesión.');
@@ -116,27 +116,27 @@ class CustomAdminController extends Controller {
 		$array = ['customers'=>$customers];
 		return view('content.my-dependants', $array);
 	}
-	
-	public function getManualPayment($id) {
-		if($item = \Solunes\Payments\App\Payment::find($id)){
-			$payment_method = \Solunes\Payments\App\PaymentMethod::where('code', 'manual-payment')->first();
-			if($payment_method){
-				$transaction = new \Solunes\Payments\App\Transaction;
-				$transaction->callback_url = $payment_method->code;
-				$transaction->payment_code = \Payments::generatePaymentCode();
-				$transaction->payment_method_id = $payment_method->id;
-				$transaction->save();
-				$transaction_payment = new \Solunes\Payments\App\TransactionPayment;
-				$transaction_payment->parent_id = $transaction->id;
-				$transaction_payment->payment_id = $id;
-				$transaction_payment->save();
-				$transaction->external_payment_code = \Payments::generatePaymentCode();
-				$transaction->processed = 1;
-				$transaction->save();
-				return redirect($this->prev)->with('message_success', 'Pago realizado correctamente.');
+
+	public function getMyPayments() {
+		$array['items'] = [];
+		$user = auth()->user();
+		if(count($user->customers)>0){
+			foreach($user->customers as $customer){
+				$array['items'][] = ['customer'=>$customer,'payments'=>$customer->pending_payments];
 			}
 		}
-		return redirect($this->prev)->with('message_error', 'Error al realizar el pago.');
+		return view('customer::content.my-payments', $array);
+	}
+
+	public function getMyHistory() {
+		$array['items'] = [];
+		$user = auth()->user();
+		if(count($user->customers)>0){
+			foreach($user->customers as $customer){
+				$array['items'][] = ['customer'=>$customer,'payments'=>$customer->paid_payments];
+			}
+		}
+		return view('customer::content.my-history', $array);
 	}
      
  	public function getManualLogin($customer_id) {
@@ -151,68 +151,5 @@ class CustomAdminController extends Controller {
 		$array['items'] = \Solunes\Customer\App\Customer::get();
 		return view('customer::content.customer-lists', $array);
 	}
-		
-	public function getPaymentsList() {
-		$items = \Solunes\Master\App\Payment::whereNotNull('id');
-		if(request()->has('search')){
-			if(request()->has('f_team_id')&&request()->input('f_team_id')!=0&&$team = \App\Team::find(request()->input('f_team_id'))){
-				$customer_ids = $team->team_customers()->lists('customer_id')->toArray();
-				$items = $items->whereIn('customer_id', $customer_ids);
-			}
-			if(request()->has('f_status')){
-				$items = $items->where('status', request()->input('f_status'));
-			}
-			if(request()->has('f_from')&&request()->input('f_from')!=NULL){
-				$items = $items->where('date', '>=', request()->input('f_from'));
-			}
-			if(request()->has('f_to')&&request()->input('f_to')!=0){
-				$items = $items->where('date', '<=', request()->input('f_to'));
-			}
-		}
-		$items = $items->with('customer','customer.team_customer')->get();
-		$array = ['dt'=>'create'];
-		$array['items'] = $items;
-		$array['f_teams'] = \App\Team::lists('name','id')->toArray();
-		$array['f_status'] = ['pending'=>'Pendiente','paid'=>'Pagado'];
-		return view('customer::content.payments-lists', $array);
-	}
 
-	public function getMyPayments() {
-		$array['items'] = [];
-		$user = auth()->user();
-		if(count($user->customers)>0){
-			foreach($user->customers as $customer){
-				$array['items'][] = ['customer'=>$customer,'payments'=>$customer->pending_payments];
-			}
-		}
-		return view('customer::content.my-payments', $array);
-	}
-	
-	public function postMakePayment(Request $request) {
-	    if($request->has('name')&&$request->has('last_name')&&$request->has('email')){
-
-	      $participant = new \App\Participant;
-	      $participant->name = $request->input('name');
-	      $participant->last_name = $request->input('last_name');
-	      $participant->email = $request->input('email');
-	      $participant->status = 'holding';
-	      $participant->save();
-
-	      return redirect($this->prev)->with('message_success', '"'.$participant->name.' '.$participant->last_name.'" fue registrado correctamente con el correo "'.$participant->email.'".');
-	    } else {
-	      return redirect($this->prev)->with('message_error', 'Debe llenar todos los campos para registrar el participante.');
-	    }
-	}
-	
-	public function getMyHistory() {
-		$array['items'] = [];
-		$user = auth()->user();
-		if(count($user->customers)>0){
-			foreach($user->customers as $customer){
-				$array['items'][] = ['customer'=>$customer,'payments'=>$customer->paid_payments];
-			}
-		}
-		return view('customer::content.my-history', $array);
-	}
-	
 }
