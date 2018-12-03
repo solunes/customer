@@ -5,7 +5,7 @@
 @if(count($customers)>0)
   @foreach($customers as $customer)
     @include('includes.member')
-    <a href="{{ url('admin/my-account/'.$customer->id.'/edit') }}"><h3>Editar Cuenta</h3></a>
+    <a href="{{ url('admin/my-account/'.$customer->id) }}"><h3>Editar Cuenta</h3></a>
   @endforeach
 @else
   <p>No tiene una cuenta de cliente.</p>
