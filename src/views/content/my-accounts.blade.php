@@ -5,10 +5,10 @@
 @if(count($customers)>0)
   @foreach($customers as $customer)
     @include('includes.member')
-    <a href="{{ url('admin/my-account/'.$customer->id.'/edit') }}"><h3>Editar Cuenta</h3></a>
+    <a href="{{ url('admin/my-account/'.$customer->id) }}"><h3>Editar Cuenta</h3></a>
   @endforeach
 @else
-  <p>No tiene una cuenta de miembro con pagos disponibles.</p>
+  <p>No tiene una cuenta de cliente.</p>
 @endif
 <br><br><br>
 <h1>Editar Contraseña</h1>
@@ -16,12 +16,12 @@
     <fieldset class="row">
       <div class="col-sm-6"><div class="form-group">
         <span class="control-label">Contraseña</span>
-        {!! Form::password('member_code', ['placeholder'=>'Introduzca una contraseña de al menos 6 carcteres', 'required'=>false, 'class'=>'form-control']) !!}
+        {!! Form::password('password', ['placeholder'=>'Introduzca una contraseña de al menos 6 carcteres', 'required'=>false, 'class'=>'form-control']) !!}
       </div></div>
       <div class="col-sm-6"><div class="form-group">
         <span class="control-label">Confirmar Contraseña</span>
-        {!! Form::password('member_code_confirmation', ['placeholder'=>'Repita su contraseña', 'required'=>false, 'class'=>'form-control']) !!}
-        @if($errors->has('member_code'))
+        {!! Form::password('password_confirmation', ['placeholder'=>'Repita su contraseña', 'required'=>false, 'class'=>'form-control']) !!}
+        @if($errors->has('password'))
           <p>Ambas contraseñas deben ser iguales</p>
         @endif
       </div></div>

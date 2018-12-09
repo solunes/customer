@@ -9,6 +9,8 @@ return array(
 	'pagos-pendientes' => 'Pagos Pendientes',
 
 	// CUSTOM TRANS
+	'historial-pagos' => 'Historial de Pagos',
+	'pagos-pendientes' => 'Pagos Pendientes',
 	'0' => 'No',
 	'1' => 'Si',
 	'LP' => 'LP',
