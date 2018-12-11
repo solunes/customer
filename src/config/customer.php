@@ -16,6 +16,7 @@ return [
         'member_code'=> true,
         'password'=> true,
         'age'=> true,
+        'image'=> false,
         'shirt'=> false,
         'shirt_size'=> false,
         'invoice_data'=> true,

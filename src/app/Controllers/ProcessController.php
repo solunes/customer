@@ -190,11 +190,12 @@ class ProcessController extends Controller {
 
     public function postChangePassword(Request $request) {
       $user = \Auth::user();
-      if($customer = $user->customer&&$request->has('password')&&$request->has('confirm_password')){ 
+      $customer = $user->customer;
+      if($customer&&$request->has('password')&&$request->has('confirm_password')){ 
         if(strlen($request->input('password'))<6&&strlen($request->input('confirm_password'))<6){
-          return redirect($this->prev)->with(array('message_error' => 'Su contraseña debe tener al menos 6 carácteres.'))->withErrors($validator)->withInput();
+          return redirect($this->prev)->with(array('message_error' => 'Su contraseña debe tener al menos 6 carácteres.'))->withInput();
         } else if($request->input('password')!=$request->input('confirm_password')){
-          return redirect($this->prev)->with(array('message_error' => 'Su contraseña no es igual en ambos campos.'))->withErrors($validator)->withInput();
+          return redirect($this->prev)->with(array('message_error' => 'Su contraseña no es igual en ambos campos.'))->withInput();
         }
         $customer->password = $request->input('password');
         $customer->save();
@@ -208,7 +209,67 @@ class ProcessController extends Controller {
       $user = auth()->user();
       $array['page'] = \Solunes\Master\App\Page::find(1);
       $array['user'] = $user;
+      if(config('customer.fields.city')){
+        $array['cities'] = \Solunes\Business\App\City::lists('name','id')->toArray();
+      }
+      $array['customer'] = $user->customer;
+      if(!$array['customer']){
+        return redirect($this->prev)->with('message_error', 'No tiene una cuenta de cliente vigente.');
+      }
       return view('customer::process.my-account', $array);
+    }
+
+    public function postEditCustomer(Request $request) {
+      $user = \Auth::user();
+      $customer = $user->customer;
+      if($customer&&$request->has('first_name')&&$request->has('last_name')){ 
+        $customer->first_name = $request->input('first_name');
+        $customer->last_name = $request->input('last_name');
+        if(config('customer.fields.city')){
+          $customer->city_id = $request->input('city_id');
+        }
+        if(config('customer.fields.address')){
+          $customer->address = $request->input('address');
+        }
+        if(config('customer.fields.invoice_data')){
+          $customer->nit_number = $request->input('nit_number');
+          $customer->nit_name = $request->input('nit_name');
+        }
+        $customer->save();
+        return redirect($this->prev)->with('message_success', 'Felicidades, sus datos fueron editados correctamente.');
+      } else {
+        return redirect($this->prev)->with(array('message_error' => 'Debe llenar todos los campos para finalizar'));
+      }
+    }
+
+    public function postEditImage(Request $request) {
+      if(auth()->check()&&$request->hasFile('image')){
+        $user = auth()->user();
+        if($customer = $user->customer){
+          $customer->image = \Asset::upload_image($request->file('image'), 'customer-image');
+          $customer->save();
+          return redirect($this->prev)->with('message_success', 'Su imagen fue subida correctamente.');
+        }
+
+        return redirect($this->prev)->with('message_error', 'No tiene una cuenta de cliente asociada.');
+      } else {
+        return redirect($this->prev)->with('message_error', 'Debe cargar una imagen válida.');
+      }
+    }
+
+    public function getDeleteImage($token) {
+      if(auth()->check()){
+        $user = auth()->user();
+        if($customer = $user->customer){
+          $customer->image = NULL;
+          $customer->save();
+          return redirect($this->prev)->with('message_success', 'Su imagen fue eliminada correctamente.');
+        }
+
+        return redirect($this->prev)->with('message_error', 'No tiene una cuenta de cliente asociada.');
+      } else {
+        return redirect($this->prev)->with('message_error', 'Hubo un error al eliminar su foto de perfil.');
+      }
     }
 
 }

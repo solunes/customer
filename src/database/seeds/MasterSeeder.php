@@ -27,6 +27,11 @@ class MasterSeeder extends Seeder {
             \Solunes\Master\App\NodeExtra::create(['parent_id'=>$node_payment->id, 'type'=>'action_field', 'parameter'=>'field', 'value_array'=>json_encode(["manual-pay","edit"])]);
         }
 
+        if(config('customer.fields.image')){
+            $image_folder = \Solunes\Master\App\ImageFolder::create(['site_id'=>1, 'name'=>'customer-image', 'extension'=>'jpg']);
+            \Solunes\Master\App\ImageSize::create(['parent_id'=>$image_folder->id, 'code'=>'normal', 'type'=>'fit', 'width'=>'240', 'height'=>'240']);
+        }
+
         // Usuarios
         $admin = \Solunes\Master\App\Role::where('name', 'admin')->first();
         $member = \Solunes\Master\App\Role::where('name', 'member')->first();

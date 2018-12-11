@@ -63,6 +63,9 @@ class SolunesCustomer extends Migration
             if(config('customer.api_slave')){
                 $table->integer('external_id')->nullable();
             }
+            if(config('customer.fields.image')){
+                $table->string('image')->nullable();
+            }
             $table->timestamps();
         });
         if(config('customer.dependants')){
