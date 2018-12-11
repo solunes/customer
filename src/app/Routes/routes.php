@@ -19,6 +19,7 @@ Route::group(['prefix'=>'process'], function(){
 });
 Route::group(['prefix'=>'account'], function(){
     // Rutas para Mi Cuenta
+    Route::get('register/{token}', 'ProcessController@getRegister')->middleware('guest');
     Route::get('login/{token}', 'ProcessController@getLogin')->middleware('guest');
     Route::get('recover-password/{token}', 'ProcessController@getRecoverPassword')->middleware('guest');
     Route::post('recover-password', 'ProcessController@postRecoverPassword')->middleware('guest');
