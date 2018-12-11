@@ -28,6 +28,9 @@ Route::group(['prefix'=>'account'], function(){
     Route::get('change-password/{token}', 'ProcessController@getChangePassword')->middleware('auth');
     Route::post('change-password', 'ProcessController@postChangePassword')->middleware('auth');
     Route::get('my-account/{token}', 'ProcessController@getMyAccount')->middleware('auth');
+    Route::post('edit-customer', 'ProcessController@postEditCustomer')->middleware('auth');
+    Route::post('edit-image', 'ProcessController@postEditImage')->middleware('auth');
+    Route::get('delete-image/{token}', 'ProcessController@getDeleteImage')->middleware('auth');
 });
 
 Route::group(['prefix'=>'customer-webservice'], function(){
