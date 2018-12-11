@@ -210,7 +210,7 @@ class ProcessController extends Controller {
       $array['page'] = \Solunes\Master\App\Page::find(1);
       $array['user'] = $user;
       if(config('customer.fields.city')){
-        $array['cities'] = \Solunes\Business\App\City::lists('name','id')->toArray();
+        $array['cities'] = \Solunes\Business\App\City::get()->lists('name','id')->toArray();
       }
       $array['customer'] = $user->customer;
       if(!$array['customer']){

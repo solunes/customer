@@ -27,10 +27,10 @@
         @endif
         <div class="profile-description">
           <h2>{{ $customer->name }}</h2>
-          @if(config('customer.fields.city'))
+          @if(config('customer.fields.city')&&$customer->city)
             <p><span class="p_title">Ciudad: </span>{{ $customer->city->name }}</p>
           @endif
-          @if(config('customer.fields.address'))
+          @if(config('customer.fields.address')&&$customer->address)
             <p><span class="p_title">Dirección: </span>{{ $customer->address.' -'.$customer->address_extra }}</p>
           @endif
           @if(config('customer.fields.invoice_data'))
