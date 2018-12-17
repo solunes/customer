@@ -13,10 +13,20 @@
       <div class="col-md-3 profile-actual">
         <div class="profile-description">
           <h2>{{ $customer->name }}</h2>
-          <p><span class="p_title">Ciudad: </span>{{ $customer->city->name }}</p>
-          <p><span class="p_title">CI: </span>{{ $customer->ci_number }} {{ $customer->ci_expedition }}</p>
-          <p><span class="p_title">NIT: </span>{{ $customer->nit_number }}</p>
-          <p><span class="p_title">Razón Social: </span>{{ $customer->nit_name }}</p>
+          @if(config('customer.fields.city')&&$customer->city)
+            <p><span class="p_title">Ciudad: </span>{{ $customer->city->name }}</p>
+          @endif
+          @if(config('customer.fields.address'))
+            <p><span class="p_title">Dirección: </span>{{ $customer->address.' -'.$customer->address_extra }}</p>
+          @endif
+          @if(config('customer.fields.invoice_data'))
+            @if($customer->nit_number)
+              <p><span class="p_title">NIT: </span>{{ $customer->nit_number }}</p>
+            @endif
+            @if($customer->nit_name)
+              <p><span class="p_title">Razón Social: </span>{{ $customer->nit_name }}</p>
+            @endif
+          @endif
         </div>
       </div>
       <div class="col-md-9 edit-profile">
