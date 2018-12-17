@@ -5,6 +5,8 @@ return array(
 	// MENU
 	'solunes' => 'Solunes',
 	'business' => 'Negocio',
+	'historial-pagos' => 'Historial de Pagos',
+	'pagos-pendientes' => 'Pagos Pendientes',
 
 	// CUSTOM TRANS
 	'historial-pagos' => 'Historial de Pagos',

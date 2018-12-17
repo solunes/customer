@@ -24,32 +24,11 @@ class ProcessController extends Controller {
 
     public function postRegistro(Request $request) {
       $fields_array = [];
-        if(config('customer.fields.password')){
-            $fields_array[] = 'password';
-            $fields_array[] = 'password_confirmation';
-        }
-        if(config('customer.fields.member_code')){
-            $fields_array[] = 'member_code';
-        }
-        if(config('customer.fields.shirt')){
-            $fields_array[] = 'shirt';
-        }
-        if(config('customer.fields.shirt_size')){
-            $fields_array[] = 'shirt_size';
-        }
-        if(config('customer.fields.invoice_data')){
-            $fields_array[] = 'nit_name';
-            $fields_array[] = 'nit_number';
-        }
-        if(config('customer.fields.emergency_long')){
-            $fields_array[] = 'emergency_name';
-            $fields_array[] = 'emergency_number';
-        }
-        $fields_array = array_merge($fields_array, ['ci_number','ci_expedition','first_name','last_name','email','cellphone','address','birth_date']);
-      $rules = \Customer::validateRegister($fields_array);
-        if(config('customer.fields.password')){
-        $rules['password'] = 'required|confirmed';
+      if(config('customer.fields.password')){
+        $fields_array[] = 'password';
       }
+      $fields_array = array_merge($fields_array, ['ci_number','first_name','last_name','email','cellphone']);
+      $rules = \Customer::validateRegister($fields_array);
       if(config('customer.custom.register_rules')){
           $rules = \CustomFunc::customerCustomRegisterRules($rules);
       }
@@ -61,25 +40,22 @@ class ProcessController extends Controller {
           if(config('customer.fields.password')){
           $password = $request->input('password');
         }
-        if($existing_customer = \Solunes\Customer\App\Customer::where('ci_number', $ci_number)->first()){
-          if($existing_customer->user&&$existing_customer->team_customers()->where('team_id', $request->input('team_id'))->count()>0){
-            auth()->login($existing_customer->user);
-            return redirect('admin/my-payments')->with('message_success', 'Usted ya se encuentra registrado en este torneo con este equipo. Le recomendamos realizar su pago aquí.')->withInput();
-          }
+        if($existing_customer = \Solunes\Customer\App\Customer::where('ci_number', $ci_number)->where('email', $email)->first()){
+          return redirect($this->prev)->with('message_error', 'Usted ya tiene una cuenta de usuario registrada, le recomendamos iniciar sesión.')->withInput();
         }
         $array = [];
         foreach($fields_array as $key => $val){
-          if(!in_array($val, ['password_confirmation','ci_number','email','age'])){
+          if(!in_array($val, ['ci_number','email'])){
             $array[$val] = $request->input($val);
           }
         }
         $customer = \Customer::generateCustomer($ci_number, $email, $array, $password);
-          if(config('customer.custom.after_register')){
-            $customer = \CustomFunc::customerCustomAfterRegister($customer, $password);
-          }
+        if(config('customer.custom.after_register')){
+          $customer = \CustomFunc::customerCustomAfterRegister($customer, $password);
+        }
         \Auth::login($customer->user);
-        \Customer::sendConfirmationEmail($customer);
-        return redirect('admin/finish-registration')->with('message_success', 'Felicidades, su registro fue realizado correctamente. Ahora finalice su registro y realice el pago para finalizar.');
+        //\Customer::sendConfirmationEmail($customer);
+        return redirect(config('customer.redirect_after_login'))->with('message_success', 'Felicidades, su registro fue realizado correctamente.');
       } else {
         return redirect($this->prev)->with(array('message_error' => 'Debe llenar todos los campos para finalizar'))->withErrors($validator)->withInput();
       }
@@ -97,6 +73,11 @@ class ProcessController extends Controller {
     public function getLogin($token) {
       $array['page'] = \Solunes\Master\App\Page::find(1);
       return view('customer::process.login', $array);
+    }
+
+    public function getRegister($token) {
+      $array['page'] = \Solunes\Master\App\Page::find(1);
+      return view('customer::process.register', $array);
     }
 
     public function getRecoverPassword($token) {
@@ -210,7 +191,7 @@ class ProcessController extends Controller {
       $array['page'] = \Solunes\Master\App\Page::find(1);
       $array['user'] = $user;
       if(config('customer.fields.city')){
-        $array['cities'] = \Solunes\Business\App\City::lists('name','id')->toArray();
+        $array['cities'] = \Solunes\Business\App\City::get()->lists('name','id')->toArray();
       }
       $array['customer'] = $user->customer;
       if(!$array['customer']){
