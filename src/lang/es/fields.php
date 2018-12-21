@@ -14,6 +14,7 @@ return [
     'birth_date' => 'Fecha de Nacimiento',
     'cellphone' => 'Teléfono Celular',
     'ci_expedition' => 'Expedición de CI',
+    'ci_extension' => 'Extensión de CI',
     'ci_number' => 'Número de CI',
     'created_at' => 'Fecha de Creación',
     'email' => 'Email',

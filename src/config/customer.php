@@ -14,6 +14,7 @@ return [
         'address'=> false,
         'coordinates'=> false,
         'member_code'=> true,
+        'ci_extension'=> false,
         'password'=> true,
         'age'=> true,
         'image'=> false,
