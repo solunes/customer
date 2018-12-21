@@ -231,6 +231,13 @@ class Customer {
             return false;
         }
     }
+    
+    // Obtener datos de pago en caja
+    public static function cashierPaymentData($user) {
+        $sucursal = $user->id;
+        $usuario  = $user->name;
+        return ['sucursal'=>$sucursal, 'usuario'=>$usuario];
+    }
 
     public static function checkExternalCustomerById($external_id) {
         $api = app('\Solunes\Customer\App\Controllers\WebServiceController')->getCustomerByExternalId($external_id);
