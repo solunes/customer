@@ -9,12 +9,13 @@ return [
     'custom_successful_payment' => false,
     'after_login_no_password' => 'account/change-password/gLW2fAst39MV',
     'redirect_after_login' => 'inicio',
+    'ci_expeditions_table' => false, // Habilitar en caso de extensiones en tabla dinamica
     'fields' => [
         'city'=> false,
         'address'=> false,
         'coordinates'=> false,
         'member_code'=> true,
-        'ci_extension'=> false,
+        'ci_extension'=> true,
         'password'=> true,
         'age'=> true,
         'image'=> false,

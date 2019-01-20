@@ -13,6 +13,21 @@ class SolunesCustomer extends Migration
     public function up()
     {
         // Módulo General de Clientes
+        if(config('payments.sfv_version')>1||config('customer.ci_expeditions_table')){
+            Schema::create('ci_expeditions', function (Blueprint $table) {
+                $table->increments('id');
+                $table->boolean('active')->nullable()->default(0);
+                $table->timestamps();
+            });
+            Schema::create('ci_expedition_translation', function(Blueprint $table) {
+                $table->increments('id');
+                $table->integer('ci_expedition_id')->unsigned();
+                $table->string('locale')->index();
+                $table->string('name')->nullable();
+                $table->unique(['ci_expedition_id','locale']);
+                $table->foreign('ci_expedition_id')->references('id')->on('ci_expeditions')->onDelete('cascade');
+            });
+        }
         Schema::create('customers', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->nullable(); // Obligatorio
@@ -20,10 +35,17 @@ class SolunesCustomer extends Migration
             $table->string('first_name')->nullable(); // Obligatorio
             $table->string('last_name')->nullable(); // Obligatorio
             $table->string('ci_number')->nullable(); // Obligatorio
-            if(config('customer.fields.ci_extension')){
+            if(config('payments.sfv_version')>1||config('customer.fields.ci_extension')){
                 $table->string('ci_extension')->nullable();
             }
-            $table->enum('ci_expedition', ['LP','SC','CB','CH','TA','OR','PO','BE','PA','OTRO'])->default('LP'); // Obligatorio
+            if(config('payments.sfv_version')>1||config('customer.ci_expeditions_table')){
+                $table->integer('ci_expedition_id')->nullable(); // Obligatorio
+            } else {
+                $table->enum('ci_expedition_basic', ['LP','SC','CB','CH','TA','OR','PO','BE','PA','OTRO'])->default('LP'); // Obligatorio
+            }
+            if(config('payments.sfv_version')>1){
+                $table->string('customer_code')->nullable();
+            }
             $table->string('email')->nullable(); // Obligatorio
             $table->string('cellphone')->nullable(); // Obligatorio
             $table->string('nit_number')->nullable(); // Obligatorio
@@ -92,6 +114,9 @@ class SolunesCustomer extends Migration
         // Módulo General de Clientes
         Schema::dropIfExists('customer_dependants');
         Schema::dropIfExists('customers');
+        Schema::dropIfExists('ci_expedition_translation');
+        Schema::dropIfExists('ci_expeditions');
+
 
     }
 }

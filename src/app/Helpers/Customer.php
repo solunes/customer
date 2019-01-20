@@ -83,6 +83,15 @@ class Customer {
             $array['email'] = $customer->email;
             //$array['email'] = 'edumejia30@gmail.com';
             $array['ci_number'] = $customer->ci_number;
+            if(config('payments.sfv_version')>1||config('customer.fields.ci_extension')){
+                $array['ci_extension'] = $customer->ci_extension;
+            }
+            if(config('payments.sfv_version')>1||config('customer.ci_expeditions_table')){
+                $array['ci_expedition'] = $customer->ci_expedition_id;
+            }
+            if(config('payments.customer_code')>1){
+                $array['customer_code'] = $customer->customer_code;
+            }
             $array['name'] = $customer->first_name.' '.$customer->last_name;
             $array['first_name'] = $customer->first_name;
             $array['last_name'] = $customer->last_name;
@@ -108,7 +117,8 @@ class Customer {
                         } else {
                             $amount = $payment_item->amount;
                         }
-                        $pending_payment = \Pagostt::generatePaymentItem($payment_item->name, $payment_item->quantity, $amount, $payment->invoice);
+                        $extra_parameters = \Pagostt::getItemExtraParameters($payment_item);
+                        $pending_payment = \Pagostt::generatePaymentItem($payment_item->name, $payment_item->quantity, $amount, $payment->invoice, $extra_parameters);
                         $pending_payments[$payment->id]['items'][] = $pending_payment;
                     }
                 }
@@ -118,6 +128,7 @@ class Customer {
                 $array['payment']['name'] = 'Múltiples Pagos';
                 $array['payment']['has_invoice'] = $payment->invoice;
                 //$array['payment']['metadata'][] = \Pagostt::generatePaymentMetadata('Tipo de Cambio', $payment->exchange);
+                $array['payment'] = \Pagostt::paymentAddPaymentInvoice($array['payment'], $payment);
             }
             $array['pending_payments'] = $pending_payments;
             return $array;
@@ -140,7 +151,8 @@ class Customer {
                 } else {
                     $amount = $payment_item->amount;
                 }
-                $subitems_array[] = \Pagostt::generatePaymentItem($payment_item->name, $payment_item->quantity, $amount, $payment->invoice);
+                $extra_parameters = \Pagostt::getItemExtraParameters($payment_item);
+                $subitems_array[] = \Pagostt::generatePaymentItem($payment_item->name, $payment_item->quantity, $amount, $payment->invoice, $extra_parameters);
             }
             if(config('customer.enable_test')==1){
                 $item['amount'] = count($payment->payment_items);
@@ -150,6 +162,7 @@ class Customer {
             $item['items'] = $subitems_array;
             $item['has_invoice'] = $payment->invoice;
             //$item['metadata'][] = \Pagostt::generatePaymentMetadata('Tipo de Cambio', $payment->exchange);
+            $item = \Pagostt::paymentAddPaymentInvoice($item, $payment);
             return $item;
         } else {
             return NULL;
@@ -174,7 +187,8 @@ class Customer {
                     } else {
                         $amount = $payment_item->amount;
                     }
-                    $subitems_array[] = \Pagostt::generatePaymentItem($payment_item->name, $payment_item->quantity, $amount, $payment->invoice);
+                    $extra_parameters = \Pagostt::getItemExtraParameters($payment_item);
+                    $subitems_array[] = \Pagostt::generatePaymentItem($payment_item->name, $payment_item->quantity, $amount, $payment->invoice, $extra_parameters);
                 }
                 if(config('services.enable_test')==1){
                     $item['amount'] = count($payment->payment_items);
@@ -188,6 +202,7 @@ class Customer {
             $array['payment']['name'] = 'Múltiples pagos seleccionados';
             $array['payment']['has_invoice'] = $payment->invoice;
             //$array['payment']['metadata'][] = \Pagostt::generatePaymentMetadata('Tipo de Cambio', $payment->exchange);
+            $array['payment'] = \Pagostt::paymentAddPaymentInvoice($array['payment'], $payment);
             return $array;
         } else {
             return NULL;

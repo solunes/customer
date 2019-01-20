@@ -33,7 +33,6 @@ class Customer extends Model {
         'first_name'=>'required',
         'last_name'=>'required',
         'ci_number'=>'required',
-        'ci_expedition'=>'required',
         'password'=>'required',
         'email'=>'required',
         'cellphone'=>'required',
@@ -51,7 +50,6 @@ class Customer extends Model {
         'first_name'=>'required',
         'last_name'=>'required',
         'ci_number'=>'required',
-        'ci_expedition'=>'required',
         'password'=>'required',
         'email'=>'required',
         'cellphone'=>'required',
@@ -64,6 +62,10 @@ class Customer extends Model {
     
     public function user() {
         return $this->belongsTo('App\User');
+    }
+        
+    public function ci_expedition_type() {
+        return $this->belongsTo('App\CiExpeditionType');
     }
     
     public function city() {
