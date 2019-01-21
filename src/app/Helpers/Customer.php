@@ -115,7 +115,7 @@ class Customer {
                         if(config('customer.enable_test')==1){
                             $amount = 1;
                         } else {
-                            $amount = $payment_item->amount;
+                            $amount = $payment_item->price;
                         }
                         $extra_parameters = \Pagostt::getItemExtraParameters($payment_item);
                         $pending_payment = \Pagostt::generatePaymentItem($payment_item->name, $payment_item->quantity, $amount, $payment->invoice, $extra_parameters);
@@ -149,7 +149,7 @@ class Customer {
                 if(config('customer.enable_test')==1){
                     $amount = 1;
                 } else {
-                    $amount = $payment_item->amount;
+                    $amount = $payment_item->price;
                 }
                 $extra_parameters = \Pagostt::getItemExtraParameters($payment_item);
                 $subitems_array[] = \Pagostt::generatePaymentItem($payment_item->name, $payment_item->quantity, $amount, $payment->invoice, $extra_parameters);
@@ -185,7 +185,7 @@ class Customer {
                     if(config('customer.enable_test')==1){
                         $amount = 1;
                     } else {
-                        $amount = $payment_item->amount;
+                        $amount = $payment_item->price;
                     }
                     $extra_parameters = \Pagostt::getItemExtraParameters($payment_item);
                     $subitems_array[] = \Pagostt::generatePaymentItem($payment_item->name, $payment_item->quantity, $amount, $payment->invoice, $extra_parameters);
