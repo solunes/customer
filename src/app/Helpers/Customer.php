@@ -144,6 +144,8 @@ class Customer {
             $item = [];
             $item['id'] = $payment->id;
             $item['name'] = $payment->name;
+            $item['nit_name'] = $payment->invoice_name;
+            $item['nit_number'] = $payment->invoice_nit;
             $subitems_array = [];
             foreach($payment->payment_items as $payment_item){
                 if(config('customer.enable_test')==1){
