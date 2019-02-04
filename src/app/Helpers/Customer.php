@@ -76,7 +76,7 @@ class Customer {
     }
 
     // Encontrar cliente en sistema o devolver nulo
-    public static function getCustomer($customer_id, $get_pending_payments = false, $for_api = false, $custom_app_key = NULL) {
+    public static function getCustomer($customer_id, $get_pending_payments = false, $for_api = false, $custom_app_key = 'default') {
         if($customer = \Solunes\Customer\App\Customer::where('id',$customer_id)->first()){
             // Definir variables de cliente en formato PagosTT: email, name, nit_name, nit_number
             $array['id'] = $customer->id;
@@ -138,7 +138,7 @@ class Customer {
     }
 
     // Encontrar pago en sistema o devolver nulo
-    public static function getPayment($payment_id, $custom_app_key = NULL) {
+    public static function getPayment($payment_id, $custom_app_key = 'default') {
         if($payment = \Solunes\Payments\App\Payment::where('id', $payment_id)->where('status','holding')->first()){
             // Definir variables de pago en formato PagosTT: name, items[concepto, cantidad, costo_unitario]
             $item = [];
