@@ -16,6 +16,7 @@ return [
     'ci_expedition' => 'Expedición de CI',
     'ci_extension' => 'Extensión de CI',
     'ci_number' => 'Número de CI',
+    'ci_expedition_basic' => 'Expedición de CI',
     'created_at' => 'Fecha de Creación',
     'email' => 'Email',
     'first_name' => 'Nombres',
