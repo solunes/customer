@@ -27,6 +27,26 @@ class ProcessController extends Controller {
       if(config('customer.fields.password')){
         $fields_array[] = 'password';
       }
+      if(config('customer.fields.invoice_data')){
+        $fields_array[] = 'nit_number';
+        $fields_array[] = 'nit_name';
+      }
+      if(config('customer.fields.birth_date')){
+        $fields_array[] = 'birth_date';
+      }
+      if(config('customer.fields.shirt')){
+        $fields_array[] = 'shirt';
+      }
+      if(config('customer.fields.shirt_size')){
+        $fields_array[] = 'shirt_size';
+      }
+      if(config('customer.fields.emergency_long')){
+        $fields_array[] = 'emergency_name';
+        $fields_array[] = 'emergency_number';
+      }
+      if(config('customer.fields.emergency_short')){
+        $fields_array[] = 'emergency';
+      }
       $fields_array = array_merge($fields_array, ['ci_number','first_name','last_name','email','cellphone']);
       $rules = \Customer::validateRegister($fields_array);
       if(config('customer.custom.register_rules')){
@@ -51,7 +71,7 @@ class ProcessController extends Controller {
         }
         $customer = \Customer::generateCustomer($ci_number, $email, $array, $password);
         if(config('customer.custom.after_register')){
-          $customer = \CustomFunc::customerCustomAfterRegister($customer, $password);
+          $customer = \CustomFunc::customerCustomAfterRegister($customer, $password, $request);
         }
         \Auth::login($customer->user);
         //\Customer::sendConfirmationEmail($customer);
