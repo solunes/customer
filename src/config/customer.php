@@ -26,6 +26,13 @@ return [
         'emergency_short'=> false,
         'emergency_long'=> false,
     ],
+    'fields_rules' => [
+        'first_name'=> 'required',
+        'last_name'=> 'required',
+        'email'=> 'required|email',
+        'ci_number'=> 'required',
+        'password'=> 'required',
+    ],
     'custom' => [
         'register'=> false,
         'register_rules'=> false,

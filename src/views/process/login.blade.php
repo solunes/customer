@@ -36,33 +36,32 @@
           </div><!-- close .row -->
           <br>
           <p><input type="submit" class="btn btn-site" value="Ingresar"></p>
-          
-          @if(config('solunes.socialite'))
-          <div class="form-horizontal"><br>
-            <div class="form-group">
-              <div class="col-sm-offset-3 col-sm-6">
-                @if(config('solunes.socialite_google'))
-                  <a href="{{ url('/auth/google') }}" class="auth-btn auth-btn-google"><button class="btn btn-site"><i class="fa fa-google"></i> Google Plus</button></a>
-                @endif
-                @if(config('solunes.socialite_facebook'))
-                  <a href="{{ url('/auth/facebook') }}" class="auth-btn auth-btn-facebook"><button class="btn btn-site"><i class="fa fa-facebook"></i> Facebook</button></a>
-                @endif
-                @if(config('solunes.socialite_twitter'))
-                  <a href="{{ url('/auth/twitter') }}" class="auth-btn auth-btn-twitter"><button class="btn btn-site"><i class="fa fa-twitter"></i> Twitter</button></a>
-                @endif
-                @if(config('solunes.socialite_github'))
-                  <a href="{{ url('/auth/github') }}" class="auth-btn auth-btn-github"><button class="btn btn-site"><i class="fa fa-github"></i> GitHub</button></a>
-                @endif
-              </div>
-            </div>
-          </div>
-          @endif
-
-
-          <hr>
-          <br>
         </form>
 
+        @if(config('solunes.socialite'))
+        <div class="form-horizontal"><br>
+          <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-6">
+              @if(config('solunes.socialite_google'))
+                <a href="{{ url('/auth/google') }}" class="auth-btn auth-btn-google"><button class="btn btn-site"><i class="fa fa-google"></i> Google Plus</button></a>
+              @endif
+              @if(config('solunes.socialite_facebook'))
+                <a href="{{ url('/auth/facebook') }}" class="auth-btn auth-btn-facebook"><button class="btn btn-site"><i class="fa fa-facebook"></i> Facebook</button></a>
+              @endif
+              @if(config('solunes.socialite_twitter'))
+                <a href="{{ url('/auth/twitter') }}" class="auth-btn auth-btn-twitter"><button class="btn btn-site"><i class="fa fa-twitter"></i> Twitter</button></a>
+              @endif
+              @if(config('solunes.socialite_github'))
+                <a href="{{ url('/auth/github') }}" class="auth-btn auth-btn-github"><button class="btn btn-site"><i class="fa fa-github"></i> GitHub</button></a>
+              @endif
+            </div>
+          </div>
+        </div>
+        @endif
+
+        <hr>
+        <br>
+        
       </div>
     </div>
 

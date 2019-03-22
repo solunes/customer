@@ -48,7 +48,7 @@ class ProcessController extends Controller {
         $fields_array[] = 'emergency';
       }
       $fields_array = array_merge($fields_array, ['ci_number','first_name','last_name','email','cellphone']);
-      $rules = \Customer::validateRegister($fields_array);
+      $rules = config('customer.fields_rules');
       if(config('customer.custom.register_rules')){
           $rules = \CustomFunc::customerCustomRegisterRules($rules);
       }
