@@ -21,6 +21,9 @@ class CustomerSaving {
         if($user_username_check){
             $user = $user_username_check;
         }
+        if(!$event->status){
+            $event->status = 'normal';
+        }
         if(!$user){
             if(!$event->password){
                 $password = rand(100000,999999);
