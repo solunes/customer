@@ -18,10 +18,12 @@
             <img class="img-responsive" src="{{ asset('assets/admin/img/user.jpg') }}" />
           @endif
         </div><br>
+        @if(config('customer.fields.image'))
         {{Form::open(array('url' => url('account/edit-image'), 'class'=>'account-settings-form', 'method' => 'post', 'files' => true))}}
           {{ Form::file('image', ['id'=>'image','class'=>'form-control']) }}<br>
           <p><input type="submit" class="btn btn-green-pro" value="Subir Foto de Perfil" /></p>
         {{ Form::close() }}
+        @endif
         @if($customer->image)
         <p><a href="{{ url('account/delete-image') }}" class="btn">Eliminar Foto</a></p>
         @endif
