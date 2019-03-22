@@ -10,32 +10,12 @@
   <div class="account-profile">
 
     <div class="row">
-      <div class="col-md-3 profile-actual">
-        <div class="profile-description">
-          <h2>{{ $customer->name }}</h2>
-          @if(config('customer.fields.city')&&$customer->city)
-            <p><span class="p_title">Ciudad: </span>{{ $customer->city->name }}</p>
-          @endif
-          @if(config('customer.fields.address'))
-            <p><span class="p_title">Dirección: </span>{{ $customer->address.' -'.$customer->address_extra }}</p>
-          @endif
-          @if(config('customer.fields.invoice_data'))
-            @if($customer->nit_number)
-              <p><span class="p_title">NIT: </span>{{ $customer->nit_number }}</p>
-            @endif
-            @if($customer->nit_name)
-              <p><span class="p_title">Razón Social: </span>{{ $customer->nit_name }}</p>
-            @endif
-          @endif
-        </div>
-      </div>
-      <div class="col-md-9 edit-profile">
-        <h2>Editar datos de Cuenta</h2>
+      <div class="col-md-12 edit-profile">
+        <h2>Editar Contraseña</h2>
 
-        <form class="account-settings-form" action="{{ url('auth/login') }}" method="post">
+        <form class="account-settings-form" action="{{ url('account/change-password') }}" method="post">
         
-          <h5>Cambiar contraseña</h5>
-          <p class="small-paragraph-spacing">Puedes cambiar la contraseña de tu cuenta aqui.</p>
+          <p class="small-paragraph-spacing">Le recomendamos que cambie su contraseña por una segura aquí.</p>
           <div class="row form-section">
             <div class="col-sm-6 col-md-6">
               <div class="form-group">
@@ -52,7 +32,7 @@
             </div><!-- close .col -->
           </div><!-- close .row -->
           <br>
-          <p><input type="submit" class="btn" value="Ingresar"></p>
+          <p><input type="submit" class="btn" value="Editar Contraseña"></p>
           
           <hr>
           <br>
