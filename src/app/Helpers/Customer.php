@@ -237,6 +237,9 @@ class Customer {
                     $sale->paid_amount = $payment->amount;
                     $sale->status = 'paid';
                     $sale->save();
+                    if(config('solunes.inventory')){
+                        \Inventory::successful_sale($sale, $sale_payment);
+                    }
                   }
                 }
                 if(config('customer.custom_successful_payment')){
