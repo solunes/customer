@@ -38,5 +38,10 @@ return [
     'city_other' => 'Ciudad (Otra)',
     'latitude' => 'Latitud',
     'longitude' => 'Longitud',
+    'age' => 'Edad',
+    'ci_expedition_basic' => 'Expedición de CI',
+    'emergency' => 'Emergencia',
+    'password' => 'Contraseña',
+    'status' => 'Estado',
 
 ];
