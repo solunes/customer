@@ -43,5 +43,7 @@ return [
     'emergency' => 'Emergencia',
     'password' => 'Contraseña',
     'status' => 'Estado',
+    'customer_code' => 'Código de Cliente',
+    'image' => 'Imagen',
 
 ];
