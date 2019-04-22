@@ -234,7 +234,7 @@ class Customer {
                     $sale_payment->pending_amount = $sale_payment->pending_amount - $payment->amount;
                     $sale_payment->save();
                     $sale = $sale_payment->parent;
-                    $sale->paid_amount = $payment->amount;
+                    $sale->paid_amount = $payment->real_amount;
                     $sale->status = 'paid';
                     $sale->save();
                     if(config('solunes.inventory')){
