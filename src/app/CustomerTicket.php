@@ -29,7 +29,7 @@ class CustomerTicket extends Model {
     }
 
     public function customer_ticket_messages() {
-        return $this->hasMany('Solunes\Customer\App\CustomerTicketMessage');
+        return $this->hasMany('Solunes\Customer\App\CustomerTicketMessage', 'parent_id');
     }
 
 }
