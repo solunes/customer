@@ -263,6 +263,10 @@ class Customer {
     public static function createCustomerActivity($customer, $type, $name, $detail = NULL) {
         $customer_activity = new \Solunes\Customer\App\CustomerActivity;
         $customer_activity->parent_id = $customer->id;
+        if(auth()->check()){
+            $user = auth()->user();
+            $customer_activity->user_id = $user->id;
+        }
         $customer_activity->type = $type;
         $customer_activity->name = $name;
         $customer_activity->detail = $detail;
