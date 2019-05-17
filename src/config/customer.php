@@ -5,6 +5,10 @@ return [
     // PARAMETERS
     'send_mail' => false,
     'dependants' => false,
+    'tracking' => false,
+    'tasks' => false,
+    'notes' => false,
+    'tickets' => false,
     'enable_test' => true,
     'custom_successful_payment' => false,
     'after_login_no_password' => 'account/change-password/gLW2fAst39MV',

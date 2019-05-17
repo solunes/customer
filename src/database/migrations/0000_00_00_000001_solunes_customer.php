@@ -102,6 +102,45 @@ class SolunesCustomer extends Migration
                 $table->timestamps();
             });
         }
+        if(config('customer.tracking')){
+            Schema::create('customer_activities', function (Blueprint $table) {
+                $table->increments('id');
+                $table->integer('parent_id')->nullable();
+                $table->enum('type', ['general','registration','login','contact','action'])->default('general');
+                $table->string('name')->nullable();
+                $table->date('date')->nullable();
+                $table->time('time')->nullable();
+                $table->text('detail')->nullable();
+                $table->timestamps();
+            });
+        }
+        if(config('customer.notes')){
+            Schema::create('customer_notes', function (Blueprint $table) {
+                $table->increments('id');
+                $table->integer('user_id')->nullable();
+                $table->integer('customer_id')->nullable();
+                $table->string('name')->nullable();
+                $table->text('detail')->nullable();
+                $table->timestamps();
+            });
+        }
+        if(config('customer.tickets')){
+            Schema::create('customer_tickets', function (Blueprint $table) {
+                $table->increments('id');
+                $table->integer('customer_id')->nullable();
+                $table->string('name')->nullable();
+                $table->text('observations')->nullable();
+                $table->enum('status', ['pending','attending','customer-response','completed','closed'])->default('pending');
+                $table->timestamps();
+            });
+            Schema::create('customer_ticket_messages', function (Blueprint $table) {
+                $table->increments('id');
+                $table->integer('parent_id')->nullable();
+                $table->integer('user_id')->nullable();
+                $table->text('message')->nullable();
+                $table->timestamps();
+            });
+        }
     }
 
     /**
@@ -112,6 +151,10 @@ class SolunesCustomer extends Migration
     public function down()
     {
         // Módulo General de Clientes
+        Schema::dropIfExists('customer_ticket_messages');
+        Schema::dropIfExists('customer_tickets');
+        Schema::dropIfExists('customer_notes');
+        Schema::dropIfExists('customer_activities');
         Schema::dropIfExists('customer_dependants');
         Schema::dropIfExists('customers');
         Schema::dropIfExists('ci_expedition_translation');

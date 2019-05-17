@@ -27,5 +27,15 @@ return array(
 	'ask_password' => 'Preguntar Contraseña',
 	'pending_confirmation' => 'Confirmación Pendiente',
 	'banned' => 'Denegado',
+	'attending' => 'Atendiendo',
+	'closed' => 'Cerrado',
+	'completed' => 'Completado',
+	'customer-response' => 'Espera de Cliente',
+	'pending' => 'Pendiente',
+	'action' => 'Acción',
+	'contact' => 'Contacto',
+	'general' => 'General',
+	'login' => 'Ingreso',
+	'registration' => 'Registro',
 
 );

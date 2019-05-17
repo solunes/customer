@@ -121,4 +121,16 @@ class Customer extends Model {
         return $this->hasMany('App\TeamCustomer');
     }
 
+    public function customer_activities() {
+        return $this->hasMany('Solunes\Customer\App\CustomerActivity', 'parent_id');
+    }
+
+    public function customer_notes() {
+        return $this->hasMany('Solunes\Customer\App\CustomerNote');
+    }
+
+    public function customer_tickets() {
+        return $this->hasMany('Solunes\Customer\App\CustomerTicket');
+    }
+    
 }

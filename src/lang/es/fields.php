@@ -45,5 +45,15 @@ return [
     'status' => 'Estado',
     'customer_code' => 'Código de Cliente',
     'image' => 'Imagen',
+    'customer' => 'Cliente',
+    'customer_ticket_messages' => 'Mensajes de Ticket',
+    'detail' => 'Detalle',
+    'message' => 'Mensaje',
+    'observations' => 'Observaciones',
+    'parent' => 'De',
+    'date' => 'Fecha',
+    'time' => 'Hora',
+    'type' => 'Tipo',
+    'customer_activities' => 'Actividades del Cliente',
 
 ];
