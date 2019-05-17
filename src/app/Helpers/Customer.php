@@ -259,6 +259,18 @@ class Customer {
         return ['sucursal'=>$sucursal, 'usuario'=>$usuario];
     }
 
+    // Crear Actividad de Cliente   // $type = general, registration, login, contact, action
+    public static function createCustomerActivity($customer, $type, $name, $detail = NULL) {
+        $customer_activity = new \Solunes\Customer\App\CustomerActivity;
+        $customer_activity->parent_id = $customer->id;
+        $customer_activity->type = $type;
+        $customer_activity->name = $name;
+        $customer_activity->detail = $detail;
+        $customer_activity->date = date('Y-m-d');
+        $customer_activity->time = date('H:i:s');
+        $customer_activity->save();
+    }
+
     public static function checkExternalCustomerById($external_id) {
         $api = app('\Solunes\Customer\App\Controllers\WebServiceController')->getCustomerByExternalId($external_id);
         if($api){

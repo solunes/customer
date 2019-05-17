@@ -11,21 +11,20 @@ class CustomerNote extends Model {
 
 	/* Creating rules */
 	public static $rules_create = array(
-		'user_id'=>'required',
-		'customer_id'=>'required',
 		'name'=>'required',
 	);
 
 	/* Updating rules */
 	public static $rules_edit = array(
-		'id'=>'required',
-		'user_id'=>'required',
-		'customer_id'=>'required',
 		'name'=>'required',
 	);
     
-    public function customer() {
+    public function parent() {
         return $this->belongsTo('Solunes\Customer\App\Customer');
+    }
+    
+    public function customer() {
+        return $this->belongsTo('Solunes\Customer\App\Customer', 'parent_id');
     }
 
 }

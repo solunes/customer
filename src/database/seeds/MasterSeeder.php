@@ -22,11 +22,11 @@ class MasterSeeder extends Seeder {
         if(config('customer.dependants')){
             $node_customer_dependant = \Solunes\Master\App\Node::create(['name'=>'customer-dependant', 'location'=>'customer', 'folder'=>'business']);
         }
+        if(config('customer.notes')){
+            $node_customer_note = \Solunes\Master\App\Node::create(['name'=>'customer-note', 'type'=>'child', 'parent_id'=>$node_customer->id, 'location'=>'customer', 'folder'=>'business']);
+        }
         if(config('customer.tracking')){
             $node_customer_activity = \Solunes\Master\App\Node::create(['name'=>'customer-activity', 'table_name'=>'customer_activities', 'type'=>'child', 'parent_id'=>$node_customer->id, 'location'=>'customer', 'folder'=>'business']);
-        }
-        if(config('customer.notes')){
-            $node_customer_note = \Solunes\Master\App\Node::create(['name'=>'customer-note', 'location'=>'customer', 'folder'=>'business']);
         }
         if(config('customer.tickets')){
             $node_customer_ticket = \Solunes\Master\App\Node::create(['name'=>'customer-ticket', 'location'=>'customer', 'folder'=>'business']);

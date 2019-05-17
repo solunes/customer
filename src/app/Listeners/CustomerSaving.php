@@ -87,6 +87,9 @@ class CustomerSaving {
             $event->password = NULL;
         }
         $event->name = $full_name;
+        if(config('customer.tracking')&&$customer->id){
+            \Customer::createCustomerActivity($event, 'update', 'El perfil del usuario fue modificado.');
+        }
         return $event;
     }
 

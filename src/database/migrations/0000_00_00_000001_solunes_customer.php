@@ -106,19 +106,20 @@ class SolunesCustomer extends Migration
             Schema::create('customer_activities', function (Blueprint $table) {
                 $table->increments('id');
                 $table->integer('parent_id')->nullable();
-                $table->enum('type', ['general','registration','login','contact','action'])->default('general');
+                $table->integer('user_id')->nullable();
+                $table->enum('type', ['general','registration','update','login','logout','contact','action'])->default('general');
                 $table->string('name')->nullable();
+                $table->text('detail')->nullable();
                 $table->date('date')->nullable();
                 $table->time('time')->nullable();
-                $table->text('detail')->nullable();
                 $table->timestamps();
             });
         }
         if(config('customer.notes')){
             Schema::create('customer_notes', function (Blueprint $table) {
                 $table->increments('id');
+                $table->integer('parent_id')->nullable();
                 $table->integer('user_id')->nullable();
-                $table->integer('customer_id')->nullable();
                 $table->string('name')->nullable();
                 $table->text('detail')->nullable();
                 $table->timestamps();

@@ -37,5 +37,6 @@ return array(
 	'general' => 'General',
 	'login' => 'Ingreso',
 	'registration' => 'Registro',
+	'update' => 'Actualización',
 
 );

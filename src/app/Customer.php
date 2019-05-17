@@ -113,7 +113,7 @@ class Customer extends Model {
     }
 
     public function customer_notes() {
-        return $this->hasMany('Solunes\Customer\App\CustomerNote');
+        return $this->hasMany('Solunes\Customer\App\CustomerNote', 'parent_id');
     }
 
     public function customer_tickets() {

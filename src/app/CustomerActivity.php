@@ -30,5 +30,9 @@ class CustomerActivity extends Model {
     public function customer() {
         return $this->belongsTo('Solunes\Customer\App\Customer', 'parent_id');
     }
+    
+    public function user() {
+        return $this->belongsTo('App\User');
+    }
 
 }
