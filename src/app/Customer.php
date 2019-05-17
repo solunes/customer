@@ -30,15 +30,9 @@ class Customer extends Model {
 
     /* Creating rules */
     public static $rules_create = array(
-        'first_name'=>'required',
-        'last_name'=>'required',
-        'ci_number'=>'required',
-        'password'=>'required',
-        'email'=>'required',
-        'cellphone'=>'required',
-        'nit_number'=>'required',
-        'nit_name'=>'required',
-        'birth_date'=>'required',
+        'email'=>'email|required_without_all:cellphone,ci_number',
+        'cellphone'=>'required_without_all:email,ci_number',
+        'ci_number'=>'required_without_all:email,cellphone',
         'status'=>'required',
         'active'=>'required',
     );
@@ -46,16 +40,9 @@ class Customer extends Model {
     /* Updating rules */
     public static $rules_edit = array(
         'id'=>'required',
-        'user_id'=>'required',
-        'first_name'=>'required',
-        'last_name'=>'required',
-        'ci_number'=>'required',
-        'password'=>'required',
-        'email'=>'required',
-        'cellphone'=>'required',
-        'nit_number'=>'required',
-        'nit_name'=>'required',
-        'birth_date'=>'required',
+        'email'=>'email|required_without_all:cellphone,ci_number',
+        'cellphone'=>'required_without_all:email,ci_number',
+        'ci_number'=>'required_without_all:email,cellphone',
         'status'=>'required',
         'active'=>'required',
     );
