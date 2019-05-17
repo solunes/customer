@@ -11,7 +11,6 @@ class CustomerActivity extends Model {
 
 	/* Creating rules */
 	public static $rules_create = array(
-		'customer_id'=>'required',
 		'type'=>'required',
 		'name'=>'required',
 		'date'=>'required',
@@ -19,8 +18,6 @@ class CustomerActivity extends Model {
 
 	/* Updating rules */
 	public static $rules_edit = array(
-		'id'=>'required',
-		'customer_id'=>'required',
 		'type'=>'required',
 		'name'=>'required',
 		'date'=>'required',

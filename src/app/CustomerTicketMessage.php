@@ -11,17 +11,12 @@ class CustomerTicketMessage extends Model {
 
 	/* Creating rules */
 	public static $rules_create = array(
-		'customer_id'=>'required',
-		'name'=>'required',
-		'active'=>'required',
+		'message'=>'required',
 	);
 
 	/* Updating rules */
 	public static $rules_edit = array(
-		'id'=>'required',
-		'customer_id'=>'required',
-		'name'=>'required',
-		'active'=>'required',
+		'message'=>'required',
 	);
     
     public function customer_ticket() {
