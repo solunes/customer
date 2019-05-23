@@ -115,7 +115,7 @@ class Customer {
                         if(config('customer.enable_test')==1){
                             $amount = 1;
                         } else {
-                            $amount = $payment_item->price;
+                            $amount = \Pagostt::transformCurrency($payment_item->price, $payment_item->currency->main_exchange);
                         }
                         $extra_parameters = \Pagostt::getItemExtraParameters($payment_item);
                         $pending_payment = \Pagostt::generatePaymentItem($payment_item->name, $payment_item->quantity, $amount, $payment->invoice, $extra_parameters);
@@ -151,7 +151,7 @@ class Customer {
                 if(config('customer.enable_test')==1){
                     $amount = 1;
                 } else {
-                    $amount = $payment_item->price;
+                    $amount = \Pagostt::transformCurrency($payment_item->price, $payment_item->currency->main_exchange);
                 }
                 $extra_parameters = \Pagostt::getItemExtraParameters($payment_item);
                 $subitems_array[] = \Pagostt::generatePaymentItem($payment_item->name, $payment_item->quantity, $amount, $payment->invoice, $extra_parameters);
@@ -159,7 +159,7 @@ class Customer {
             if(config('customer.enable_test')==1){
                 $item['amount'] = count($payment->payment_items);
             } else {
-                $item['amount'] = $payment->amount;
+                $item['amount'] = \Pagostt::transformCurrency($payment->amount, $payment->currency->main_exchange);
             }
             $item['items'] = $subitems_array;
             $item['has_invoice'] = $payment->invoice;
@@ -187,7 +187,7 @@ class Customer {
                     if(config('customer.enable_test')==1){
                         $amount = 1;
                     } else {
-                        $amount = $payment_item->price;
+                        $amount = \Pagostt::transformCurrency($payment_item->price, $payment_item->currency->main_exchange);
                     }
                     $extra_parameters = \Pagostt::getItemExtraParameters($payment_item);
                     $subitems_array[] = \Pagostt::generatePaymentItem($payment_item->name, $payment_item->quantity, $amount, $payment->invoice, $extra_parameters);
@@ -195,7 +195,7 @@ class Customer {
                 if(config('services.enable_test')==1){
                     $item['amount'] = count($payment->payment_items);
                 } else {
-                    $item['amount'] = $payment->amount;
+                    $item['amount'] = \Pagostt::transformCurrency($payment->amount, $payment->currency->main_exchange);
                 }
                 $item['items'] = $subitems_array;
                 $items[$payment->id] = $item;
