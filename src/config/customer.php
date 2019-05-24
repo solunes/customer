@@ -15,6 +15,7 @@ return [
     'redirect_after_login' => 'inicio',
     'ci_expeditions_table' => false, // Habilitar en caso de extensiones en tabla dinamica
     'fields' => [
+        'country'=> false,
         'city'=> false,
         'address'=> false,
         'coordinates'=> false,
