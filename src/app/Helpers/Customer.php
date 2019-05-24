@@ -161,6 +161,7 @@ class Customer {
             } else {
                 $item['amount'] = \Pagostt::transformCurrency($payment->amount, $payment->currency->main_exchange);
             }
+            $item['currency_exchange'] = $payment->currency->main_exchange;
             $item['items'] = $subitems_array;
             $item['has_invoice'] = $payment->invoice;
             //$item['metadata'][] = \Pagostt::generatePaymentMetadata('Tipo de Cambio', $payment->exchange);
