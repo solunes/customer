@@ -54,7 +54,11 @@ class Customer extends Model {
     public function ci_expedition_type() {
         return $this->belongsTo('App\CiExpeditionType');
     }
-    
+        
+    public function country() {
+        return $this->belongsTo('Solunes\Business\App\Country');
+    }
+
     public function city() {
         return $this->belongsTo('Solunes\Business\App\City');
     }
