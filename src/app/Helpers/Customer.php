@@ -115,7 +115,7 @@ class Customer {
                         if(config('customer.enable_test')==1){
                             $amount = 1;
                         } else {
-                            $amount = \Pagostt::transformCurrency($payment_item->price, $payment_item->currency->main_exchange);
+                            $amount = \Pagostt::transformCurrency($payment_item->price, $payment->currency->main_exchange);
                         }
                         $extra_parameters = \Pagostt::getItemExtraParameters($payment_item);
                         $pending_payment = \Pagostt::generatePaymentItem($payment_item->name, $payment_item->quantity, $amount, $payment->invoice, $extra_parameters);
@@ -151,7 +151,7 @@ class Customer {
                 if(config('customer.enable_test')==1){
                     $amount = 1;
                 } else {
-                    $amount = \Pagostt::transformCurrency($payment_item->price, $payment_item->currency->main_exchange);
+                    $amount = \Pagostt::transformCurrency($payment_item->price, $payment->currency->main_exchange);
                 }
                 $extra_parameters = \Pagostt::getItemExtraParameters($payment_item);
                 $subitems_array[] = \Pagostt::generatePaymentItem($payment_item->name, $payment_item->quantity, $amount, $payment->invoice, $extra_parameters);
@@ -187,7 +187,7 @@ class Customer {
                     if(config('customer.enable_test')==1){
                         $amount = 1;
                     } else {
-                        $amount = \Pagostt::transformCurrency($payment_item->price, $payment_item->currency->main_exchange);
+                        $amount = \Pagostt::transformCurrency($payment_item->price, $payment->currency->main_exchange);
                     }
                     $extra_parameters = \Pagostt::getItemExtraParameters($payment_item);
                     $subitems_array[] = \Pagostt::generatePaymentItem($payment_item->name, $payment_item->quantity, $amount, $payment->invoice, $extra_parameters);
