@@ -94,6 +94,9 @@ class SolunesCustomer extends Migration
             if(config('customer.fields.image')){
                 $table->string('image')->nullable();
             }
+            if(config('customer.contacts')){
+                $table->date('last_contact')->nullable();
+            }
             $table->timestamps();
         });
         if(config('customer.dependants')){
@@ -128,6 +131,22 @@ class SolunesCustomer extends Migration
                 $table->timestamps();
             });
         }
+        if(config('customer.contacts')){
+            Schema::create('customer_contacts', function (Blueprint $table) {
+                $table->increments('id');
+                $table->integer('parent_id')->nullable();
+                $table->string('name')->nullable();
+                $table->date('date')->nullable();
+                $table->time('time')->nullable();
+                $table->text('reason_to_contact')->nullable();
+                $table->enum('status', ['pending','attended','reprogrammed','cancelled'])->default('pending');
+                $table->boolean('reprogrammed')->nullable()->default(0);
+                $table->date('new_date')->nullable();
+                $table->time('new_time')->nullable();
+                $table->text('result')->nullable();
+                $table->timestamps();
+            });
+        }
         if(config('customer.tickets')){
             Schema::create('customer_tickets', function (Blueprint $table) {
                 $table->increments('id');
@@ -157,6 +176,7 @@ class SolunesCustomer extends Migration
         // Módulo General de Clientes
         Schema::dropIfExists('customer_ticket_messages');
         Schema::dropIfExists('customer_tickets');
+        Schema::dropIfExists('customer_contacts');
         Schema::dropIfExists('customer_notes');
         Schema::dropIfExists('customer_activities');
         Schema::dropIfExists('customer_dependants');

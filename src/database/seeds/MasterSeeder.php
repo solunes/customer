@@ -24,9 +24,15 @@ class MasterSeeder extends Seeder {
         }
         if(config('customer.notes')){
             $node_customer_note = \Solunes\Master\App\Node::create(['name'=>'customer-note', 'type'=>'child', 'parent_id'=>$node_customer->id, 'location'=>'customer', 'folder'=>'business']);
+            \Solunes\Master\App\NodeExtra::create(['parent_id'=>$node_customer_note->id, 'type'=>'action_field', 'parameter'=>'field', 'value_array'=>json_encode(["edit"])]);
         }
         if(config('customer.tracking')){
             $node_customer_activity = \Solunes\Master\App\Node::create(['name'=>'customer-activity', 'table_name'=>'customer_activities', 'type'=>'child', 'parent_id'=>$node_customer->id, 'location'=>'customer', 'folder'=>'business']);
+            \Solunes\Master\App\NodeExtra::create(['parent_id'=>$node_customer_activity->id, 'type'=>'action_field', 'parameter'=>'field', 'value_array'=>json_encode(["view"])]);
+        }
+        if(config('customer.contacts')){
+            $node_customer_contact = \Solunes\Master\App\Node::create(['name'=>'customer-contact', 'type'=>'child', 'parent_id'=>$node_customer->id, 'location'=>'customer', 'folder'=>'business']);
+            \Solunes\Master\App\NodeExtra::create(['parent_id'=>$node_customer_contact->id, 'type'=>'action_field', 'parameter'=>'field', 'value_array'=>json_encode(["edit-customer-contact","edit"])]);
         }
         if(config('customer.tickets')){
             $node_customer_ticket = \Solunes\Master\App\Node::create(['name'=>'customer-ticket', 'location'=>'customer', 'folder'=>'business']);
@@ -34,7 +40,19 @@ class MasterSeeder extends Seeder {
         }
 
         if($node_customer = \Solunes\Master\App\Node::where('name', 'customer')->first()){
-            \Solunes\Master\App\NodeExtra::create(['parent_id'=>$node_customer->id, 'type'=>'action_field', 'parameter'=>'field', 'value_array'=>json_encode(["login-as","edit"])]);
+            $subarray = [];
+            if(config('customer.contacts')){
+                array_push($subarray, "create-customer-contact");
+            } 
+            if(config('customer.notes')){
+                array_push($subarray, "create-customer-note");
+                $subarray[] = ["create-customer-note"];
+            }
+            if(config('customer.login_as')){
+                array_push($subarray, "login-as");
+            }
+            array_push($subarray, "edit");
+            \Solunes\Master\App\NodeExtra::create(['parent_id'=>$node_customer->id, 'type'=>'action_field', 'parameter'=>'field', 'value_array'=>json_encode($subarray)]);
         }
         if($node_payment = \Solunes\Master\App\Node::where('name', 'payment')->first()){
             \Solunes\Master\App\NodeExtra::create(['parent_id'=>$node_payment->id, 'type'=>'action_field', 'parameter'=>'field', 'value_array'=>json_encode(["manual-pay","edit"])]);

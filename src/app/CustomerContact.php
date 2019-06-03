@@ -4,19 +4,22 @@ namespace Solunes\Customer\App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CustomerNote extends Model {
+class CustomerContact extends Model {
 	
-	protected $table = 'customer_notes';
+	protected $table = 'customer_contacts';
 	public $timestamps = true;
 
 	/* Creating rules */
 	public static $rules_create = array(
-		'name'=>'required',
+		'parent_id'=>'required',
+		'status'=>'required',
 	);
 
 	/* Updating rules */
 	public static $rules_edit = array(
-		'name'=>'required',
+		'id'=>'required',
+		'parent_id'=>'required',
+		'status'=>'required',
 	);
     
     public function parent() {
@@ -27,8 +30,4 @@ class CustomerNote extends Model {
         return $this->belongsTo('Solunes\Customer\App\Customer', 'parent_id');
     }
     
-    public function user() {
-        return $this->belongsTo('App\User');
-    }
-
 }

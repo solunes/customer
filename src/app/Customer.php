@@ -52,9 +52,13 @@ class Customer extends Model {
     }
         
     public function ci_expedition_type() {
-        return $this->belongsTo('App\CiExpeditionType');
+        return $this->belongsTo('Solunes\Customer\pp\CiExpeditionType');
     }
-        
+               
+    public function ci_expedition() {
+        return $this->belongsTo('Solunes\Customer\App\CiExpedition');
+    }
+
     public function country() {
         return $this->belongsTo('Solunes\Business\App\Country');
     }
@@ -118,6 +122,10 @@ class Customer extends Model {
 
     public function customer_notes() {
         return $this->hasMany('Solunes\Customer\App\CustomerNote', 'parent_id');
+    }
+
+    public function customer_contacts() {
+        return $this->hasMany('Solunes\Customer\App\CustomerContact', 'parent_id');
     }
 
     public function customer_tickets() {

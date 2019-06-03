@@ -39,5 +39,7 @@ return array(
 	'registration' => 'Registro',
 	'update' => 'Actualización',
 	'logout' => 'Cerrar Sesión',
-
+	'attended' => 'Atendido',
+	'cancelled' => 'Cancelado',
+	'reprogrammed' => 'Reprogramado',
 );

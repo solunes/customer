@@ -56,5 +56,13 @@ return [
     'type' => 'Tipo',
     'customer_activities' => 'Actividades del Cliente',
     'customer_notes' => 'Notas del Cliente',
+    'customer_contacts' => 'Contactos de Cliente',
+    'new_date' => 'Fecha de Reprogramación',
+    'new_time' => 'Hora de Reprogramación',
+    'reason_to_contact' => 'Motivo de Contacto',
+    'result' => 'Resultado',
+    'reprogrammed' => '¿Reprogramado?',
+    'contact' => '¿Contactar?',
+    'last_contact' => 'Último Contacto',
 
 ];
