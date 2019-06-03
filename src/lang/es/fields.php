@@ -55,5 +55,6 @@ return [
     'time' => 'Hora',
     'type' => 'Tipo',
     'customer_activities' => 'Actividades del Cliente',
+    'customer_notes' => 'Notas del Cliente',
 
 ];

@@ -38,5 +38,6 @@ return array(
 	'login' => 'Ingreso',
 	'registration' => 'Registro',
 	'update' => 'Actualización',
+	'logout' => 'Cerrar Sesión',
 
 );
