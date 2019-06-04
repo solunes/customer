@@ -83,6 +83,22 @@ class Customer extends Model {
         return $this->hasMany('Solunes\Payments\App\Payment')->where('status','paid');
     }
 
+    public function customer_activities() {
+        return $this->hasMany('Solunes\Customer\App\CustomerActivity', 'parent_id');
+    }
+
+    public function customer_notes() {
+        return $this->hasMany('Solunes\Customer\App\CustomerNote', 'parent_id');
+    }
+
+    public function customer_contacts() {
+        return $this->hasMany('Solunes\Customer\App\CustomerContact', 'parent_id');
+    }
+
+    public function customer_tickets() {
+        return $this->hasMany('Solunes\Customer\App\CustomerTicket');
+    }
+    
     // DEL FUTBOL CTLP
 
     public function total_goals() {
@@ -116,20 +132,4 @@ class Customer extends Model {
         return $this->hasMany('App\TeamCustomer');
     }
 
-    public function customer_activities() {
-        return $this->hasMany('Solunes\Customer\App\CustomerActivity', 'parent_id');
-    }
-
-    public function customer_notes() {
-        return $this->hasMany('Solunes\Customer\App\CustomerNote', 'parent_id');
-    }
-
-    public function customer_contacts() {
-        return $this->hasMany('Solunes\Customer\App\CustomerContact', 'parent_id');
-    }
-
-    public function customer_tickets() {
-        return $this->hasMany('Solunes\Customer\App\CustomerTicket');
-    }
-    
 }

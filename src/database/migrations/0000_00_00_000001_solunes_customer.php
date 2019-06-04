@@ -41,7 +41,7 @@ class SolunesCustomer extends Migration
             if(config('payments.sfv_version')>1||config('customer.ci_expeditions_table')){
                 $table->integer('ci_expedition_id')->nullable(); // Obligatorio
             } else {
-                $table->enum('ci_expedition_basic', ['LP','SC','CB','CH','TA','OR','PO','BE','PA','OTRO'])->default('LP'); // Obligatorio
+                $table->enum('ci_expedition_basic', ['LP','SC','CB','CH','TA','OR','PO','BE','PA','OTRO'])->nullable()->default('LP'); // Obligatorio
             }
             if(config('payments.sfv_version')>1){
                 $table->string('customer_code')->nullable();
