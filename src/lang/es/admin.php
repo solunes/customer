@@ -42,4 +42,7 @@ return array(
 	'attended' => 'Atendido',
 	'cancelled' => 'Cancelado',
 	'reprogrammed' => 'Reprogramado',
+	'decrease' => 'Reducción',
+	'increase' => 'Incremento',
+
 );

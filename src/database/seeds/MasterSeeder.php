@@ -38,6 +38,9 @@ class MasterSeeder extends Seeder {
             $node_customer_ticket = \Solunes\Master\App\Node::create(['name'=>'customer-ticket', 'location'=>'customer', 'folder'=>'business']);
             $node_customer_ticket_message = \Solunes\Master\App\Node::create(['name'=>'customer-ticket-message', 'type'=>'child', 'parent_id'=>$node_customer_ticket->id, 'location'=>'customer', 'folder'=>'business']);
         }
+        if(config('customer.credit_wallet')){
+            $node_customer_wallet_transaction = \Solunes\Master\App\Node::create(['name'=>'customer-wallet-transaction', 'location'=>'customer', 'folder'=>'business']);
+        }
 
         if($node_customer = \Solunes\Master\App\Node::where('name', 'customer')->first()){
             $subarray = [];

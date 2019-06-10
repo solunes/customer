@@ -99,6 +99,22 @@ class Customer extends Model {
         return $this->hasMany('Solunes\Customer\App\CustomerTicket');
     }
     
+    public function customer_wallet_transaction() {
+        return $this->hasOne('Solunes\Customer\App\CustomerWalletTransaction')->orderBy('id','DESC');
+    }
+
+    public function customer_wallet_transactions() {
+        return $this->hasMany('Solunes\Customer\App\CustomerWalletTransaction');
+    }
+    
+    public function customer_wallet_credit() {
+        if($this->customer_wallet_transaction){
+            return $this->customer_wallet_transaction->current_amount;
+        } else {
+            return 0;
+        }
+    }
+
     // DEL FUTBOL CTLP
 
     public function total_goals() {

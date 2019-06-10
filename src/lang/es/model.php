@@ -17,5 +17,6 @@ return [
 	'customer-contact' => 'Contacto de Cliente|Contactos de Clientes',
 	'customer-ticket' => 'Ticket de Cliente|Tickets de Cliente',
 	'customer-ticket-message' => 'Mensaje de Ticket|Mensajes de Ticket',
+	'customer-wallet-transaction' => 'Transacción de Crédito|Transacciones de Crédito',
 
 ];

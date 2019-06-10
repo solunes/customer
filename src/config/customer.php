@@ -10,6 +10,7 @@ return [
     'notes' => false,
     'contacts' => false,
     'tickets' => false,
+    'credit_wallet' => false,
     'login_as' => false,
     'enable_test' => true,
     'custom_successful_payment' => false,

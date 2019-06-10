@@ -64,5 +64,9 @@ return [
     'reprogrammed' => '¿Reprogramado?',
     'contact' => '¿Contactar?',
     'last_contact' => 'Último Contacto',
+    'amount' => 'Monto',
+    'current_amount' => 'Nuevo Monto',
+    'initial_amount' => 'Monto Inicial',
+    'transaction_code' => 'Código de Transacción',
 
 ];

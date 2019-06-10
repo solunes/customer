@@ -164,6 +164,18 @@ class SolunesCustomer extends Migration
                 $table->timestamps();
             });
         }
+        if(config('customer.credit_wallet')){
+            Schema::create('customer_wallet_transactions', function (Blueprint $table) {
+                $table->increments('id');
+                $table->integer('parent_id')->nullable();
+                $table->string('transaction_code')->nullable();
+                $table->enum('type',['increase','decrease'])->nullable();
+                $table->decimal('amount', 10, 2)->nullable();
+                $table->decimal('initial_amount', 10, 2)->nullable();
+                $table->decimal('current_amount', 10, 2)->nullable();
+                $table->timestamps();
+            });
+        }
     }
 
     /**
@@ -174,6 +186,7 @@ class SolunesCustomer extends Migration
     public function down()
     {
         // Módulo General de Clientes
+        Schema::dropIfExists('customer_wallet_transactions');
         Schema::dropIfExists('customer_ticket_messages');
         Schema::dropIfExists('customer_tickets');
         Schema::dropIfExists('customer_contacts');
