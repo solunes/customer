@@ -283,6 +283,7 @@ class Customer {
             $customer_wallet_transaction->initial_amount = $actual_credit;
             $customer_wallet_transaction->current_amount = $new_credit;
             $customer_wallet_transaction->save();
+            return $customer_wallet_transaction;
         } else {
             return null;
         }
