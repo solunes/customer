@@ -268,7 +268,7 @@ class Customer {
     
     // Crear Transacción del Wallet
     public static function createWalletTransaction($customer, $type, $transaction_code, $amount) {
-        $actual_credit = $customer->credit_wallet;
+        $actual_credit = $customer->credit;
         if($type=='increase'){
             $new_credit = $actual_credit + $amount;
         } else if($type=='decrease'){
