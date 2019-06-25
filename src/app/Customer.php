@@ -100,14 +100,14 @@ class Customer extends Model {
     }
     
     public function customer_wallet_transaction() {
-        return $this->hasOne('Solunes\Customer\App\CustomerWalletTransaction')->orderBy('id','DESC');
+        return $this->hasOne('Solunes\Customer\App\CustomerWalletTransaction','parent_id')->orderBy('id','DESC');
     }
 
     public function customer_wallet_transactions() {
-        return $this->hasMany('Solunes\Customer\App\CustomerWalletTransaction');
+        return $this->hasMany('Solunes\Customer\App\CustomerWalletTransaction','parent_id');
     }
     
-    public function customer_wallet_credit() {
+    public function getCreditAttribute() {
         if($this->customer_wallet_transaction){
             return $this->customer_wallet_transaction->current_amount;
         } else {
