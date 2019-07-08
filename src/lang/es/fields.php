@@ -68,5 +68,7 @@ return [
     'current_amount' => 'Nuevo Monto',
     'initial_amount' => 'Monto Inicial',
     'transaction_code' => 'Código de Transacción',
+    'level' => 'Nivel',
+    'order' => 'Orden',
 
 ];

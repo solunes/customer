@@ -30,6 +30,9 @@ class SolunesCustomer extends Migration
         }
         Schema::create('customers', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('parent_id')->nullable();
+            $table->integer('level')->nullable();
+            $table->integer('order')->nullable()->default(0);
             $table->integer('user_id')->nullable(); // Obligatorio
             $table->string('name')->nullable(); // Obligatorio
             $table->string('first_name')->nullable(); // Obligatorio
@@ -52,6 +55,7 @@ class SolunesCustomer extends Migration
             $table->string('nit_name')->nullable(); // Obligatorio
             $table->date('birth_date')->nullable(); // Obligatorio
             $table->string('password')->nullable(); // Obligatorio
+            $table->enum('type', ['business','agency','person'])->default('business'); // Obligatorio
             $table->enum('status', ['normal','ask_password','pending_confirmation','banned'])->default('ask_password'); // Obligatorio
             $table->boolean('active')->default(0); // Obligatorio
             if(config('customer.fields.country')||config('sales.delivery_country')){
@@ -104,6 +108,35 @@ class SolunesCustomer extends Migration
                 $table->increments('id');
                 $table->integer('customer_id')->nullable();
                 $table->string('name')->nullable();
+                if(config('customer.dependant_fields.email')){
+                    $table->string('email')->nullable();
+                }
+                if(config('customer.dependant_fields.cellphone')){
+                    $table->string('cellphone')->nullable();
+                }
+                if(config('customer.dependant_fields.ci_number')){
+                    $table->string('ci_number')->nullable();
+                    if(config('customer.fields.ci_extension')){
+                        $table->string('ci_extension')->nullable();
+                    }
+                    if(config('customer.ci_expeditions_table')){
+                        $table->integer('ci_expedition_id')->nullable(); // Obligatorio
+                    } else {
+                        $table->enum('ci_expedition_basic', ['LP','SC','CB','CH','TA','OR','PO','BE','PA','OTRO'])->nullable()->default('LP'); // Obligatorio
+                    }
+                }
+                if(config('customer.dependant_fields.image')){
+                    $table->string('image')->nullable();
+                }
+                if(config('customer.dependant_fields.birth_date')){
+                    $table->string('birth_date')->nullable();
+                }
+                if(config('customer.dependant_fields.emergency_name')){
+                    $table->string('emergency_name')->nullable();
+                }
+                if(config('customer.dependant_fields.emergency_number')){
+                    $table->string('emergency_number')->nullable();
+                }
                 $table->boolean('active')->nullable()->default(0);
                 $table->timestamps();
             });

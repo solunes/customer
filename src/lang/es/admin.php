@@ -44,5 +44,7 @@ return array(
 	'reprogrammed' => 'Reprogramado',
 	'decrease' => 'Reducción',
 	'increase' => 'Incremento',
+	'agency' => 'Agencia',
+	'person' => 'Persona',
 
 );

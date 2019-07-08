@@ -34,6 +34,15 @@ return [
         'emergency_short'=> false,
         'emergency_long'=> false,
     ],
+    'dependant_fields' => [
+        'email'=> false,
+        'cellphone'=> false,
+        'ci_number'=> false,
+        'image'=> false,
+        'birth_date'=> false,
+        'emergency_name'=> false,
+        'emergency_number'=> false,
+    ],
     'fields_rules' => [
         'first_name'=> 'required',
         'last_name'=> 'required',

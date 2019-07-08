@@ -18,7 +18,7 @@ class MasterSeeder extends Seeder {
         if(config('payments.sfv_version')>1||config('customer.ci_expeditions_table')){
             $node_ci_expedition = \Solunes\Master\App\Node::create(['name'=>'ci-expedition', 'location'=>'customer', 'folder'=>'business']);
         }
-        $node_customer = \Solunes\Master\App\Node::create(['name'=>'customer', 'location'=>'customer', 'folder'=>'business']);
+        $node_customer = \Solunes\Master\App\Node::create(['name'=>'customer', 'multilevel'=>true, 'location'=>'customer', 'folder'=>'business']);
         if(config('customer.dependants')){
             $node_customer_dependant = \Solunes\Master\App\Node::create(['name'=>'customer-dependant', 'location'=>'customer', 'folder'=>'business']);
         }
