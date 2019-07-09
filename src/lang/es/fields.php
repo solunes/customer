@@ -11,6 +11,7 @@ return [
 
     'active' => 'Activo',
     'address' => 'Dirección',
+    'agency' => 'Agencia',
     'birth_date' => 'Fecha de Nacimiento',
     'cellphone' => 'Teléfono Celular',
     'ci_expedition' => 'Expedición de CI',
