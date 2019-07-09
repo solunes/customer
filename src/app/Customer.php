@@ -55,6 +55,10 @@ class Customer extends Model {
         return $this->belongsTo('Solunes\Business\App\Agency');
     }
           
+    public function children() {
+        return $this->hasMany('Solunes\Customer\App\Customer', 'parent_id');
+    }
+    
     public function parent() {
         return $this->belongsTo('Solunes\Customer\App\Customer', 'parent_id');
     }
