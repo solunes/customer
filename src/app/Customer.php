@@ -51,8 +51,12 @@ class Customer extends Model {
         return $this->belongsTo('App\User');
     }
     
+    public function agency() {
+        return $this->belongsTo('Solunes\Business\App\Agency');
+    }
+          
     public function parent() {
-        return $this->belongsTo('Solunes\Customer\pp\Customer', 'parent_id');
+        return $this->belongsTo('Solunes\Customer\App\Customer', 'parent_id');
     }
           
     public function ci_expedition_type() {

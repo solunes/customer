@@ -33,6 +33,9 @@ class SolunesCustomer extends Migration
             $table->integer('parent_id')->nullable();
             $table->integer('level')->nullable();
             $table->integer('order')->nullable()->default(0);
+            if(config('customer.customer_agency')){
+                $table->integer('agency_id')->nullable();
+            }
             $table->integer('user_id')->nullable(); // Obligatorio
             $table->string('name')->nullable(); // Obligatorio
             $table->string('first_name')->nullable(); // Obligatorio

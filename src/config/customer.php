@@ -13,6 +13,7 @@ return [
     'credit_wallet' => false,
     'login_as' => false,
     'enable_test' => true,
+    'customer_agency' => false,
     'custom_successful_payment' => false,
     'after_login_no_password' => 'account/change-password/gLW2fAst39MV',
     'redirect_after_login' => 'inicio',
