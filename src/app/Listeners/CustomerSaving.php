@@ -72,7 +72,13 @@ class CustomerSaving {
               $user->address = $event->address;
               $user->address_extra = $event->address_extra;
             }
-            $user->status = $event->status;
+            if($event->password){
+                $user->password = $event->password;
+            }
+            if($event->password&&$user->status=='ask_password'){
+                $user->status = 'normal';
+                $event->status = 'normal';
+            }
             $user->save();
         }
         if($event->status=='normal'||$event->status=='ask_password'){
