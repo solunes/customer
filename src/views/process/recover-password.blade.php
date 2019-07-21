@@ -1,4 +1,4 @@
-@extends('layouts/master')
+@extends(config('solunes.dashadmin_layout'))
 @include('helpers.meta')
 
 @section('css')
