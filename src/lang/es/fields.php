@@ -55,6 +55,7 @@ return [
     'date' => 'Fecha',
     'time' => 'Hora',
     'type' => 'Tipo',
+    'triggered' => 'Ejecutado',
     'customer_activities' => 'Actividades del Cliente',
     'customer_notes' => 'Notas del Cliente',
     'customer_contacts' => 'Contactos de Cliente',
