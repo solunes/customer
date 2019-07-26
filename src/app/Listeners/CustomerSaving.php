@@ -18,8 +18,8 @@ class CustomerSaving {
         } else {
             $user_cellphone_check = \App\User::whereNotNull('cellphone')->where('cellphone',$event->cellphone)->first();
         }
-        if($user_username_check){
-            $user = $user_username_check;
+        if($user_cellphone_check){
+            $user = $user_cellphone_check;
         }
         if(!$event->status){
             $event->status = 'normal';
