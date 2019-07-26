@@ -34,6 +34,10 @@ Route::group(['prefix'=>'account'], function(){
     Route::get('delete-image/{token}', 'ProcessController@getDeleteImage')->middleware('auth');
 });
 
+Route::group(['prefix'=>'trigger'], function(){
+    Route::get('check-customer-contact/{customer_contact_id}', 'ProcessController@getCheckCustomerContact');
+});
+
 Route::group(['prefix'=>'customer-webservice'], function(){
     Route::get('customer-by-parameters/{email}/{ci_number}/{cellphone}', 'WebServiceController@getCustomerByParameters');
     Route::get('customer-by-external-id/{external_id}', 'WebServiceController@getCustomerByExternalId');

@@ -14,6 +14,11 @@ class CustomerContactUpdating {
             $customer_contact->reason_to_contact = $event->detail.' - '.$event->result;
             $customer_contact->save();
             $event->reprogrammed = 1;
+            $event->triggered = 0;
+            if($customer_contact->date>date('Y-m-d')){
+                // Generar notificacion
+                \External::generateTrigger('Contacto de Cliente: '.$customer_contact->parent->name, $customer_contact->date, $customer_contact->time, url('trigger/check-customer-contact/'.$customer_contact->id));
+            }
         }
         if($event->status=='attended'&&$event->result){
             $customer = $event->parent;

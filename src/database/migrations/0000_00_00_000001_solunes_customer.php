@@ -178,6 +178,7 @@ class SolunesCustomer extends Migration
                 $table->date('new_date')->nullable();
                 $table->time('new_time')->nullable();
                 $table->text('result')->nullable();
+                $table->boolean('triggered')->nullable()->default(0);
                 $table->timestamps();
             });
         }

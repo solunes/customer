@@ -273,4 +273,13 @@ class ProcessController extends Controller {
       }
     }
 
+    public function getCheckCustomerContact($customer_contact_id) {
+      if($customer = \Solunes\Customer\App\CustomerContact::where('triggered', 0)->where('date',date('Y-m-d'))->where('id', $customer_contact_id)->first()){
+        // Send Mail
+        return ['triggered'=>true];
+      } else {
+        return ['triggered'=>false];
+      }
+    }
+
 }
