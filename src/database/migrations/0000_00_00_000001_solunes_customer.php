@@ -169,6 +169,7 @@ class SolunesCustomer extends Migration
             Schema::create('customer_contacts', function (Blueprint $table) {
                 $table->increments('id');
                 $table->integer('parent_id')->nullable();
+                $table->integer('user_id')->nullable();
                 $table->string('name')->nullable();
                 $table->date('date')->nullable();
                 $table->time('time')->nullable();

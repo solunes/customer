@@ -274,8 +274,13 @@ class ProcessController extends Controller {
     }
 
     public function getCheckCustomerContact($customer_contact_id) {
-      if($customer = \Solunes\Customer\App\CustomerContact::where('triggered', 0)->where('date',date('Y-m-d'))->where('id', $customer_contact_id)->first()){
-        // Send Mail
+      if($customer_contact = \Solunes\Customer\App\CustomerContact::where('triggered', 0)->where('date',date('Y-m-d'))->where('id', $customer_contact_id)->first()){
+        if($customer_contact->user){
+          $customer = $customer_contact->parent;
+          $to_array = [$customer_contact->user->email];
+          $vars = ['@customer_name@'=>$customer->name, '@cellphone@'=>$customer->cellphone, '@email@'=>$customer->email, '@date@'=>$customer_contact->date, '@time@'=>$customer_contact->time];
+          \FuncNode::make_email('customer-contact-reminder', $to_array, $vars);
+        }
         return ['triggered'=>true];
       } else {
         return ['triggered'=>false];

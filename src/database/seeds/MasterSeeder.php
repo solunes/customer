@@ -33,6 +33,7 @@ class MasterSeeder extends Seeder {
         if(config('customer.contacts')){
             $node_customer_contact = \Solunes\Master\App\Node::create(['name'=>'customer-contact', 'type'=>'child', 'parent_id'=>$node_customer->id, 'location'=>'customer', 'folder'=>'business']);
             \Solunes\Master\App\NodeExtra::create(['parent_id'=>$node_customer_contact->id, 'type'=>'action_field', 'parameter'=>'field', 'value_array'=>json_encode(["edit-customer-contact","edit"])]);
+            \Solunes\Master\App\Email::create(['name'=>'customer-contact-reminder', ['es'=>['title'=>'Tiene una cita de contacto ahora!', 'content'=>'<p>Estimado Encargado,</p><p>Este es un email automáticopara recordarle que tiene una cita con @customer_id@ el @date@ @time@.</p><p>Los datos del cliente son:<br>Nombre de Cliente: @customer_name@<br>Email: @email@<br>Teléfono: @cellphone@<br></p><p>Saludos,</p><p>Su Sistema</p>']]]);
         }
         if(config('customer.tickets')){
             $node_customer_ticket = \Solunes\Master\App\Node::create(['name'=>'customer-ticket', 'location'=>'customer', 'folder'=>'business']);
