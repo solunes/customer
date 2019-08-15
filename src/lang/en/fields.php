@@ -45,4 +45,6 @@ return [
     'status' => 'Estado',
     'customer_code' => 'Código de Cliente',
     'image' => 'Imagen',
+    'seller_user' => 'Vendedor',
+    
 ];

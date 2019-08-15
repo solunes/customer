@@ -34,6 +34,9 @@ class SolunesCustomer extends Migration
             if(config('customer.customer_agency')){
                 $table->integer('agency_id')->nullable();
             }
+            if(config('customer.seller_user')){
+                $table->integer('seller_user_id')->nullable();
+            }
             $table->integer('user_id')->nullable(); // Obligatorio
             $table->string('name')->nullable(); // Obligatorio
             $table->string('first_name')->nullable(); // Obligatorio
@@ -170,6 +173,9 @@ class SolunesCustomer extends Migration
                 $table->increments('id');
                 $table->integer('parent_id')->nullable();
                 $table->integer('user_id')->nullable();
+                if(config('customer.seller_user')){
+                    $table->integer('seller_user_id')->nullable();
+                }
                 $table->string('name')->nullable();
                 $table->date('date')->nullable();
                 $table->time('time')->nullable();

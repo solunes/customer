@@ -12,10 +12,6 @@ class CustomerContactCreated {
         if(config('customer.tracking')){
         	\Customer::createCustomerActivity($event->customer, 'general', 'Se generó una cita de contacto para el '.$event->date.' a horas '.$event->time.'.');
         }
-        if(!$event->user_id&&auth()->check()){
-        	$event->user_id = auth()->user()->id;
-        	$event->save();
-        }
         return $event;
     }
 

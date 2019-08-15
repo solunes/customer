@@ -29,6 +29,7 @@ class CustomerServiceProvider extends ServiceProvider {
         /* Registrar Alias */
         $loader = \Illuminate\Foundation\AliasLoader::getInstance();
         $loader->alias('Customer', '\Solunes\Customer\App\Helpers\Customer');
+        $loader->alias('CustomCustomer', '\Solunes\Customer\App\Helpers\CustomCustomer');
 
         /* Comandos de Consola */
         $this->commands([

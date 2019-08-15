@@ -72,5 +72,6 @@ return [
     'transaction_code' => 'Código de Transacción',
     'level' => 'Nivel',
     'order' => 'Orden',
+    'seller_user' => 'Vendedor',
 
 ];

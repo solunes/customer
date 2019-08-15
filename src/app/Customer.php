@@ -51,6 +51,10 @@ class Customer extends Model {
         return $this->belongsTo('App\User');
     }
     
+    public function seller_user() {
+        return $this->belongsTo('App\User');
+    }
+    
     public function agency() {
         return $this->belongsTo('Solunes\Business\App\Agency');
     }

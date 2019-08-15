@@ -29,6 +29,10 @@ class CustomerContact extends Model {
     public function user() {
         return $this->belongsTo('App\User');
     }
+    
+    public function seller_user() {
+        return $this->belongsTo('App\User');
+    }
 
     public function customer() {
         return $this->belongsTo('Solunes\Customer\App\Customer', 'parent_id');

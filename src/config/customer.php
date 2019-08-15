@@ -14,6 +14,8 @@ return [
     'login_as' => false,
     'enable_test' => true,
     'customer_agency' => false,
+    'seller_user' => false,
+    'after_seed' => true,
     'custom_successful_payment' => false,
     'after_login_no_password' => 'account/change-password/gLW2fAst39MV',
     'redirect_after_login' => 'inicio',
