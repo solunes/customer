@@ -7,19 +7,23 @@ class CustomerSaving {
     public function handle($event) {
         $user = $user_email_check = $user_username_check = $user_cellphone_check = NULL;
         $full_name = $event->first_name.' '.$event->last_name;
-        $user_email_check = \App\User::whereNotNull('email')->where('email',$event->email)->first();
-        if($user_email_check){
-            $user = $user_email_check;
+        if(!$event->user_id){
+            $user_email_check = \App\User::whereNotNull('email')->where('email',$event->email)->first();
+            if($user_email_check){
+                $user = $user_email_check;
+            } else {
+                $user_username_check = \App\User::whereNotNull('username')->where('username',$event->ci_number)->first();
+            }
+            if($user_username_check){
+                $user = $user_username_check;
+            } else {
+                $user_cellphone_check = \App\User::whereNotNull('cellphone')->where('cellphone',$event->cellphone)->first();
+            }
+            if($user_cellphone_check){
+                $user = $user_cellphone_check;
+            }
         } else {
-            $user_username_check = \App\User::whereNotNull('username')->where('username',$event->ci_number)->first();
-        }
-        if($user_username_check){
-            $user = $user_username_check;
-        } else {
-            $user_cellphone_check = \App\User::whereNotNull('cellphone')->where('cellphone',$event->cellphone)->first();
-        }
-        if($user_cellphone_check){
-            $user = $user_cellphone_check;
+            $user = $event->user;
         }
         if(!$event->status){
             $event->status = 'normal';
