@@ -92,7 +92,7 @@ class ProcessController extends Controller {
 
     public function getLogin($token) {
       $array['page'] = \Solunes\Master\App\Page::find(1);
-      return view('customer::process.login', $array);
+      return view('customer::process.login-2', $array);
     }
 
     public function getRegister($token) {
@@ -102,7 +102,7 @@ class ProcessController extends Controller {
 
     public function getRecoverPassword($token) {
       $array['page'] = \Solunes\Master\App\Page::find(1);
-      return view('customer::process.recover-password', $array);
+      return view('customer::process.recover-password-2', $array);
     }
 
     public function postRecoverPassword(Request $request) {
@@ -141,17 +141,17 @@ class ProcessController extends Controller {
 
     public function getRecoveredPassword($token) {
       $array['page'] = \Solunes\Master\App\Page::find(1);
-      return view('customer::process.recovered-password', $array);
+      return view('customer::process.recovered-password-2', $array);
     }
 
     public function getResetPassword($token) {
-      if (is_null($token)) return redirect('account/recover-password/')->with('message_error', trans('master::form.password_reset_error'));
+      if (is_null($token)) return redirect('account/recover-password/513475837')->with('message_error', trans('master::form.password_reset_error'));
       if (\App\PasswordReminder::where('token', $token)->count()>0) {
         $array = ['token'=>$token];
         $array['page'] = \Solunes\Master\App\Page::find(1);
-        return view('customer::process.reset-password', $array);
+        return view('customer::process.reset-password-2', $array);
       } else {
-        return \Login::failed_try(NULL, 'account/reset-password', trans('master::form.password_reset_error'));
+        return \Login::failed_try(NULL, 'account/recover-password/513475837', trans('master::form.password_reset_error'));
       }
     }
 
@@ -165,7 +165,7 @@ class ProcessController extends Controller {
           $email = \App\PasswordReminder::where('token', $token)->first()->email;
           \App\User::where('email', $email)->update(array('password' => bcrypt($request->input('password'))));
           \App\PasswordReminder::where('token', $token)->delete();
-          return redirect(config('customer.redirect_after_login'))->with('message_success', trans('master::form.password_reset_success'));        
+          return redirect('account/login/15613543.')->with('message_success', trans('master::form.password_reset_success'));        
         } else {
           return \Login::failed_try(NULL, $this->prev, trans('master::form.password_reset_error'));
         }
@@ -186,7 +186,7 @@ class ProcessController extends Controller {
       } else {
         $array['customer'] = NULL;
       }
-      return view('customer::process.change-password', $array);
+      return view('customer::process.change-password-2', $array);
     }
 
     public function postChangePassword(Request $request) {
@@ -217,24 +217,10 @@ class ProcessController extends Controller {
       if(!$array['customer']){
         return redirect($this->prev)->with('message_error', 'No tiene una cuenta de cliente vigente.');
       }
-      return view('customer::process.my-account', $array);
-    }
-
-    public function getMyAccount2($token) {
-      $user = auth()->user();
-      $array['page'] = \Solunes\Master\App\Page::find(1);
-      $array['user'] = $user;
-      if(config('customer.fields.city')){
-        $array['cities'] = \Solunes\Business\App\City::get()->lists('name','id')->toArray();
-      }
-      $array['customer'] = $user->customer;
-      if(!$array['customer']){
-        return redirect($this->prev)->with('message_error', 'No tiene una cuenta de cliente vigente.');
-      }
       return view('customer::process.my-account-2', $array);
     }
 
-    public function getMyPayments2($token) {
+    public function getMyPayments($token) {
       $user = auth()->user();
       $array['page'] = \Solunes\Master\App\Page::find(1);
       $array['user'] = $user;
@@ -248,7 +234,7 @@ class ProcessController extends Controller {
       return view('customer::process.my-payments-2', $array);
     }
 
-    public function getMyHystory2($token) {
+    public function getMyHystory($token) {
       $user = auth()->user();
       $array['page'] = \Solunes\Master\App\Page::find(1);
       $array['user'] = $user;

@@ -10,14 +10,11 @@
 <div class="content-header-left col-md-9 col-12 mb-2">
   <div class="row breadcrumbs-top">
       <div class="col-12">
-          <h2 class="content-header-title float-left mb-0">Resumen de Suscripciones</h2>
+          <h2 class="content-header-title float-left mb-0">Historial de Pagos</h2>
           <div class="breadcrumb-wrapper col-12">
               <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="index.html">Home</a>
-                  </li>
-                  <li class="breadcrumb-item"><a href="#">Data List</a>
-                  </li>
-                  <li class="breadcrumb-item active">Resumen de Suscripciones
+                  <li class="breadcrumb-item"><a href="{{ url(config('customer.redirect_after_login')) }}">Inicio</a></li>
+                  <li class="breadcrumb-item active">Historial de Pagos
                   </li>
               </ol>
           </div>
