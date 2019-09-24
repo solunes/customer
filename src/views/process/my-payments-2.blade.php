@@ -24,7 +24,7 @@
             <div class="content-body ecommerce-application">             
                 <!-- Wishlist Starts -->
                 <section id="wishlist" class="grid-view wishlist-items">
-
+                    @foreach($customer->payments as $payment)
                     <div class="card ecommerce-card">
                         <div class="card-content">
                             <div class="item-img text-center">
@@ -34,18 +34,16 @@
                                 <div class="item-wrapper">
                                     <div>
                                         <h4 class="item-price">
-                                            PRECIO: $19.99
+                                            Monto: Bs. {{ $payment->amount }}
                                         </h4>
                                     </div>
                                 </div>
                                 <div class="item-name">
-                                    <span>Lorem ipsum dolor sit amet consectetur adipisicing.</span>
+                                    <span>{{ $payment->name }}</span>
                                 </div>
                                 <div>
                                     <p class="item-description">
-                                        These Sony ZX Series MDRZX110/BLK headphones feature neodymium magnets and 30mm drivers for powerful,
-                                        reinforced sound. Enjoy your favorite songs with lush bass response thanks to the Acoustic Bass Booster
-                                        technology.
+                                        {{ $payment->name }}
                                     </p>
                                 </div>
                             </div>
@@ -54,11 +52,14 @@
                                     <i class="feather icon-x align-middle"></i> Cancelar
                                 </div>
                                 <div class="cart move-cart">
+                                  <a href="{{ url('pagostt/make-single-payment/'.$customer->id.'/'.$payment->id) }}">
                                     <i class="feather icon-home"></i> <span class="move-to-cart">Realizar pago</span>
+                                  </a>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    @endforeach
 
                 </section>
                 <!-- Wishlist Ends -->            
