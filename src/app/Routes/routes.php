@@ -21,6 +21,7 @@ Route::group(['prefix'=>'account'], function(){
     // Rutas para Mi Cuenta
     Route::get('register/{token}', 'ProcessController@getRegister')->middleware('guest');
     Route::get('login/{token}', 'ProcessController@getLogin')->middleware('guest');
+    Route::get('login/{token}', 'ProcessController@getLogin')->middleware('guest');
     Route::get('recover-password/{token}', 'ProcessController@getRecoverPassword')->middleware('guest');
     Route::post('recover-password', 'ProcessController@postRecoverPassword')->middleware('guest');
     Route::get('recovered-password/{token}', 'ProcessController@getRecoveredPassword')->middleware('guest');
@@ -29,6 +30,9 @@ Route::group(['prefix'=>'account'], function(){
     Route::get('change-password/{token}', 'ProcessController@getChangePassword')->middleware('auth');
     Route::post('change-password', 'ProcessController@postChangePassword')->middleware('auth');
     Route::get('my-account/{token}', 'ProcessController@getMyAccount')->middleware('auth');
+    Route::get('my-account-2/{token}', 'ProcessController@getMyAccount2')->middleware('auth');
+    Route::get('my-payments-2/{token}', 'ProcessController@getMyPayments2')->middleware('auth');
+    Route::get('my-history-2/{token}', 'ProcessController@getMyHystory2')->middleware('auth');
     Route::post('edit-customer', 'ProcessController@postEditCustomer')->middleware('auth');
     Route::post('edit-image', 'ProcessController@postEditImage')->middleware('auth');
     Route::get('delete-image/{token}', 'ProcessController@getDeleteImage')->middleware('auth');
