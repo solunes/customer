@@ -218,6 +218,58 @@ class SolunesCustomer extends Migration
                 $table->timestamps();
             });
         }
+        if(config('customer.subscriptions')){
+            Schema::create('ppvs', function (Blueprint $table) {
+                $table->increments('id');
+                $table->integer('season_id')->nullable();
+                $table->integer('product_bridge_id')->nullable();
+                $table->string('name')->nullable();
+                $table->enum('status', ['pending','active','closed'])->default('pending');
+                $table->date('date')->nullable();
+                $table->time('time_in')->nullable(); // Nuevo campo
+                $table->time('time_out')->nullable(); // Nuevo campo
+                $table->decimal('price', 10, 2)->nullable();
+                $table->timestamps();
+            });
+            Schema::create('ppv_users', function (Blueprint $table) {
+                $table->increments('id');
+                $table->integer('user_id')->nullable();
+                $table->integer('customer_id')->nullable();
+                $table->integer('sale_id')->nullable();
+                $table->integer('ppv_id')->nullable();
+                $table->string('name')->nullable();
+                $table->date('start_date')->nullable();
+                $table->date('end_date')->nullable();
+                $table->enum('status', ['pending','active','expired'])->default('pending');
+                $table->decimal('price', 10, 2)->default(0);
+                $table->timestamps();
+            });
+            Schema::create('subscriptions', function (Blueprint $table) {
+                $table->increments('id');
+                $table->integer('season_id')->nullable();
+                $table->integer('product_bridge_id')->nullable();
+                $table->string('name')->nullable();
+                $table->integer('days')->nullable();
+                $table->enum('type', ['monthly','yearly'])->default('monthly');
+                $table->enum('status', ['pending','active','closed'])->default('pending');
+                $table->decimal('price', 10, 2)->default(0);
+                $table->timestamps();
+            });
+            Schema::create('subscription_users', function (Blueprint $table) {
+                $table->increments('id');
+                $table->integer('user_id')->nullable();
+                $table->integer('customer_id')->nullable();
+                $table->integer('sale_id')->nullable();
+                $table->integer('subscription_id')->nullable();
+                $table->string('name')->nullable();
+                $table->integer('days')->default(30);
+                $table->date('start_date')->nullable();
+                $table->date('end_date')->nullable();
+                $table->enum('status', ['pending','active','closed'])->default('pending');
+                $table->decimal('price', 10, 2)->nullable();
+                $table->timestamps();
+            });
+        }
     }
 
     /**
