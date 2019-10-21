@@ -42,6 +42,20 @@ class MasterSeeder extends Seeder {
         if(config('customer.credit_wallet')){
             $node_customer_wallet_transaction = \Solunes\Master\App\Node::create(['name'=>'customer-wallet-transaction', 'location'=>'customer', 'folder'=>'business']);
         }
+        if(config('customer.nfcs')){
+            $node_nfc = \Solunes\Master\App\Node::create(['name'=>'nfc', 'location'=>'customer', 'folder'=>'business']);
+        }
+        if(config('customer.ppvs')){
+            $node_ppv = \Solunes\Master\App\Node::create(['name'=>'ppv', 'location'=>'customer', 'folder'=>'business']);
+            $node_ppv_customer = \Solunes\Master\App\Node::create(['name'=>'ppv-customer', 'location'=>'customer', 'folder'=>'business']);
+        }
+        if(config('customer.subscriptions')){
+            $node_subscription = \Solunes\Master\App\Node::create(['name'=>'subscription', 'location'=>'customer', 'folder'=>'business']);
+            $node_subscription_plan = \Solunes\Master\App\Node::create(['name'=>'subscription-plan', 'location'=>'customer', 'folder'=>'business']);
+            $node_subscription_benefit = \Solunes\Master\App\Node::create(['name'=>'subscription-benefit', 'location'=>'customer', 'folder'=>'business']);
+            $node_customer_subscription = \Solunes\Master\App\Node::create(['name'=>'customer-subscription', 'location'=>'customer', 'folder'=>'business']);
+            $node_customer_subscription_month = \Solunes\Master\App\Node::create(['name'=>'customer-subscription-month', 'type'=>'child', 'parent_id'=>$node_customer_subscription->id , 'location'=>'customer', 'folder'=>'business']);
+        }
 
         if($node_customer = \Solunes\Master\App\Node::where('name', 'customer')->first()){
             $subarray = [];

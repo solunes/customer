@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Solunes\Customer\App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -29,16 +29,24 @@ class Subscription extends Model {
 		'price'=>'required',
 	);
 
-	public function season() {
-        return $this->belongsTo('App\Season');
-    }
-    
-	public function product_bridge() {
-        return $this->belongsTo('Solunes\Business\App\ProductBridge');
+	public function category() {
+        return $this->belongsTo('Solunes\Business\App\Category');
     }
 
-	public function subscription_users() {
-        return $this->hasMany('App\SubscriptionUser');
+	public function customers_subscription() {
+        return $this->hasMany('Solunes\Customer\App\CustomerSubscription');
     }
 	
+	public function subscription_plans() {
+        return $this->hasMany('Solunes\Customer\App\SubscriptionPlan', 'parent_id');
+    }
+			
+	public function subscription_plan() {
+        return $this->hasOne('Solunes\Customer\App\SubscriptionPlan', 'parent_id');
+    }
+
+	public function subscription_benefits() {
+        return $this->hasMany('Solunes\Customer\App\SubscriptionBenefit', 'parent_id');
+    }
+
 }

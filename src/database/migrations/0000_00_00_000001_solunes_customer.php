@@ -218,10 +218,20 @@ class SolunesCustomer extends Migration
                 $table->timestamps();
             });
         }
+        if(config('customer.nfcs')){
+            Schema::create('nfcs', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('name')->nullable();
+                $table->integer('customer_id')->nullable();
+                $table->integer('customer_subscription_id')->nullable();
+                $table->string('secret_uid')->nullable();
+                $table->boolean('active')->default(0);
+                $table->timestamps();
+            });
+        }
         if(config('customer.ppvs')){
             Schema::create('ppvs', function (Blueprint $table) {
                 $table->increments('id');
-                $table->integer('category_id')->nullable();
                 $table->integer('product_bridge_id')->nullable();
                 $table->string('name')->nullable();
                 $table->enum('status', ['pending','active','closed'])->default('pending');
@@ -238,7 +248,7 @@ class SolunesCustomer extends Migration
                 $table->integer('sale_id')->nullable();
                 $table->integer('parent_id')->nullable();
                 $table->string('name')->nullable();
-                $table->date('start_date')->nullable();
+                $table->date('initial_date')->nullable();
                 $table->date('end_date')->nullable();
                 $table->enum('status', ['pending','active','finished','cancelled'])->default('pending');
                 $table->decimal('price', 10, 2)->default(0);
@@ -249,26 +259,53 @@ class SolunesCustomer extends Migration
             Schema::create('subscriptions', function (Blueprint $table) {
                 $table->increments('id');
                 $table->integer('category_id')->nullable();
+                $table->string('name')->nullable();
+                $table->boolean('active')->nullable()->default(1);
+                $table->integer('free_trial_days')->nullable()->default(0);
+                $table->timestamps();
+            });
+            Schema::create('subscription_benefits', function (Blueprint $table) {
+                $table->increments('id');
+                $table->integer('parent_id')->nullable();
+                $table->string('name')->nullable();
+                $table->string('icon')->nullable();
+                $table->timestamps();
+            });
+            Schema::create('subscription_plans', function (Blueprint $table) {
+                $table->increments('id');
+                $table->integer('parent_id')->nullable();
                 $table->integer('product_bridge_id')->nullable();
                 $table->string('name')->nullable();
-                $table->integer('days')->nullable();
-                $table->enum('type', ['monthly','monthly','yearly'])->default('monthly');
-                $table->enum('status', ['pending','active','closed'])->default('pending');
+                $table->enum('type', ['daily','weekly','biweekly','monthly','quarterly','half-yearly','yearly','custom'])->default('monthly');
+                $table->integer('custom_days')->nullable();
+                $table->boolean('active')->nullable()->default(1);
                 $table->decimal('price', 10, 2)->default(0);
                 $table->timestamps();
             });
-            Schema::create('subscription_customers', function (Blueprint $table) {
+            Schema::create('customer_subscriptions', function (Blueprint $table) {
                 $table->increments('id');
-                $table->integer('user_id')->nullable();
                 $table->integer('customer_id')->nullable();
-                $table->integer('sale_id')->nullable();
-                $table->integer('parent_id')->nullable();
+                $table->integer('subscription_id')->nullable();
+                $table->integer('subscription_plan_id')->nullable();
                 $table->string('name')->nullable();
-                $table->integer('days')->default(30);
-                $table->date('start_date')->nullable();
+                $table->date('initial_date')->nullable();
                 $table->date('end_date')->nullable();
-                $table->enum('status', ['pending','active','finished','cancelled'])->default('pending');
-                $table->decimal('price', 10, 2)->nullable();
+                $table->boolean('active')->nullable()->default(0);
+                $table->timestamps();
+            });
+            Schema::create('customer_subscription_months', function (Blueprint $table) {
+                $table->increments('id');
+                $table->integer('parent_id')->nullable();
+                $table->integer('subscription_id')->nullable();
+                $table->integer('subscription_plan_id')->nullable();
+                $table->integer('sale_id')->nullable();
+                $table->enum('status', ['pending','paid','cancelled'])->default('pending');
+                $table->date('initial_date')->nullable();
+                $table->date('end_date')->nullable();
+                $table->integer('duration')->nullable();
+                $table->boolean('processing')->default(0);
+                $table->decimal('amount', 10, 2)->default(0);
+                $table->string('invoice_url')->nullable();
                 $table->timestamps();
             });
         }
@@ -282,10 +319,14 @@ class SolunesCustomer extends Migration
     public function down()
     {
         // Módulo General de Clientes
-        Schema::dropIfExists('subscription_customers');
+        Schema::dropIfExists('customer_subscription_months');
+        Schema::dropIfExists('customer_subscriptions');
+        Schema::dropIfExists('subscription_plans');
+        Schema::dropIfExists('subscription_benefits');
         Schema::dropIfExists('subscriptions');
         Schema::dropIfExists('ppv_customers');
         Schema::dropIfExists('ppvs');
+        Schema::dropIfExists('nfcs');
         Schema::dropIfExists('customer_wallet_transactions');
         Schema::dropIfExists('customer_ticket_messages');
         Schema::dropIfExists('customer_tickets');

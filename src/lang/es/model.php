@@ -18,5 +18,10 @@ return [
 	'customer-ticket' => 'Ticket de Cliente|Tickets de Cliente',
 	'customer-ticket-message' => 'Mensaje de Ticket|Mensajes de Ticket',
 	'customer-wallet-transaction' => 'Transacción de Crédito|Transacciones de Crédito',
+	'customer-subscription' => 'Suscripción de Cliente|Suscripciones de Cliente',
+	'customer-subscription-month' => 'Cuota de Suscripción de Cliente|Cuotas de Suscripción de Cliente',
+	'subscription' => 'Suscripción|Suscripciones',
+	'subscription-benefit' => 'Beneficio de Suscripción|Beneficios de Suscripción',
+	'subscription-plan' => 'Plan de Suscripción|Planes de Suscripción',
 
 ];

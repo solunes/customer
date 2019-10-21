@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Solunes\Customer\App;
 
 use Illuminate\Database\Eloquent\Model;
 
