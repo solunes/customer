@@ -315,4 +315,70 @@ class ProcessController extends Controller {
       }
     }
 
+    public function getMySubscriptions($token) {
+      $user = auth()->user();
+      $customer = $user->customer;
+      $array['page'] = \Solunes\Master\App\Page::find(1);
+      $array['items'] = $customer->customer_subscriptions;
+      return view('customer::process.my-subscriptions', $array);
+    }
+
+    public function getSubscriptions($subscription_id, $token) {
+      $user = auth()->user();
+      $array['page'] = \Solunes\Master\App\Page::find(1);
+      $array['subscription'] = \Solunes\Customer\App\Subscription::find($subscription_id);
+      if($array['subscription']){
+        $array['type'] = 'subscription-plan';
+        $array['items'] = \Solunes\Customer\App\SubscriptionPlan::where('parent_id', $subscription_id)->get();
+      } else {
+        $array['type'] = 'subscription';
+        $array['items'] = \Solunes\Customer\App\Subscription::get();
+      }
+      return view('customer::process.subscriptions', $array);
+    }
+
+    public function getAcceptSubscription($subscription_id, $subscription_plan_id) {
+      $user = \Auth::user();
+      $subscription = \Solunes\Customer\App\Subscription::find($subscription_id);
+      $subscription_plan = \Solunes\Customer\App\SubscriptionPlan::where('parent_id', $subscription->id)->where('id', $subscription_plan_id)->first();
+      $customer = $user->customer;
+      if($customer&&$subscription&&$subscription_plan){ 
+        $customer_subscription = \Solunes\Customer\App\CustomerSubscription::where('customer_id', $customer->id)->where('subscription_id', $subscription->id)->first();
+        if($customer_subscription){
+          $customer_subscription->subscription_plan_id = $subscription_plan->id;
+          $customer_subscription->save();
+          if($customer_subscription->active){
+            $initial_date = $customer_subscription->end_date;
+          } else {
+            $initial_date = date('Y-m-d');
+          }
+          $customer_subscription_month = new \Solunes\Customer\App\CustomerSubscriptionMonth;
+          $customer_subscription_month->parent_id = $customer_subscription->id;
+          $customer_subscription_month->subscription_id = $subscription->id;
+          $customer_subscription_month->subscription_plan_id = $subscription_plan->id;
+          $customer_subscription_month->initial_date = $initial_date;
+          $customer_subscription_month->save();
+          //$redirect = 'account/my-subscriptions/1354351278';
+          $redirect = url('pagostt/make-single-payment/'.$customer_subscription->customer_id.'/'.$customer_subscription_month->sale->sale_payment->payment_id);
+          return redirect($redirect)->with('message_success', 'Felicidades, su plan fue extendido para un nuevo periodo, ahora solo debe proceder con el pago.');
+        } else {
+          $customer_subscription = new \Solunes\Customer\App\CustomerSubscription;
+          $customer_subscription->customer_id = $customer->id;
+          $customer_subscription->subscription_id = $subscription->id;
+          $customer_subscription->subscription_plan_id = $subscription_plan->id;
+          $customer_subscription->name = $subscription->name;
+          $customer_subscription->initial_date = date('Y-m-d');
+          $customer_subscription->save();
+          if($customer_subscription_month = $customer_subscription->customer_subscription_month){
+            $redirect = url('pagostt/make-single-payment/'.$customer_subscription->customer_id.'/'.$customer_subscription_month->sale->sale_payment->payment_id);
+          } else {
+            $redirect = 'account/my-subscriptions/1354351278';
+          }
+          return redirect($redirect)->with('message_success', 'Felicidades, su suscripción fue creada correctamente.');
+        }
+      } else {
+        return redirect($this->prev)->with(array('message_error' => 'Debe llenar todos los campos para finalizar'));
+      }
+    }
+
 }

@@ -46,5 +46,14 @@ return array(
 	'increase' => 'Incremento',
 	'agency' => 'Agencia',
 	'person' => 'Persona',
+	'biweekly' => 'Bi Semanal',
+	'custom' => 'Personalizado',
+	'daily' => 'Diario',
+	'half-yearly' => 'Semestral',
+	'monthly' => 'Mensual',
+	'paid' => 'Pagado',
+	'quarterly' => 'Trimestral',
+	'weekly' => 'Semanal',
+	'yearly' => 'Anual',
 
 );

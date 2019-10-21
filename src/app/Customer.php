@@ -123,6 +123,14 @@ class Customer extends Model {
         return $this->hasMany('Solunes\Customer\App\CustomerWalletTransaction','parent_id');
     }
     
+    public function customer_subscriptions() {
+        return $this->hasMany('Solunes\Customer\App\CustomerSubscription');
+    }
+
+    public function customer_subscription() {
+        return $this->hasOne('Solunes\Customer\App\CustomerSubscription');
+    }
+
     public function getCreditAttribute() {
         if($this->customer_wallet_transaction){
             return $this->customer_wallet_transaction->current_amount;
