@@ -57,7 +57,7 @@ return [
         'password'=> 'required',
     ],
     'custom' => [
-        'register'=> false,
+        'register'=> true,
         'register_rules'=> false,
         'after_register'=> false,
         'after_login'=> false,

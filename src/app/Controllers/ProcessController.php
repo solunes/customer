@@ -23,7 +23,7 @@ class ProcessController extends Controller {
   }
 
     public function postRegistro(Request $request) {
-      $fields_array = [];
+      $fields_array = [];asd();
       if(config('customer.fields.password')){
         $fields_array[] = 'password';
       }
