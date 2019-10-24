@@ -97,7 +97,7 @@ class ProcessController extends Controller {
 
     public function getRegister($token) {
       $array['page'] = \Solunes\Master\App\Page::find(1);
-      return view('customer::process.register', $array);
+      return view('customer::process.register-2', $array);
     }
 
     public function getRecoverPassword($token) {
