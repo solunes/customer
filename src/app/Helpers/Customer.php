@@ -16,11 +16,15 @@ class Customer {
         $menu_labels['historial-pagos'][$language->code] = ['name'=>trans('customer::admin.historial-pagos'),'link'=>'admin/my-history'];
       }
       if($menu){
-        \Solunes\Master\App\Menu::create(array_merge(['menu_type'=>'admin','level'=>2,'parent_id'=>$menu->id,'icon'=>'table','permission'=>'todotix'],$menu_labels['nomina-clientes']));
-        \Solunes\Master\App\Menu::create(array_merge(['menu_type'=>'admin','level'=>2,'parent_id'=>$menu->id,'icon'=>'table','permission'=>'todotix'],$menu_labels['nomina-pagos']));
+        $menu = \Solunes\Master\App\Menu::create(array_merge(['menu_type'=>'admin','level'=>2,'parent_id'=>$menu->id,'icon'=>'table','permission'=>'todotix'],$menu_labels['nomina-clientes']));
+        $menu = \FuncNode::generate_translations($menu);
+        $menu = \Solunes\Master\App\Menu::create(array_merge(['menu_type'=>'admin','level'=>2,'parent_id'=>$menu->id,'icon'=>'table','permission'=>'todotix'],$menu_labels['nomina-pagos']));
+        $menu = \FuncNode::generate_translations($menu);
       }
-      \Solunes\Master\App\Menu::create(array_merge(['menu_type'=>'admin','icon'=>'dollar','permission'=>'members'],$menu_labels['pagos-pendientes']));
-      \Solunes\Master\App\Menu::create(array_merge(['menu_type'=>'admin','icon'=>'table','permission'=>'members'],$menu_labels['historial-pagos']));
+      $menu = \Solunes\Master\App\Menu::create(array_merge(['menu_type'=>'admin','icon'=>'dollar','permission'=>'members'],$menu_labels['pagos-pendientes']));
+      $menu = \FuncNode::generate_translations($menu);
+      $menu = \Solunes\Master\App\Menu::create(array_merge(['menu_type'=>'admin','icon'=>'table','permission'=>'members'],$menu_labels['historial-pagos']));
+      $menu = \FuncNode::generate_translations($menu);
     }
 
     public static function validateRegister($fields_array) {

@@ -276,7 +276,7 @@ class SolunesCustomer extends Migration
                 $table->integer('parent_id')->nullable();
                 $table->integer('product_bridge_id')->nullable();
                 $table->string('name')->nullable();
-                $table->enum('type', ['daily','weekly','biweekly','monthly','quarterly','half-yearly','yearly','custom'])->default('monthly');
+                $table->enum('type', ['free','daily','weekly','biweekly','monthly','quarterly','half-yearly','yearly','custom'])->default('monthly');
                 $table->integer('custom_days')->nullable();
                 $table->boolean('active')->nullable()->default(1);
                 $table->decimal('price', 10, 2)->default(0);

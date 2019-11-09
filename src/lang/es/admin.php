@@ -55,5 +55,6 @@ return array(
 	'quarterly' => 'Trimestral',
 	'weekly' => 'Semanal',
 	'yearly' => 'Anual',
+	'free' => 'Gratis',
 
 );
