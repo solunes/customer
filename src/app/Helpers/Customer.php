@@ -146,6 +146,7 @@ class Customer {
         if($payment = \Solunes\Payments\App\Payment::where('id', $payment_id)->where('status','holding')->first()){
             // Definir variables de pago en formato PagosTT: name, items[concepto, cantidad, costo_unitario]
             $item = [];
+            $item['payment'] = $payment;
             $item['id'] = $payment->id;
             $item['name'] = $payment->name;
             $item['nit_name'] = $payment->invoice_name;
