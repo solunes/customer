@@ -272,8 +272,12 @@ class Customer {
     }
     
     // Crear Transacción del Wallet
-    public static function createWalletTransaction($customer, $type, $transaction_code, $amount) {
-        $actual_credit = $customer->credit;
+    public static function createWalletTransaction($customer, $type, $transaction_code, $amount, $category = 'cash') {
+        if($category=='cash'){
+            $actual_credit = $customer->credit;
+        } else {
+            $actual_credit = $customer->points_credit;
+        }
         if($type=='increase'){
             $new_credit = $actual_credit + $amount;
         } else if($type=='decrease'){
@@ -283,6 +287,7 @@ class Customer {
             $customer_wallet_transaction = new \Solunes\Customer\App\CustomerWalletTransaction;
             $customer_wallet_transaction->parent_id = $customer->id;
             $customer_wallet_transaction->transaction_code = $transaction_code;
+            $customer_wallet_transaction->category = $category;
             $customer_wallet_transaction->type = $type;
             $customer_wallet_transaction->amount = $amount;
             $customer_wallet_transaction->initial_amount = $actual_credit;
@@ -295,10 +300,10 @@ class Customer {
     }
 
     // Incrementar Crédito de Wallet
-    public static function increaseCreditWallet($customer_id, $transaction_code, $amount) {
+    public static function increaseCreditWallet($customer_id, $transaction_code, $amount, $category = 'cash') {
         $customer = \Solunes\Customer\App\Customer::find($customer_id);
         if($customer&&$amount>0){
-            return \Customer::createWalletTransaction($customer, 'increase', $transaction_code, $amount);
+            return \Customer::createWalletTransaction($customer, 'increase', $transaction_code, $amount, $category);
         } else {
             // TODO: Reportar Error
             return false;
@@ -306,10 +311,10 @@ class Customer {
     }
     
     // Reducir Crédito de Wallet
-    public static function reduceCreditWallet($customer_id, $transaction_code, $amount) {
+    public static function reduceCreditWallet($customer_id, $transaction_code, $amount, $category = 'cash') {
         $customer = \Solunes\Customer\App\Customer::find($customer_id);
         if($customer&&$amount>0){
-            return \Customer::createWalletTransaction($customer, 'decrease', $transaction_code, $amount);
+            return \Customer::createWalletTransaction($customer, 'decrease', $transaction_code, $amount, $category);
         } else {
             // TODO: Reportar Error
             return false;
@@ -317,12 +322,12 @@ class Customer {
     }
     
     // Transferir Crédito de Wallet a otro Cliente
-    public static function transferCreditWallet($customer_id, $customer_to_id, $transaction_code, $amount) {
+    public static function transferCreditWallet($customer_id, $customer_to_id, $transaction_code, $amount, $category = 'cash') {
         $customer = \Solunes\Customer\App\Customer::find($customer_id);
         $customer_to = \Solunes\Customer\App\Customer::find($customer_to_id);
         if($customer&&$customer_to&&$amount>0){
-            \Customer::createWalletTransaction($customer_to, 'increase', $transaction_code, $amount);
-            return \Customer::createWalletTransaction($customer, 'decrease', $transaction_code, $amount);
+            \Customer::createWalletTransaction($customer_to, 'increase', $transaction_code, $amount, $category);
+            return \Customer::createWalletTransaction($customer, 'decrease', $transaction_code, $amount, $category);
         } else {
             // TODO: Reportar Error
             return false;

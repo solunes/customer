@@ -211,6 +211,7 @@ class SolunesCustomer extends Migration
                 $table->increments('id');
                 $table->integer('parent_id')->nullable();
                 $table->string('transaction_code')->nullable();
+                $table->enum('category',['cash','points'])->nullable()->default('cash');
                 $table->enum('type',['increase','decrease'])->nullable();
                 $table->decimal('amount', 10, 2)->nullable();
                 $table->decimal('initial_amount', 10, 2)->nullable();

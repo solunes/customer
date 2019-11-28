@@ -118,11 +118,27 @@ class Customer extends Model {
     public function customer_wallet_transaction() {
         return $this->hasOne('Solunes\Customer\App\CustomerWalletTransaction','parent_id')->orderBy('id','DESC');
     }
+    
+    public function cash_customer_wallet_transaction() {
+        return $this->hasOne('Solunes\Customer\App\CustomerWalletTransaction','parent_id')->where('category','cash')->orderBy('id','DESC');
+    } 
+
+    public function points_customer_wallet_transaction() {
+        return $this->hasOne('Solunes\Customer\App\CustomerWalletTransaction','parent_id')->where('category','points')->orderBy('id','DESC');
+    }
 
     public function customer_wallet_transactions() {
         return $this->hasMany('Solunes\Customer\App\CustomerWalletTransaction','parent_id');
     }
     
+    public function cash_customer_wallet_transactions() {
+        return $this->hasMany('Solunes\Customer\App\CustomerWalletTransaction','parent_id')->where('category','cash');
+    }
+
+    public function points_customer_wallet_transactions() {
+        return $this->hasMany('Solunes\Customer\App\CustomerWalletTransaction','parent_id')->where('category','points');
+    }
+
     public function customer_subscriptions() {
         return $this->hasMany('Solunes\Customer\App\CustomerSubscription');
     }
@@ -132,8 +148,16 @@ class Customer extends Model {
     }
 
     public function getCreditAttribute() {
-        if($this->customer_wallet_transaction){
-            return $this->customer_wallet_transaction->current_amount;
+        if($this->cash_customer_wallet_transaction){
+            return $this->cash_customer_wallet_transaction->current_amount;
+        } else {
+            return 0;
+        }
+    }
+
+    public function getPointsCreditAttribute() {
+        if($this->points_customer_wallet_transaction){
+            return $this->points_customer_wallet_transaction->current_amount;
         } else {
             return 0;
         }
