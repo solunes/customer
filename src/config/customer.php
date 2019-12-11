@@ -13,6 +13,7 @@ return [
     'nfcs' => false,
     'ppvs' => false,
     'subscriptions' => false,
+    //
     'subscription_products' => false,
     'credit_wallet' => false,
     'credit_wallet_points' => false,
