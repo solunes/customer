@@ -146,6 +146,10 @@ class Customer extends Model {
     public function customer_subscription() {
         return $this->hasOne('Solunes\Customer\App\CustomerSubscription');
     }
+    
+    public function active_customer_subscription() {
+        return $this->hasOne('Solunes\Customer\App\CustomerSubscription')->where('active', 1);
+    }
 
     public function getCreditAttribute() {
         if($this->cash_customer_wallet_transaction){
