@@ -334,6 +334,7 @@ class ProcessController extends Controller {
         $array['type'] = 'subscription';
         $array['items'] = \Solunes\Customer\App\Subscription::get();
       }
+      $array['currency'] = \Solunes\Business\App\Currency::where('type', 'main')->first();
       return view('customer::process.subscriptions', $array);
     }
 

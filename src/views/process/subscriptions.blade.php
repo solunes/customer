@@ -33,7 +33,7 @@
                     <?php if($type=='subscription'&&count($item->subscription_plans)==1){ $item = $item->subscription_plan; } ?>
                     <h4 class="card-title">{{ $item->parent->name }}: {{ $item->name }}</h4>
                     <div class="price">
-                      <h2>USD {{ $item->price }}</h2>
+                      <h2>{{ $currency->name }} {{ $item->price }}</h2>
                       @if($item->type=='custom')
                       <span>{{ $item->custom_days }} días</span>
                       @else
