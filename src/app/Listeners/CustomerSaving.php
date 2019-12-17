@@ -101,7 +101,7 @@ class CustomerSaving {
                 $event->seller_user_id = auth()->user()->id;
             }
         }
-        if(config('customer.customer_agency')){
+        if(config('customer.customer_agency')&&!$event->agency_id){
             if(auth()->check()&&$agency_id = auth()->user()->agency_id){
                 $event->agency_id = $agency_id;
             }
