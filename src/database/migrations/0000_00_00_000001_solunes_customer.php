@@ -59,9 +59,9 @@ class SolunesCustomer extends Migration
             $table->string('nit_name')->nullable(); // Obligatorio
             $table->date('birth_date')->nullable(); // Obligatorio
             $table->string('password')->nullable(); // Obligatorio
-            $table->enum('type', ['business','agency','person'])->default('business'); // Obligatorio
-            $table->enum('status', ['normal','ask_password','pending_confirmation','banned'])->default('ask_password'); // Obligatorio
-            $table->boolean('active')->default(0); // Obligatorio
+            $table->enum('type', ['business','agency','person'])->nullable()->default('business'); // Obligatorio
+            $table->enum('status', ['normal','ask_password','pending_confirmation','banned'])->nullable()->default('ask_password'); // Obligatorio
+            $table->boolean('active')->nullable()->default(0); // Obligatorio
             if(config('customer.fields.country')||config('sales.delivery_country')){
                 $table->integer('country_id')->nullable();
             }
