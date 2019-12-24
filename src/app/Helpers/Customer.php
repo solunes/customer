@@ -336,18 +336,20 @@ class Customer {
 
     // Crear Actividad de Cliente   // $type = general, registration, login, contact, action
     public static function createCustomerActivity($customer, $type, $name, $detail = NULL) {
-        $customer_activity = new \Solunes\Customer\App\CustomerActivity;
-        $customer_activity->parent_id = $customer->id;
-        if(auth()->check()){
-            $user = auth()->user();
-            $customer_activity->user_id = $user->id;
+        if($customer){
+            $customer_activity = new \Solunes\Customer\App\CustomerActivity;
+            $customer_activity->parent_id = $customer->id;
+            if(auth()->check()){
+                $user = auth()->user();
+                $customer_activity->user_id = $user->id;
+            }
+            $customer_activity->type = $type;
+            $customer_activity->name = $name;
+            $customer_activity->detail = $detail;
+            $customer_activity->date = date('Y-m-d');
+            $customer_activity->time = date('H:i:s');
+            $customer_activity->save();
         }
-        $customer_activity->type = $type;
-        $customer_activity->name = $name;
-        $customer_activity->detail = $detail;
-        $customer_activity->date = date('Y-m-d');
-        $customer_activity->time = date('H:i:s');
-        $customer_activity->save();
     }
 
     public static function checkExternalCustomerById($external_id) {
