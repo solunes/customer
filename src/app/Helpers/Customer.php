@@ -63,6 +63,7 @@ class Customer {
         if(config('customer.fields.age')){
             $customer->age = \Customer::calculateAge($customer->birth_date);
         }
+        $customer->password = $password;
         $customer->status = 'normal';
         $customer->save();
         if(config('customer.custom.register')){
