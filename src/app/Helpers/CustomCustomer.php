@@ -9,10 +9,14 @@ class CustomCustomer {
     public static function after_seed_actions() {
 
         $business_menu = \Solunes\Master\App\Menu::where('level',1)->where('permission','business')->where('type','blank')->first();
-        $menu = \Solunes\Master\App\Menu::create(['parent_id'=>$business_menu->id,'level'=>'2','menu_type'=>'admin','icon'=>'user','permission'=>'business','name'=>'Contactos con Clientes','link'=>'admin/model-list/customer-contact']);
-        $menu = \FuncNode::generate_translations($menu);
-        $menu = \Solunes\Master\App\Menu::create(['parent_id'=>$business_menu->id,'level'=>'2','menu_type'=>'admin','icon'=>'user','permission'=>'business','name'=>'Notas de Cliente','link'=>'admin/model-list/customer-note']);
-        $menu = \FuncNode::generate_translations($menu);
+        if(config('customer.contacts')){
+            $menu = \Solunes\Master\App\Menu::create(['parent_id'=>$business_menu->id,'level'=>'2','menu_type'=>'admin','icon'=>'user','permission'=>'business','name'=>'Contactos con Clientes','link'=>'admin/model-list/customer-contact']);
+            $menu = \FuncNode::generate_translations($menu);
+        }
+        if(config('customer.notes')){
+            $menu = \Solunes\Master\App\Menu::create(['parent_id'=>$business_menu->id,'level'=>'2','menu_type'=>'admin','icon'=>'user','permission'=>'business','name'=>'Notas de Cliente','link'=>'admin/model-list/customer-note']);
+            $menu = \FuncNode::generate_translations($menu);
+        }
 
         return 'After seed realizado correctamente.';
     }
