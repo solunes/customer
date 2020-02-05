@@ -16,7 +16,7 @@ class CustomerSubscriptionMonthCreating
             $customer_subscription_month->status = 'cancelled';
             $customer_subscription_month->save();
         }
-        $sale = \Sales::generateSingleSale($event->parent->user_id, $event->parent->parent_id, 1, 2, 1, $event->parent->parent->nit_name, $event->parent->parent->nit_number, $event->subscription_plan->product_bridge->name.' ('.$event->initial_date.' - '.$event->end_date.')', $event->amount, $event->subscription_plan->product_bridge_id);
+        $sale = \Sales::generateSingleSale($event->parent->user_id, $event->parent->customer_id, 1, 2, 1, $event->parent->customer->nit_name, $event->parent->customer->nit_number, $event->subscription_plan->product_bridge->name.' ('.$event->initial_date.' - '.$event->end_date.')', $event->amount, $event->subscription_plan->product_bridge_id);
         $event->sale_id = $sale->id;
         return $event;
     }
