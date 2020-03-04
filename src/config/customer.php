@@ -47,6 +47,7 @@ return [
         'cellphone'=> false,
         'ci_number'=> false,
         'image'=> false,
+        'member_code'=> false,
         'birth_date'=> false,
         'emergency_name'=> false,
         'emergency_number'=> false,
