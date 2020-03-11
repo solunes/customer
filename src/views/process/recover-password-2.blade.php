@@ -31,7 +31,10 @@
                                         </div>
                                         <label for="user-name">Email</label>
                                     </fieldset>
-                                    <a href="{{ url('account/login/1934673413') }}" class="btn btn-outline-primary float-left btn-inline">Iniciar Sesión</a>
+                                    @if(config('customer.different_customers_by_agency'))
+                                    <input type="hidden" id="agency_token" name="agency_token" value="{{ $agency_token }}" />
+                                    @endif
+                                    <a href="{{ url('account/login/'.$token.'/'.$agency_token) }}" class="btn btn-outline-primary float-left btn-inline">Iniciar Sesión</a>
                                     <button type="submit" class="btn btn-primary float-right btn-inline">Recuperar Contraseña</button>
                                     <br><br><br>
                                 </form>

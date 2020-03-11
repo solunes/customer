@@ -25,6 +25,10 @@ return [
     'after_login_no_password' => 'account/change-password/gLW2fAst39MV',
     'redirect_after_login' => 'inicio',
     'ci_expeditions_table' => false, // Habilitar en caso de extensiones en tabla dinamica
+    'allow_login_by_id' => null, // Introducir llave de seguridad para utilizar este comando
+    'different_customers_by_agency' => false, // Habilitar cuando cada agencia funcione como una empresa distinta.
+    'customers_token' => 'mMLZggHrrFgfF', // Habilitar para validar navegación y demás
+    'default_password' => '12345678', // Habilitar para validar navegación y demás
     'fields' => [
         'country'=> false,
         'city'=> false,

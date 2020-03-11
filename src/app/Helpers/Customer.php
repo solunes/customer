@@ -47,11 +47,31 @@ class Customer {
         return $diff->format('%y');
     }
 
+    public static function checkCustomer($ci_number, $email, $array, $password) {
+        $customer = NULL;
+        if(!$customer&&$ci_number){
+            if(config('customer.different_customers_by_agency')&&isset($array['agency_id'])){
+                $customer = \Solunes\Customer\App\Customer::where('agency_id', $array['agency_id'])->where('ci_number', $ci_number)->first();
+            } else if(!config('customer.different_customers_by_agency')) {
+                $customer = \Solunes\Customer\App\Customer::where('ci_number', $ci_number)->first();
+            }
+        }
+        if(!$customer&&$email){
+            if(config('customer.different_customers_by_agency')&&isset($array['agency_id'])){
+                $customer = \Solunes\Customer\App\Customer::where('agency_id', $array['agency_id'])->where('email', $email)->first();
+            } else if(!config('customer.different_customers_by_agency')) {
+                $customer = \Solunes\Customer\App\Customer::where('email', $email)->first();
+            }
+        }
+        return $customer;
+    }
+
     public static function generateCustomer($ci_number, $email, $array, $password) {
         if(!$password){
             $password = rand(100000,999999);
         }
-        if(!$customer = \Solunes\Customer\App\Customer::where('ci_number', $ci_number)->first()){
+        $customer = \Customer::checkCustomer($ci_number, $email, $array, $password);
+        if(!$customer){
             $customer = new \Solunes\Customer\App\Customer;
             $customer->ci_number = $ci_number;
             $customer->email = $email;

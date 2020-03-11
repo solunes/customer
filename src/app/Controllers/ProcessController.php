@@ -47,6 +47,9 @@ class ProcessController extends Controller {
       if(config('customer.fields.emergency_short')){
         $fields_array[] = 'emergency';
       }
+      if(config('customer.different_customers_by_agency')){
+        $fields_array[] = 'agency_token';
+      }
       $fields_array = array_merge($fields_array, ['ci_number','first_name','last_name','email','cellphone']);
       $rules = config('customer.fields_rules');
       if(config('customer.custom.register_rules')){
@@ -57,17 +60,23 @@ class ProcessController extends Controller {
         $ci_number = $request->input('ci_number');
         $email = $request->input('email');
         $password = NULL;
-          if(config('customer.fields.password')){
+        if(config('customer.fields.password')){
           $password = $request->input('password');
-        }
-        if($existing_customer = \Solunes\Customer\App\Customer::where('ci_number', $ci_number)->where('email', $email)->first()){
-          return redirect($this->prev)->with('message_error', 'Usted ya tiene una cuenta de usuario registrada, le recomendamos iniciar sesión.')->withInput();
         }
         $array = [];
         foreach($fields_array as $key => $val){
-          if(!in_array($val, ['ci_number','email'])){
+          if(config('customer.different_customers_by_agency')&&$val=='agency_token'){
+            $agency = \Business::getAgencyByToken($request->input($val));
+            if($agency){
+              $array['agency_id'] = $agency->id;
+            }
+          } else if(!in_array($val, ['ci_number','email'])){
             $array[$val] = $request->input($val);
           }
+        }
+        $existing_customer = \Customer::checkCustomer($ci_number, $email, $array, $password);
+        if($existing_customer){
+          return redirect($this->prev)->with('message_error', 'Usted ya tiene una cuenta de usuario registrada, le recomendamos iniciar sesión.')->withInput();
         }
         $customer = \Customer::generateCustomer($ci_number, $email, $array, $password);
         if(config('customer.custom.after_register')){
@@ -81,8 +90,15 @@ class ProcessController extends Controller {
       }
     }
 
-    public function getCheckCi($ci_number) {
-      if($customer = \Solunes\Customer\App\Customer::where('ci_number', $ci_number)->first()){
+    public function getCheckCi($ci_number, $agency_token = NULL) {
+      $agency = \Business::getAgencyByToken($agency_token);
+      $customer = NULL;
+      if(config('customer.different_customers_by_agency')&&$agency){
+        $customer = \Solunes\Customer\App\Customer::where('agency_id', $agency->id)->where('ci_number', $ci_number)->first();
+      } else if(!config('customer.different_customers_by_agency')) {
+        $customer = \Solunes\Customer\App\Customer::where('ci_number', $ci_number)->first();
+      }
+      if($customer){
         // Send Mail
         return ['exists'=>true, 'customer'=>$customer->toArray()];
       } else {
@@ -90,18 +106,24 @@ class ProcessController extends Controller {
       }
     }
 
-    public function getLogin($token) {
+    public function getLogin($token, $agency_token = NULL) {
       $array['page'] = \Solunes\Master\App\Page::find(1);
+      $array['token'] = $token;
+      $array['agency_token'] = $agency_token;
       return view('customer::process.login-2', $array);
     }
 
-    public function getRegister($token) {
+    public function getRegister($token, $agency_token = NULL) {
       $array['page'] = \Solunes\Master\App\Page::find(1);
+      $array['token'] = $token;
+      $array['agency_token'] = $agency_token;
       return view('customer::process.register-2', $array);
     }
 
-    public function getRecoverPassword($token) {
+    public function getRecoverPassword($token, $agency_token = NULL) {
       $array['page'] = \Solunes\Master\App\Page::find(1);
+      $array['token'] = $token;
+      $array['agency_token'] = $agency_token;
       return view('customer::process.recover-password-2', $array);
     }
 
@@ -112,6 +134,12 @@ class ProcessController extends Controller {
       // Añadir regla de comprobación Captcha si corresponde
       if(config('solunes.nocaptcha_login')){
         $rules['g-recaptcha-response'] = 'required|captcha';
+      }
+      if(config('customer.different_customers_by_agency')){
+        $rules['agency_token'] = 'required';
+        $agency = \Business::getAgencyByToken($request->input('agency_token'));
+      } else {
+        $agency = NULL;
       }
       $validator = Validator::make($request->all(), $rules, $error_messages);
       if ($validator->passes()) {
@@ -133,39 +161,51 @@ class ProcessController extends Controller {
             $m->to($email, 'User')->subject(config('solunes.app_name').' | '.trans('master::mail.remind_password_title'));
         });
         $message = trans('master::form.password_request_success');
-        return redirect('account/recovered-password/cKeaDssbRd23m9Yb');
+        return redirect('account/recovered-password/'.config('customer.customers_token').'/'.$request->input('agency_token'));
       } else {
         return \Login::failed_try($validator, $this->prev, trans('master::form.password_request_error'));
       }
     }
 
-    public function getRecoveredPassword($token) {
+    public function getRecoveredPassword($token, $agency_token = NULL) {
       $array['page'] = \Solunes\Master\App\Page::find(1);
+      $array['token'] = $token;
+      $array['agency_token'] = $agency_token;
       return view('customer::process.recovered-password-2', $array);
     }
 
-    public function getResetPassword($token) {
-      if (is_null($token)) return redirect('account/recover-password/513475837')->with('message_error', trans('master::form.password_reset_error'));
+    public function getResetPassword($token, $agency_token) {
+      if (is_null($token)) return redirect('account/recover-password/'.$token.'/'.$agency_token)->with('message_error', trans('master::form.password_reset_error'));
       if (\App\PasswordReminder::where('token', $token)->count()>0) {
         $array = ['token'=>$token];
         $array['page'] = \Solunes\Master\App\Page::find(1);
+        $array['agency_token'] = $agency_token;
         return view('customer::process.reset-password-2', $array);
       } else {
-        return \Login::failed_try(NULL, 'account/recover-password/513475837', trans('master::form.password_reset_error'));
+        return \Login::failed_try(NULL, 'account/recover-password/'.$token.'/'.$agency_token, trans('master::form.password_reset_error'));
       }
     }
 
     public function postResetPassword(Request $request) {
       $error_messages = array('reminder_password.confirmed' => trans('master::form.password_match_error'));
-      $token = $request->input('token');
+      $confirmation_token = $request->input('token');
       $validator = Validator::make($request->all(), \App\User::$rules_edit_pass, $error_messages);
       if ($validator->passes()) {
         $now = new \DateTime();
-        if ((\App\PasswordReminder::where('token', $token)->count()>0)&&(\App\PasswordReminder::where('token', $token)->first()->created_at<$now)) {
-          $email = \App\PasswordReminder::where('token', $token)->first()->email;
-          \App\User::where('email', $email)->update(array('password' => bcrypt($request->input('password'))));
-          \App\PasswordReminder::where('token', $token)->delete();
-          return redirect('account/login/15613543.')->with('message_success', trans('master::form.password_reset_success'));        
+        if ((\App\PasswordReminder::where('token', $confirmation_token)->count()>0)&&(\App\PasswordReminder::where('token', $confirmation_token)->first()->created_at<$now)) {
+          $email = \App\PasswordReminder::where('token', $confirmation_token)->first()->email;
+          if(config('customer.different_customers_by_agency')){
+            $agency = \Business::getAgencyByToken($request->input('agency_token'));
+            if($agency){
+              \App\User::where('agency_id', $email)->where('email', $email)->update(array('password' => bcrypt($request->input('password'))));
+            } else {
+              return \redirect($this->prev)->with('message_error', 'No se encontró una agencia con este código')->withErrors($validator)->withInput();
+            }
+          } else {
+            \App\User::where('email', $email)->update(array('password' => bcrypt($request->input('password'))));
+          }
+          \App\PasswordReminder::where('token', $confirmation_token)->delete();
+          return redirect('account/login/'.config('customer.customers_token').'/'.$request->input('agency_token'))->with('message_success', trans('master::form.password_reset_success'));        
         } else {
           return \Login::failed_try(NULL, $this->prev, trans('master::form.password_reset_error'));
         }

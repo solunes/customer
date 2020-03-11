@@ -24,5 +24,5 @@ Route::group(['prefix'=>'admin'], function(){
     // Admin
     Route::get('list-customers', 'CustomAdminController@getCustomerList');
     Route::get('list-payments', 'CustomAdminController@getPaymentsList');
-    Route::get('login-as/{customer_id}', 'CustomAdminController@getManualLogin');
+    Route::get('login-as/{token}/{customer_id}', 'CustomAdminController@getManualLogin');
 });

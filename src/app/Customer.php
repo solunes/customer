@@ -30,12 +30,19 @@ class Customer extends Model {
 
     /* Creating rules */
     public static $rules_create = array(
+        'email'=>'email|required_without_all:cellphone,ci_number',
+        'cellphone'=>'required_without_all:email,ci_number',
+        'ci_number'=>'required_without_all:email,cellphone',
+        'status'=>'required',
+        'active'=>'required',
+    );
+    /*public static $rules_create = array(
         'email'=>'email|unique:customers,email|required_without_all:cellphone,ci_number',
         'cellphone'=>'unique:customers,cellphone|required_without_all:email,ci_number',
         'ci_number'=>'unique:customers,ci_number|required_without_all:email,cellphone',
         'status'=>'required',
         'active'=>'required',
-    );
+    );*/
 
     /* Updating rules */
     public static $rules_edit = array(

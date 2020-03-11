@@ -31,7 +31,7 @@ class SolunesCustomer extends Migration
         Schema::create('customers', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('parent_id')->nullable();
-            if(config('customer.customer_agency')){
+            if(config('customer.different_customers_by_agency')||config('customer.customer_agency')){
                 $table->integer('agency_id')->nullable();
             }
             if(config('customer.seller_user')){

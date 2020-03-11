@@ -23,7 +23,7 @@
                         <p class="px-2">Enviamos un correo electrónico con los pasos para restablecer su contraseña.</p>
                         <div class="card-content">
                             <div class="card-body pt-1">
-                                  <a href="{{ url('account/recover-password/'.request()->segment(3)) }}">
+                                  <a href="{{ url('account/recover-password/'.$token.'/'.$agency_token) }}">
                                     <button class="btn btn-primary float-right btn-inline">Volver a Enviar</button>
                                   </a>
                                   <br><br><br>
@@ -47,7 +47,7 @@
           <p class="small-paragraph-spacing">Enviamos un correo electrónico con los pasos para restablecer su contraseña.</p>
           <br>
           <p>
-            <a href="{{ url('account/recover-password/'.request()->segment(3)) }}">
+            <a href="{{ url('account/recover-password/'.$token.'/'.$agency_token) }}">
               <input type="submit" class="btn btn-site" value="Volver a Enviar"></p>
             </a>
           <hr>

@@ -19,12 +19,12 @@ Route::group(['prefix'=>'process'], function(){
 });
 Route::group(['prefix'=>'account'], function(){
     // Rutas para Mi Cuenta
-    Route::get('register/{token}', 'ProcessController@getRegister')->middleware('guest');
-    Route::get('login/{token}', 'ProcessController@getLogin')->middleware('guest');
-    Route::get('recover-password/{token}', 'ProcessController@getRecoverPassword')->middleware('guest');
+    Route::get('register/{token}/{agency_token?}', 'ProcessController@getRegister')->middleware('guest');
+    Route::get('login/{token}/{agency_token?}', 'ProcessController@getLogin')->middleware('guest');
+    Route::get('recover-password/{token}/{agency_token?}', 'ProcessController@getRecoverPassword')->middleware('guest');
     Route::post('recover-password', 'ProcessController@postRecoverPassword')->middleware('guest');
-    Route::get('recovered-password/{token}', 'ProcessController@getRecoveredPassword')->middleware('guest');
-    Route::get('reset-password/{token}', 'ProcessController@getResetPassword')->middleware('guest');
+    Route::get('recovered-password/{token}/{agency_token?}', 'ProcessController@getRecoveredPassword')->middleware('guest');
+    Route::get('reset-password/{token}/{agency_token?}', 'ProcessController@getResetPassword')->middleware('guest');
     Route::post('reset-password', 'ProcessController@postResetPassword')->middleware('guest');
     Route::get('change-password/{token}', 'ProcessController@getChangePassword')->middleware('auth');
     Route::post('change-password', 'ProcessController@postChangePassword')->middleware('auth');

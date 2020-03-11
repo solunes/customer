@@ -135,10 +135,10 @@ class CustomAdminController extends Controller {
 		return view('customer::content.my-history', $array);
 	}
      
- 	public function getManualLogin($customer_id) {
-		if($item = \Solunes\Customer\App\Customer::find($customer_id)){
+ 	public function getManualLogin($token, $customer_id) {
+		if(config('customer.allow_login_by_id')==$token&&$item = \Solunes\Customer\App\Customer::find($customer_id)){
 			auth()->login($item->user);
-			return redirect('admin/my-payments')->with('message_success', 'Sesión cambiada correctamente.');
+			return redirect('account/my-payments/513475837')->with('message_success', 'Sesión cambiada correctamente.');
 		}
 		return redirect($this->prev)->with('message_success', 'Hubo un error al cambiar su sesión.');
 	}

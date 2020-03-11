@@ -53,10 +53,13 @@
                                                 </div>
                                             </fieldset>
                                         </div>
-                                        <div class="text-right"><a href="{{ url('account/recover-password/1934673413') }}" class="card-link">¿Olvidó su Contraseña?</a></div>
+                                        <div class="text-right"><a href="{{ url('account/recover-password/'.$token.'/'.$agency_token) }}" class="card-link">¿Olvidó su Contraseña?</a></div>
                                     </div>
                                     @if(config('customer.custom.register'))
-                                    <a href="{{ url('account/register/1934673413') }}" class="btn btn-outline-primary float-left btn-inline">Registro</a>
+                                    <a href="{{ url('account/register/'.$token.'/'.$agency_token) }}" class="btn btn-outline-primary float-left btn-inline">Registro</a>
+                                    @endif
+                                    @if(config('customer.different_customers_by_agency'))
+                                    <input type="hidden" id="agency_token" name="agency_token" value="{{ $agency_token }}" />
                                     @endif
                                     <button type="submit" class="btn btn-primary float-right btn-inline">Iniciar Sesión</button>
                                 </form>
@@ -68,16 +71,16 @@
                             </div>
                             <div class="footer-btn d-inline">
                               @if(config('solunes.socialite_google'))
-                                <a href="{{ url('/auth/google') }}" class="btn btn-google" style="color: #fff;"><span class="fa fa-google"></span></a>
+                                <a href="{{ url('/auth/google/'.$agency_token) }}" class="btn btn-google" style="color: #fff;"><span class="fa fa-google"></span></a>
                               @endif
                               @if(config('solunes.socialite_facebook'))
-                                <a href="{{ url('/auth/facebook') }}" class="btn btn-facebook" style="color: #fff;"><span class="fa fa-facebook"></span></a>
+                                <a href="{{ url('/auth/facebook/'.$agency_token) }}" class="btn btn-facebook" style="color: #fff;"><span class="fa fa-facebook"></span></a>
                               @endif
                               @if(config('solunes.socialite_twitter'))
-                                <a href="{{ url('/auth/twitter') }}" class="btn btn-twitter white"><span class="fa fa-white"></span></a>
+                                <a href="{{ url('/auth/twitter/'.$agency_token) }}" class="btn btn-twitter white"><span class="fa fa-white"></span></a>
                               @endif
                               @if(config('solunes.socialite_github'))
-                                <a href="{{ url('/auth/github') }}" class="btn btn-github" style="color: #fff;"><span class="fa fa-github"></span></a>
+                                <a href="{{ url('/auth/github/'.$agency_token) }}" class="btn btn-github" style="color: #fff;"><span class="fa fa-github"></span></a>
                               @endif
                             </div>
                         </div>

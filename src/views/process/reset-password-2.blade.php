@@ -38,8 +38,11 @@
                                         </div>
                                         <label for="user-password_confirmation">Confirmar Contraseña</label>
                                     </fieldset>
-                                    <input type="hidden" name="token" value="{{ $token }}">
-                                    <a href="{{ url('account/login/1934673413') }}" class="btn btn-outline-primary float-left btn-inline">Iniciar Sesión</a>
+                                    <input type="hidden" name="token" value="{{ $confirmation_token }}">
+                                    @if(config('customer.different_customers_by_agency'))
+                                    <input type="hidden" id="agency_token" name="agency_token" value="{{ $agency_token }}" />
+                                    @endif
+                                    <a href="{{ url('account/login/'.$token.'/'.$agency_token) }}" class="btn btn-outline-primary float-left btn-inline">Iniciar Sesión</a>
                                     <button type="submit" class="btn btn-primary float-right btn-inline">Actualizar Contraseña</button>
                                     <br><br><br>
                                 </form>
