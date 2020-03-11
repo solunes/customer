@@ -36,10 +36,14 @@
               </tr>
           </thead>
           <tbody>
-            @foreach($customer->payments as $payment)
+            @foreach($customer->paid_payments as $payment)
               <tr>
                   <td></td>
-                  <td class="product-img"><img src="http://www.redusers.com/noticias/wp-content/uploads/2017/06/digital_evento_sitio-600x450.jpg" alt="Img placeholder">
+                  <?php $sale_item_id = $payment->payment_item->item_id; ?>
+                  <td class="product-img">
+                    @if($sale_image = \Solunes\Sales\App\SaleItem::find($sale_item_id)&&$sale_image->product_bridge->image)
+                      <img src="{{ asset(\Asset::get_image_path('product-bridge-image','thumb',$sale_image)) }}" alt="Banner">
+                    @endif
                   </td>
                   <td class="product-name">{{ $payment->name }}</td>
                   <!--<td class="product-category">Suscripción anual</td>-->

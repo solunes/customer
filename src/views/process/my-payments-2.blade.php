@@ -24,12 +24,17 @@
             <div class="content-body ecommerce-application">             
                 <!-- Wishlist Starts -->
                 <section id="wishlist" class="grid-view wishlist-items">
-                    @foreach($customer->payments as $payment)
+                    @foreach($customer->pending_payments as $payment)
                     <div class="card ecommerce-card">
                         <div class="card-content">
+                            <?php $sale_item_id = $payment->payment_item->item_id; ?>
+                            @if($sale_item_id)
                             <div class="item-img text-center">
-                                <img src="http://www.redusers.com/noticias/wp-content/uploads/2017/06/digital_evento_sitio-600x450.jpg" class="img-fluid" alt="img-placeholder">
+                              @if($sale_image = \Solunes\Sales\App\SaleItem::find($sale_item_id)&&$sale_image->product_bridge->image)
+                                <img src="{{ asset(\Asset::get_image_path('product-bridge-image','thumb',$sale_image)) }}" class="img-fluid" alt="img-placeholder">
+                              @endif
                             </div>
+                            @endif
                             <div class="card-body">
                                 <div class="item-wrapper">
                                     <div>
@@ -49,7 +54,11 @@
                             </div>
                             <div class="item-options text-center">
                                 <div class="wishlist remove-wishlist">
+                                  @if(config('payments.customer_cancel_payments')&&$payment->customer_cancel_payments)
+                                  <a href="{{ url('payments/cancel-payment/'.$payment->id) }}">
                                     <i class="feather icon-x align-middle"></i> Cancelar
+                                  </a>
+                                  @endif
                                 </div>
                                 <div class="cart move-cart">
                                   <a href="{{ url('pagostt/make-single-payment/'.$customer->id.'/'.$payment->id) }}">

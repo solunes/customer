@@ -118,6 +118,9 @@ class SolunesCustomer extends Migration
                 if(config('customer.dependant_fields.cellphone')){
                     $table->string('cellphone')->nullable();
                 }
+                if(config('customer.dependant_fields.member_code')){
+                    $table->string('member_code')->nullable();
+                }
                 if(config('customer.dependant_fields.ci_number')){
                     $table->string('ci_number')->nullable();
                     if(config('customer.fields.ci_extension')){
