@@ -11,6 +11,8 @@ return array(
 	// CUSTOM TRANS
 	'historial-pagos' => 'Historial de Pagos',
 	'pagos-pendientes' => 'Pagos Pendientes',
+	'cash' => 'Cash',
+	'points' => 'Points',
 	'0' => 'No',
 	'1' => 'Si',
 	'LP' => 'LP',
