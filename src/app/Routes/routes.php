@@ -12,7 +12,7 @@
 */
 
 Route::group(['prefix'=>'process'], function(){
-    if(!config('customer.custom.register')){
+    if(!config('customer.custom.custom_register')){
         Route::post('registro', 'ProcessController@postRegistro');
     }
     Route::get('check-ci/{ci_number}', 'ProcessController@getCheckCi');

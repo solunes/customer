@@ -86,7 +86,7 @@ class Customer {
         $customer->password = $password;
         $customer->status = 'normal';
         $customer->save();
-        if(config('customer.custom.register')){
+        if(config('customer.custom.custom_register')){
             $customer = \CustomFunc::customerCustomRegister($customer);
         }
         return $customer;
