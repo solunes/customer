@@ -22,6 +22,10 @@ class CustomerSaving {
             if($user_cellphone_check){
                 $user = $user_cellphone_check;
             }
+            if(!$event->agency_id&&auth()->check()){
+                $admin_user = auth()->user();
+                $event->agency_id = $admin_user->agency_id;
+            }
         } else if(!$event->user_id){
             $user_email_check = \App\User::whereNotNull('email')->where('email',$event->email)->first();
             if($user_email_check){
@@ -44,7 +48,9 @@ class CustomerSaving {
             $event->status = 'normal';
         }
         if(!$user){
-            if(!$event->password){
+            if(!$event->password&&config('customer.default_password')){
+                $password = config('customer.default_password');
+            } else if(!$event->password){
                 $password = rand(100000,999999);
             } else {
                 $password = $event->password;
