@@ -64,11 +64,12 @@ return [
         'password'=> 'required',
     ],
     'custom' => [
-        'register'=> true,
-        'register_rules'=> false,
-        'after_register'=> false,
-        'after_login'=> false,
-        'after_succesful_payment'=> false,
+        'register'=> true, // Habilitar registro
+        'custom_register'=> false, // Habilitar registro totalmente personalizado
+        'register_rules'=> false, // Haiblitar reglas de registro personalizadas
+        'after_register'=> false, // Habilitar funcion luego de registro
+        'after_login'=> false, // Habilitar funcion luego de login
+        'after_succesful_payment'=> false, // Habilitar funcion luego de pago
     ],
 
     // API
