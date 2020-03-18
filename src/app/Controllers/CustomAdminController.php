@@ -33,7 +33,7 @@ class CustomAdminController extends Controller {
 		if(!$user->customer){
 			return redirect('admin/model-list/payment')->with('message_success','Inició sesión como administrador.');
 		}
-		return redirect('admin/my-payments')->with('message_success','Inició sesión correctamente, a continuación sus pagos pendientes.');
+		return redirect(config('payments.redirect_after_payment'))->with('message_success','Inició sesión correctamente, a continuación sus pagos pendientes.');
 	}
 
 	public function getMyAccounts() {

@@ -21,59 +21,59 @@
 </div>
 
 
-            <div class="content-body ecommerce-application">             
-                <!-- Wishlist Starts -->
-                <section id="wishlist" class="grid-view wishlist-items">
-                    @foreach($customer->pending_payments as $payment)
-                    <div class="card ecommerce-card">
-                        <div class="card-content">
-                            <?php $sale_item_id = $payment->payment_item->item_id; ?>
-                            @if($sale_item_id)
-                            <div class="item-img text-center">
-                              <?php $sale_image = \Solunes\Sales\App\SaleItem::find($sale_item_id); ?>
-                              @if($sale_image&&$sale_image->product_bridge->image)
-                                <img src="{{ asset(\Asset::get_image_path('product-bridge-image','thumb',$sale_image->product_bridge->image)) }}" class="img-fluid" alt="img-placeholder">
-                              @endif
-                            </div>
-                            @endif
-                            <div class="card-body">
-                                <div class="item-wrapper">
-                                    <div>
-                                        <h4 class="item-price">
-                                            Monto: Bs. {{ $payment->amount }}
-                                        </h4>
-                                    </div>
-                                </div>
-                                <div class="item-name">
-                                    <span>{{ $payment->name }}</span>
-                                </div>
-                                <div>
-                                    <p class="item-description">
-                                        {{ $payment->sale_payment->sale->sale_item->detail }}
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="item-options text-center">
-                                <div class="wishlist remove-wishlist">
-                                  @if(config('payments.customer_cancel_payments')&&$payment->customer_cancel_payments)
-                                  <a href="{{ url('payments/cancel-payment/'.$payment->id) }}">
-                                    <i class="feather icon-x align-middle"></i> Cancelar
-                                  </a>
-                                  @endif
-                                </div>
-                                <div class="cart move-cart">
-                                  <a href="{{ url('pagostt/make-single-payment/'.$customer->id.'/'.$payment->id) }}">
-                                    <i class="feather icon-home"></i> <span class="move-to-cart">Realizar pago</span>
-                                  </a>
-                                </div>
-                            </div>
+<div class="content-body ecommerce-application">             
+    <!-- Wishlist Starts -->
+    <section id="wishlist" class="grid-view wishlist-items">
+        @foreach($customer->pending_payments as $payment)
+        <div class="card ecommerce-card">
+            <div class="card-content">
+                <?php $sale_item_id = $payment->payment_item->item_id; ?>
+                @if($sale_item_id)
+                <div class="item-img text-center">
+                  <?php $sale_image = \Solunes\Sales\App\SaleItem::find($sale_item_id); ?>
+                  @if($sale_image&&$sale_image->product_bridge->image)
+                    <img src="{{ asset(\Asset::get_image_path('product-bridge-image','thumb',$sale_image->product_bridge->image)) }}" class="img-fluid" alt="img-placeholder">
+                  @endif
+                </div>
+                @endif
+                <div class="card-body">
+                    <div class="item-wrapper">
+                        <div>
+                            <h4 class="item-price">
+                                Monto: Bs. {{ $payment->amount }}
+                            </h4>
                         </div>
                     </div>
-                    @endforeach
-
-                </section>
-                <!-- Wishlist Ends -->            
+                    <div class="item-name">
+                        <span>{{ $payment->name }}</span>
+                    </div>
+                    <div>
+                        <p class="item-description">
+                            {{ $payment->sale_payment->sale->sale_item->detail }}
+                        </p>
+                    </div>
+                </div>
+                <div class="item-options text-center">
+                    <div class="wishlist remove-wishlist">
+                      @if(config('payments.customer_cancel_payments')&&$payment->customer_cancel_payments)
+                      <a href="{{ url('payments/cancel-payment/'.$payment->id) }}">
+                        <i class="feather icon-x align-middle"></i> Cancelar
+                      </a>
+                      @endif
+                    </div>
+                    <div class="cart move-cart">
+                      <a href="{{ url('pagostt/make-single-payment/'.$customer->id.'/'.$payment->id) }}">
+                        <i class="feather icon-home"></i> <span class="move-to-cart">Realizar pago</span>
+                      </a>
+                    </div>
+                </div>
             </div>
+        </div>
+        @endforeach
+
+    </section>
+    <!-- Wishlist Ends -->            
+</div>
 @endsection
 
 @section('script')

@@ -240,7 +240,7 @@ class ProcessController extends Controller {
         }
         $customer->password = $request->input('password');
         $customer->save();
-        return redirect($this->prev)->with('message_success', 'Felicidades, su contraseña fue cambiada correctamente.');
+        return redirect(config('customer.redirect_after_login'))->with('message_success', 'Felicidades, su contraseña fue cambiada correctamente.');
       } else {
         return redirect($this->prev)->with(array('message_error' => 'Debe llenar todos los campos para finalizar'));
       }

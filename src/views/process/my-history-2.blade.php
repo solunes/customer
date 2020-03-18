@@ -41,8 +41,9 @@
                   <td></td>
                   <?php $sale_item_id = $payment->payment_item->item_id; ?>
                   <td class="product-img">
-                    @if($sale_image = \Solunes\Sales\App\SaleItem::find($sale_item_id)&&$sale_image->product_bridge->image)
-                      <img src="{{ asset(\Asset::get_image_path('product-bridge-image','thumb',$sale_image)) }}" alt="Banner">
+                    <?php $sale_image = \Solunes\Sales\App\SaleItem::find($sale_item_id); ?>
+                    @if($sale_image&&$sale_image->product_bridge->image)
+                      <img src="{{ asset(\Asset::get_image_path('product-bridge-image','thumb',$sale_image->product_bridge->image)) }}" alt="Banner">
                     @endif
                   </td>
                   <td class="product-name">{{ $payment->name }}</td>

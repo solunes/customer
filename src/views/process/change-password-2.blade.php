@@ -1,4 +1,4 @@
-@extends(config('solunes.dashadmin_layout'))
+@extends('master::layouts/admin-2-clean')
 @include('helpers.meta')
 
 @section('css')
@@ -6,43 +6,51 @@
 @endsection
 
 @section('content')
-<div class="container solunes-store">
-  <div class="account-profile">
+<section class="row flexbox-container">
+    <div class="col-xl-8 col-11 d-flex justify-content-center">
+        <div class="card bg-authentication rounded-0 mb-0">
+            <div class="row m-0">
+                <div class="col-lg-6 d-lg-block d-none text-center align-self-center px-1 py-0">
+                    <img src="{{ asset('assets/admin/img/login.png') }}" alt="branding logo">
+                </div>
+                <div class="col-lg-6 col-12 p-0">
+                    <div class="card rounded-0 mb-0 px-2">
+                        <div class="card-header pb-1">
+                            <div class="card-title">
+                                <h4 class="mb-0">Editar Contraseña</h4>
+                            </div>
+                        </div>
+                        <p class="px-2">Le recomendamos que ingrese una contraseña segura para continuar.</p>
+                        <div class="card-content">
+                            <div class="card-body pt-1">
+                                <form method="post" action="{{ url('account/change-password') }}">
+                                    <fieldset class="form-label-group form-group position-relative has-icon-left">
+                                        <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" required>
+                                        <div class="form-control-position">
+                                            <i class="feather icon-lock"></i>
+                                        </div>
+                                        <label for="user-name">Contraseña</label>
+                                    </fieldset>
 
-    <div class="row">
-      <div class="col-md-12 edit-profile">
-        <h2>Editar Contraseña</h2>
-
-        <form class="account-settings-form" action="{{ url('account/change-password') }}" method="post">
-        
-          <p class="small-paragraph-spacing">Le recomendamos que cambie su contraseña por una segura aquí.</p>
-          <div class="row form-section">
-            <div class="col-sm-6 col-md-6">
-              <div class="form-group">
-                <label for="password" class="col-form-label">Contraseña:</label>
-                <input type="password" class="form-control" name="password" id="password" placeholder="">
-              </div>
-            </div><!-- close .col -->
-            <div class="col-sm-6 col-md-6">
-              <div class="form-group">
-              <div>
-                <label for="confirm_password" class="col-form-label">Confirmar Contraseña:</label></div>
-                <input type="password" class="form-control" name="confirm_password" id="confirm_password" placeholder="">
-              </div>
-            </div><!-- close .col -->
-          </div><!-- close .row -->
-          <br>
-          <p><input type="submit" class="btn" value="Editar Contraseña"></p>
-          
-          <hr>
-          <br>
-        </form>
-
-      </div>
+                                    <fieldset class="form-label-group position-relative has-icon-left">
+                                        <input type="password" class="form-control" name="confirm_password" id="confirm_password" placeholder="Confirmar Contraseña" required>
+                                        <div class="form-control-position">
+                                            <i class="feather icon-lock"></i>
+                                        </div>
+                                        <label for="user-password">Confirmar Contraseña</label>
+                                    </fieldset>
+                                    <a href="{{ url('account/my-payments/'.config('customer.customers_token')) }}" class="btn btn-outline-primary float-left btn-inline">Saltar</a>
+                                    <button type="submit" class="btn btn-primary float-right btn-inline">Cambiar Contraseña</button>
+                                    <br><br>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
-  </div>
-</div><!-- End container  -->
+</section>
 @endsection
 
 @section('script')
