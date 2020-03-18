@@ -30,8 +30,9 @@
                             <?php $sale_item_id = $payment->payment_item->item_id; ?>
                             @if($sale_item_id)
                             <div class="item-img text-center">
-                              @if($sale_image = \Solunes\Sales\App\SaleItem::find($sale_item_id)&&$sale_image->product_bridge->image)
-                                <img src="{{ asset(\Asset::get_image_path('product-bridge-image','thumb',$sale_image)) }}" class="img-fluid" alt="img-placeholder">
+                              <?php $sale_image = \Solunes\Sales\App\SaleItem::find($sale_item_id); ?>
+                              @if($sale_image&&$sale_image->product_bridge->image)
+                                <img src="{{ asset(\Asset::get_image_path('product-bridge-image','thumb',$sale_image->product_bridge->image)) }}" class="img-fluid" alt="img-placeholder">
                               @endif
                             </div>
                             @endif
@@ -48,7 +49,7 @@
                                 </div>
                                 <div>
                                     <p class="item-description">
-                                        {{ $payment->name }}
+                                        {{ $payment->sale_payment->sale->sale_item->detail }}
                                     </p>
                                 </div>
                             </div>
