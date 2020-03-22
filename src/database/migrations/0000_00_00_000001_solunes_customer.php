@@ -74,7 +74,7 @@ class SolunesCustomer extends Migration
                 $table->string('address_extra')->nullable();
             }
             if(config('customer.fields.coordinates')||config('sales.ask_coordinates')){
-                $table->string('latitude')->nullable(); // Obligatorio
+                $table->string('latitude')->nullable();
                 $table->string('longitude')->nullable();
             }
             if(config('customer.fields.member_code')){
