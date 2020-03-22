@@ -99,7 +99,7 @@ class Customer extends Model {
     }
 
     public function pending_payments() {
-        return $this->hasMany('Solunes\Payments\App\Payment')->where('status','holding');
+        return $this->hasMany('Solunes\Payments\App\Payment')->whereIn('status',['holding','to-pay']);
     }
 
     public function paid_payments() {

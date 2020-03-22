@@ -40,31 +40,37 @@
                     <div class="item-wrapper">
                         <div>
                             <h4 class="item-price">
-                                Monto: Bs. {{ $payment->amount }}
+                                Monto: Bs. {{ $payment->amount }} ({{ trans('payments::admin.'.$payment->status) }})
                             </h4>
                         </div>
                     </div>
                     <div class="item-name">
-                        <span>{{ $payment->name }}</span>
+                        <span>{{ $payment->name }} </span>
                     </div>
                     <div>
                         <p class="item-description">
-                            {{ $payment->sale_payment->sale->sale_item->detail }}
+                            {{ $payment->payment_item->name }}<br>
                         </p>
                     </div>
                 </div>
                 <div class="item-options text-center">
                     <div class="wishlist remove-wishlist">
-                      @if(config('payments.customer_cancel_payments')&&$payment->customer_cancel_payments)
+                      @if(config('payments.customer_cancel_payments')&&$payment->customer_cancel_payments&&$payment->status=='holding')
                       <a href="{{ url('payments/cancel-payment/'.$payment->id) }}">
                         <i class="feather icon-x align-middle"></i> Cancelar
                       </a>
                       @endif
                     </div>
                     <div class="cart move-cart">
+                      @if($payment->sale_payment->payment_method->code=='pagostt')
                       <a href="{{ url('pagostt/make-single-payment/'.$customer->id.'/'.$payment->id) }}">
                         <i class="feather icon-home"></i> <span class="move-to-cart">Realizar pago</span>
                       </a>
+                      @elseif($payment->sale_payment)
+                      <a href="{{ url('process/sale/'.$payment->sale_payment->parent_id) }}">
+                        <i class="feather icon-home"></i> <span class="move-to-cart">Ir a Venta</span>
+                      </a>
+                      @endif
                     </div>
                 </div>
             </div>
