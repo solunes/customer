@@ -34,7 +34,7 @@ Route::group(['prefix'=>'account'], function(){
     Route::post('edit-customer', 'ProcessController@postEditCustomer')->middleware('auth');
     Route::post('edit-image', 'ProcessController@postEditImage')->middleware('auth');
     Route::get('delete-image/{token}', 'ProcessController@getDeleteImage')->middleware('auth');
-    Route::get('my-subscriptions/{token}', 'ProcessController@getmySubscriptions')->middleware('auth');
+    Route::get('my-subscriptions/{token}', 'ProcessController@getMySubscriptions')->middleware('auth');
     Route::get('subscriptions/{subscription_id}/{token}', 'ProcessController@getSubscriptions')->middleware('auth');
     Route::get('accept-subscription/{subscription_id}/{subscription_plan_id}', 'ProcessController@getAcceptSubscription')->middleware('auth');
 });
