@@ -141,6 +141,7 @@ class ProcessController extends Controller {
       } else {
         $agency = NULL;
       }
+      \Log::info(json_encode($rules));
       $validator = Validator::make($request->all(), $rules, $error_messages);
       if ($validator->passes()) {
         $email = $request->input('email');
@@ -157,7 +158,7 @@ class ProcessController extends Controller {
             $password_reminder->created_at = $now;
             $password_reminder->save();
         }
-        \Mail::send('customer::emails.reminder', ['token'=>$token, 'email'=>$email], function($m) use($email) {
+        \Mail::send('customer::emails.reminder', ['token'=>$token, 'agency_token'=>$request->input('agency_token'), 'email'=>$email], function($m) use($email) {
             $m->to($email, 'User')->subject(config('solunes.app_name').' | '.trans('master::mail.remind_password_title'));
         });
         $message = trans('master::form.password_request_success');
@@ -174,7 +175,7 @@ class ProcessController extends Controller {
       return view('customer::process.recovered-password-2', $array);
     }
 
-    public function getResetPassword($token, $agency_token) {
+    public function getResetPassword($token, $agency_token = NULL) {
       if (is_null($token)) return redirect('account/recover-password/'.$token.'/'.$agency_token)->with('message_error', trans('master::form.password_reset_error'));
       if (\App\PasswordReminder::where('token', $token)->count()>0) {
         $array = ['token'=>$token];

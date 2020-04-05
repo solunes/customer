@@ -38,7 +38,7 @@
                                         </div>
                                         <label for="user-password_confirmation">Confirmar Contraseña</label>
                                     </fieldset>
-                                    <input type="hidden" name="token" value="{{ $confirmation_token }}">
+                                    <input type="hidden" name="token" value="{{ $token}}">
                                     @if(config('customer.different_customers_by_agency'))
                                     <input type="hidden" id="agency_token" name="agency_token" value="{{ $agency_token }}" />
                                     @endif
