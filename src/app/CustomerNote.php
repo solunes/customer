@@ -17,6 +17,7 @@ class CustomerNote extends Model {
 
 	/* Updating rules */
 	public static $rules_edit = array(
+		'id'=>'required',
 		'parent_id'=>'required',
 		'name'=>'required',
 	);

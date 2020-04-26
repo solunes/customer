@@ -5,6 +5,7 @@ return [
     // PARAMETERS
     'send_mail' => false,
     'dependants' => false,
+    'addresses' => false,
     'tracking' => false,
     'tasks' => false,
     'notes' => false,

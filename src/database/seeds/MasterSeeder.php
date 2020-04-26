@@ -22,6 +22,9 @@ class MasterSeeder extends Seeder {
         if(config('customer.dependants')){
             $node_customer_dependant = \Solunes\Master\App\Node::create(['name'=>'customer-dependant', 'location'=>'customer', 'folder'=>'business']);
         }
+        if(config('customer.addresses')){
+            $node_customer_address = \Solunes\Master\App\Node::create(['name'=>'customer-address', 'table_name'=>'customer_addresses', 'location'=>'customer', 'folder'=>'business']);
+        }
         if(config('customer.notes')){
             $node_customer_note = \Solunes\Master\App\Node::create(['name'=>'customer-note', 'type'=>'child', 'parent_id'=>$node_customer->id, 'location'=>'customer', 'folder'=>'business']);
             \Solunes\Master\App\NodeExtra::create(['parent_id'=>$node_customer_note->id, 'type'=>'action_field', 'parameter'=>'field', 'value_array'=>json_encode(["edit"])]);

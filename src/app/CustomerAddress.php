@@ -4,16 +4,16 @@ namespace Solunes\Customer\App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CustomerDependant extends Model {
+class CustomerAddress extends Model {
 	
-	protected $table = 'customer_dependants';
+	protected $table = 'customer_addresses';
 	public $timestamps = true;
 
 	/* Creating rules */
 	public static $rules_create = array(
 		'parent_id'=>'required',
 		'name'=>'required',
-		'active'=>'required',
+		'address'=>'required',
 	);
 
 	/* Updating rules */
@@ -21,9 +21,9 @@ class CustomerDependant extends Model {
 		'id'=>'required',
 		'parent_id'=>'required',
 		'name'=>'required',
-		'active'=>'required',
+		'address'=>'required',
 	);
-    
+        
     public function parent() {
         return $this->belongsTo('Solunes\Customer\App\Customer');
     }

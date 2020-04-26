@@ -12,7 +12,7 @@
             <div class="row m-0">
                 <div class="col-lg-6 d-lg-block d-none text-center align-self-center px-1 py-0">
                     <a href="{{ url('inicio') }}">
-                        <img src="{{ asset('assets/admin/img/login.png') }}" alt="branding logo">
+                        <img src="{{ asset('assets/admin/img/login.png') }}" alt="logo">
                     </a>
                 </div>
                 <div class="col-lg-6 col-12 p-0">

@@ -11,7 +11,9 @@
         <div class="card bg-authentication rounded-0 mb-0">
             <div class="row m-0">
                 <div class="col-lg-6 d-lg-block d-none text-center align-self-center px-1 py-0">
-                    <img src="{{ asset('assets/admin/img/login.png') }}" alt="branding logo">
+                    <a href="{{ url('inicio') }}">
+                        <img src="{{ asset('assets/admin/img/login.png') }}" alt="logo">
+                    </a>
                 </div>
                 <div class="col-lg-6 col-12 p-0">
                     <div class="card rounded-0 mb-0 px-2">

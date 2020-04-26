@@ -91,7 +91,19 @@ class Customer extends Model {
     }
 
     public function customer_dependants() {
-        return $this->hasMany('Solunes\Customer\App\CustomerDependant');
+        return $this->hasMany('Solunes\Customer\App\CustomerDependant', 'parent_id');
+    }
+
+    public function customer_address() {
+        return $this->hasOne('Solunes\Customer\App\CustomerAddress', 'parent_id');
+    }
+
+    public function main_customer_address() {
+        return $this->hasOne('Solunes\Customer\App\CustomerAddress', 'parent_id')->where('id', $this->customer_address_id);
+    }
+
+    public function customer_addresses() {
+        return $this->hasMany('Solunes\Customer\App\CustomerAddress', 'parent_id');
     }
 
     public function payments() {
