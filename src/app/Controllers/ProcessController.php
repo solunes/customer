@@ -387,7 +387,7 @@ class ProcessController extends Controller {
       if($customer&&$subscription&&$subscription_plan){ 
         $customer_subscription = \Solunes\Customer\App\CustomerSubscription::where('customer_id', $customer->id)->where('subscription_id', $subscription->id)->first();
         if($customer_subscription){
-          if($customer_subscription_month = $customer_subscription->customer_subscription_month){
+          if($customer_subscription_month = $customer_subscription->active_customer_subscription_month){
             $sale = $customer_subscription_month->sale;
             $sale->status = 'cancelled';
             $sale->save();
@@ -419,8 +419,8 @@ class ProcessController extends Controller {
           $customer_subscription->name = $subscription->name;
           $customer_subscription->initial_date = date('Y-m-d');
           $customer_subscription->save();
-          $customer_subscription->load('customer_subscription_month');
-          if($customer_subscription_month = $customer_subscription->customer_subscription_month){
+          $customer_subscription->load('active_customer_subscription_month');
+          if($customer_subscription_month = $customer_subscription->active_customer_subscription_month){
             $redirect = url('pagostt/make-single-payment/'.$customer_subscription->customer_id.'/'.$customer_subscription_month->sale->sale_payment->payment_id);
           } else {
             $redirect = 'account/my-subscriptions/1354351278';

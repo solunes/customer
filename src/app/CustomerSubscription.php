@@ -51,8 +51,16 @@ class CustomerSubscription extends Model {
         return $this->hasMany('Solunes\Customer\App\CustomerSubscriptionMonth', 'parent_id');
     }
 
+	public function customer_subscription_month() {
+        return $this->hasOne('Solunes\Customer\App\CustomerSubscriptionMonth', 'parent_id');
+    }
+
 	public function active_customer_subscription_months() {
         return $this->hasMany('Solunes\Customer\App\CustomerSubscriptionMonth', 'parent_id')->where('status','!=','cancelled');
+    }
+
+	public function active_customer_subscription_month() {
+        return $this->hasOne('Solunes\Customer\App\CustomerSubscriptionMonth', 'parent_id')->where('status','!=','cancelled');
     }
 
 	public function super_active_customer_subscription_months() {
