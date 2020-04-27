@@ -16,7 +16,13 @@ class CustomerSubscriptionMonthCreating
             $customer_subscription_month->status = 'cancelled';
             $customer_subscription_month->save();
         }
-        $sale = \Sales::generateSingleSale($event->parent->user_id, $event->parent->customer_id, 1, 2, 1, $event->parent->customer->nit_name, $event->parent->customer->nit_number, $event->subscription_plan->product_bridge->name.' ('.$event->initial_date.' - '.$event->end_date.')', $event->amount, $event->subscription_plan->product_bridge_id);
+        $payment_method = \Solunes\Payments\App\PaymentMethod::where('code', config('payments.default_payment_method_code'))->first();
+        if($payment_method){
+            $payment_method_id = $payment_method->id;
+        } else {
+            $payment_method_id = 2;
+        }
+        $sale = \Sales::generateSingleSale($event->parent->customer->user_id, $event->parent->customer_id, 1, $payment_method->id, 1, $event->parent->customer->nit_name, $event->parent->customer->nit_number, $event->subscription_plan->product_bridge->name.' ('.$event->initial_date.' - '.$event->end_date.')', $event->amount, $event->subscription_plan->product_bridge_id);
         $event->sale_id = $sale->id;
         return $event;
     }

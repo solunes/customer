@@ -29,12 +29,12 @@
             <div class="card-content">
                 <?php $sale_item_id = $payment->payment_item->item_id; ?>
                 @if($sale_item_id)
-                <div class="item-img text-center">
-                  <?php $sale_image = \Solunes\Sales\App\SaleItem::find($sale_item_id); ?>
+                <?php $sale_image = \Solunes\Sales\App\SaleItem::find($sale_item_id); ?>
                   @if($sale_image&&$sale_image->product_bridge->image)
-                    <img src="{{ asset(\Asset::get_image_path('product-bridge-image','thumb',$sale_image->product_bridge->image)) }}" class="img-fluid" alt="img-placeholder">
+                    <div class="item-img text-center">
+                      <img src="{{ asset(\Asset::get_image_path('product-bridge-image','thumb',$sale_image->product_bridge->image)) }}" class="img-fluid" alt="img-placeholder">
+                    </div>
                   @endif
-                </div>
                 @endif
                 <div class="card-body">
                     <div class="item-wrapper">
