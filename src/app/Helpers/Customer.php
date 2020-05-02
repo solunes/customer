@@ -268,6 +268,8 @@ class Customer {
                     } else if($receipt_file) {
                         $payment->receipt_url = $receipt_file;
                     }
+                } else if($receipt_file){
+                    $payment->receipt_url = $receipt_file;
                 }
                 $payment->status = 'paid';
                 $payment->payment_date = $date;
