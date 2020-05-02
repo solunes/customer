@@ -275,6 +275,20 @@ class ProcessController extends Controller {
       return view('customer::process.my-payments-2', $array);
     }
 
+    public function getMyCustomerPayments($token) {
+      $user = auth()->user();
+      $array['page'] = \Solunes\Master\App\Page::find(1);
+      $array['user'] = $user;
+      if(config('customer.fields.city')){
+        $array['cities'] = \Solunes\Business\App\City::get()->lists('name','id')->toArray();
+      }
+      $array['customer'] = $user->customer;
+      if(!$array['customer']){
+        return redirect($this->prev)->with('message_error', 'No tiene una cuenta de cliente vigente.');
+      }
+      return view('customer::process.my-customer-payments-2', $array);
+    }
+
     public function getMyHystory($token) {
       $user = auth()->user();
       $array['page'] = \Solunes\Master\App\Page::find(1);

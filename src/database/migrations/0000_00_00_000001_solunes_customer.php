@@ -259,6 +259,26 @@ class SolunesCustomer extends Migration
                 $table->timestamps();
             });
         }
+        if(config('customer.payments')){
+            Schema::create('customer_payments', function (Blueprint $table) {
+                $table->increments('id');
+                $table->integer('parent_id')->nullable();
+                $table->integer('sale_id')->nullable();
+                $table->integer('payment_id')->nullable();
+                $table->boolean('has_invoice')->default(1);
+                $table->string('customer_code')->nullable();
+                $table->string('payment_code')->nullable();
+                $table->string('name')->nullable();
+                $table->string('detail')->nullable();
+                $table->string('period')->nullable();
+                $table->decimal('price', 10, 2)->default(0);
+                if(config('payments.payment_blocks')){
+                    $table->integer('customer_payment_check_id')->nullable();
+                    $table->string('message_block')->nullable();
+                }
+                $table->timestamps();
+            });
+        }
         if(config('customer.ppvs')){
             Schema::create('ppvs', function (Blueprint $table) {
                 $table->increments('id');
@@ -356,6 +376,7 @@ class SolunesCustomer extends Migration
         Schema::dropIfExists('subscriptions');
         Schema::dropIfExists('ppv_customers');
         Schema::dropIfExists('ppvs');
+        Schema::dropIfExists('customer_payments');
         Schema::dropIfExists('nfcs');
         Schema::dropIfExists('customer_wallet_transactions');
         Schema::dropIfExists('customer_ticket_messages');

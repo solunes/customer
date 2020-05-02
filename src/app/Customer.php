@@ -106,6 +106,10 @@ class Customer extends Model {
         return $this->hasMany('Solunes\Customer\App\CustomerAddress', 'parent_id');
     }
 
+    public function customer_payments() {
+        return $this->hasMany('Solunes\Customer\App\CustomerPayment', 'parent_id');
+    }
+
     public function payments() {
         return $this->hasMany('Solunes\Payments\App\Payment');
     }

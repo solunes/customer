@@ -53,8 +53,10 @@
                           <div class="chip-body">
                               @if($payment->invoice_url)
                                 <div class="chip-text"><a target="_blank" href="{{ $payment->invoice_url }}">Ver Factura</a></div>
+                              @elseif($payment->receipt_url)
+                                <div class="chip-text"><a target="_blank" href="{{ asset(\Asset::get_file('payment-receipt_file',$payment->receipt_url)) }}">Ver Recibo</a></div>
                               @else
-                                <div class="chip-text"><a href="#">Ver Factura</a></div>
+                                <div class="chip-text"><a href="#">-</a></div>
                               @endif
                           </div>
                       </div>

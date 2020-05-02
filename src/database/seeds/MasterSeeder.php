@@ -48,6 +48,9 @@ class MasterSeeder extends Seeder {
         if(config('customer.nfcs')){
             $node_nfc = \Solunes\Master\App\Node::create(['name'=>'nfc', 'location'=>'customer', 'folder'=>'business']);
         }
+        if(config('customer.payments')){
+            $node_customer_payment = \Solunes\Master\App\Node::create(['name'=>'customer-payment', 'type'=>'child', 'parent_id'=>$node_customer->id, 'location'=>'customer', 'folder'=>'business']);
+        }
         if(config('customer.ppvs')){
             $node_ppv = \Solunes\Master\App\Node::create(['name'=>'ppv', 'location'=>'customer', 'folder'=>'business']);
             $node_ppv_customer = \Solunes\Master\App\Node::create(['name'=>'ppv-customer', 'location'=>'customer', 'folder'=>'business']);

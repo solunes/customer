@@ -30,6 +30,7 @@ Route::group(['prefix'=>'account'], function(){
     Route::post('change-password', 'ProcessController@postChangePassword')->middleware('auth');
     Route::get('my-account/{token}', 'ProcessController@getMyAccount')->middleware('auth');
     Route::get('my-payments/{token}', 'ProcessController@getMyPayments')->middleware('auth');
+    Route::get('my-customer-payments/{token}', 'ProcessController@getMyCustomerPayments')->middleware('auth');
     Route::get('my-history/{token}', 'ProcessController@getMyHystory')->middleware('auth');
     Route::post('edit-customer', 'ProcessController@postEditCustomer')->middleware('auth');
     Route::post('edit-image', 'ProcessController@postEditImage')->middleware('auth');

@@ -99,8 +99,11 @@ class Customer {
         if($customer = \Solunes\Customer\App\Customer::where('id',$customer_id)->first()){
             // Definir variables de cliente en formato PagosTT: email, name, nit_name, nit_number
             $array['id'] = $customer->id;
-            $array['email'] = $customer->email;
-            //$array['email'] = 'edumejia30@gmail.com';
+            if(!$customer->email||config('customer.enable_test')){
+                $array['email'] = config('customer.global_email');
+            } else {
+                $array['email'] = $customer->email;
+            }
             $array['ci_number'] = $customer->ci_number;
             if(config('payments.sfv_version')>1||config('customer.fields.ci_extension')){
                 $array['ci_extension'] = $customer->ci_extension;
@@ -236,15 +239,32 @@ class Customer {
     public static function transactionSuccesful($transaction) {
         $date = date('Y-m-d');
         if($transaction&&$transaction->status=='paid'){
+            $receipt_file = NULL;
+            if(config('payments.receipts')){
+                $receipt_payments = [];
+                foreach($transaction->transaction_payments as $transaction_payment){
+                    $payment = $transaction_payment->payment;
+                    if(!$payment->invoice){
+                        $receipt_payments[] = $payment;
+                    }
+                }
+                if(count($receipt_payments)>0){
+                    $receipt_number = 1000; // CAMBIAR A SECUENCIAL!!! TODO
+                    $receipt_file = \Payments::generateReceipt($transaction->customer, $receipt_number, $receipt_payments);
+                }
+            }
             foreach($transaction->transaction_payments as $transaction_payment){
                 $transaction_payment->processed = 1;
                 $transaction_payment->save();
                 $payment = $transaction_payment->payment;
                 if($transaction_invoice = $transaction->transaction_invoice){
-                    $payment->invoice = 1;
                     $payment->invoice_name = $transaction_invoice->customer_name;
                     $payment->invoice_nit = $transaction_invoice->customer_nit;
-                    $payment->invoice_url = $transaction_invoice->invoice_url;
+                    if($payment->invoice){
+                        $payment->invoice_url = $transaction_invoice->invoice_url;
+                    } else if($receipt_file) {
+                        $payment->receipt_url = $receipt_file;
+                    }
                 }
                 $payment->status = 'paid';
                 $payment->payment_date = $date;
