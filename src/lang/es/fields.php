@@ -89,4 +89,12 @@ return [
     'icon' => 'Ícono',
     'invoice_url' => 'URL de Factura',
     'processing' => '¿Procesando?',
+    'customer_address' => 'Dirección de Cliente',
+    'customer_payment_check' => 'Pago de Cliente Asociado',
+    'customer_payments' => 'Pagos de Cliente',
+    'has_invoice' => '¿Factura?',
+    'message_block' => 'Mensaje de Bloqueo de Deuda',
+    'payment' => 'Pago',
+    'payment_code' => 'Código de Pago',
+    'period' => 'Periodo',
 ];

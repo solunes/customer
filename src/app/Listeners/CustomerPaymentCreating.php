@@ -36,8 +36,18 @@ class CustomerPaymentCreating {
         }
         if($customer&&!$event->sale_id&&!$event->payment_id){
             $event->parent_id = $customer->id;
-            $sale = \Sales::generateSingleSale($customer->user->id, $customer->id, $product_bridge->currency_id, 2, $event->has_invoice, $customer->last_name, $customer->ci_number, $event->name.' - '.$event->payment_code.' - '.$event->period, $event->price, $product_bridge->id, 1);
+            $payment_method = \Solunes\Payments\App\PaymentMethod::where('code', config('payments.default_payment_method_code'))->first();
+            if($payment_method){
+                $payment_method_id = $payment_method->id;
+            } else {
+                $payment_method_id = 2;
+            }
+            $sale = \Sales::generateSingleSale($customer->user->id, $customer->id, $product_bridge->currency_id, $payment_method_id, $event->has_invoice, $customer->last_name, $customer->ci_number, $event->name.' - '.$event->payment_code.' - '.$event->period, $event->price, $product_bridge->id, 1);
             $payment = $sale->sale_payment->payment;
+            if(!$payment->customer_payment_id){
+                $payment->customer_payment_id = $event->id;
+                $payment->save();
+            }
             if($event->customer_payment_check_id){
                 $payment->payment_check_id = $event->customer_payment_check->payment_id;
                 $payment->save();

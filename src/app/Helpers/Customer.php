@@ -242,6 +242,7 @@ class Customer {
             $receipt_file = NULL;
             if(config('payments.receipts')){
                 $receipt_payments = [];
+                $receipt_number = 1000;
                 foreach($transaction->transaction_payments as $transaction_payment){
                     $payment = $transaction_payment->payment;
                     if(!$payment->invoice){
@@ -249,7 +250,9 @@ class Customer {
                     }
                 }
                 if(count($receipt_payments)>0){
-                    $receipt_number = 1000; // CAMBIAR A SECUENCIAL!!! TODO
+                    if($receipt_payment = \Solunes\Payments\App\Payment::where('invoice',0)->whereNotNull('receipt_code')->orderBy('receipt_code','DESC')->first()){
+                        $receipt_number = $receipt_payment->receipt_code + 1;
+                    }
                     $receipt_file = \Payments::generateReceipt($transaction->customer, $receipt_number, $receipt_payments);
                 }
             }
@@ -284,6 +287,14 @@ class Customer {
                     $sale->status = 'paid';
                     $sale->save();
                     \Sales::customerSuccessfulPayment($sale, $customer);
+                    if(config('payments.payment_blocks')){
+                        $payment_check = \Solunes\Payments\App\Payment::where('payment_check_id',$sale_payment->payment_id)->first();
+                        if($payment_check){
+                            \Log::info('payment_check'.$payment_check->id);
+                            $payment_check->payment_check_id = NULL;
+                            $payment_check->save();
+                        }
+                    }
                     if(config('solunes.inventory')){
                         \Inventory::successful_sale($sale, $sale_payment);
                     }
