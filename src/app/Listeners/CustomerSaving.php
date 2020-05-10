@@ -149,13 +149,13 @@ class CustomerSaving {
             if($ip_array['ip']&&!$event->ip){
                 $event->ip = $ip_array['ip'];
             }
-            if(config('customer.country')&&$ip_array['country']&&!$event->country_id){
+            if(config('customer.fields.country')&&$ip_array['country']&&!$event->country_id){
                 $event->country_id = $ip_array['country']->id;
             }
-            if(config('customer.region')&&$ip_array['region']&&!$event->region_id){
+            if(config('customer.fields.region')&&$ip_array['region']&&!$event->region_id){
                 $event->region_id = $ip_array['region']->id;
             }
-            if(config('customer.city')&&$ip_array['city']&&!$event->city_id){
+            if(config('customer.fields.city')&&$ip_array['city']&&!$event->city_id){
                 $event->city_id = $ip_array['city']->id;
             }
         }
