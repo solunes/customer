@@ -22,6 +22,7 @@ return [
     'enable_test' => env('ENABLE_TEST', 1),
     'customer_agency' => false,
     'seller_user' => false,
+    'detect_ip' => false,
     'after_seed' => true,
     'custom_successful_payment' => false,
     'global_email' => 'edumejia30@gmail.com',
@@ -34,6 +35,7 @@ return [
     'default_password' => '12345678', // Habilitar para validar navegación y demás
     'fields' => [
         'country'=> false,
+        'region'=> false,
         'city'=> false,
         'address'=> false,
         'coordinates'=> false,

@@ -86,6 +86,10 @@ class Customer extends Model {
         return $this->belongsTo('Solunes\Business\App\Country');
     }
 
+    public function region() {
+        return $this->belongsTo('Solunes\Business\App\Region');
+    }
+
     public function city() {
         return $this->belongsTo('Solunes\Business\App\City');
     }

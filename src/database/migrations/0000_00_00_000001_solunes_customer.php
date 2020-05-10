@@ -62,11 +62,18 @@ class SolunesCustomer extends Migration
             $table->enum('type', ['business','agency','person'])->nullable()->default('business'); // Obligatorio
             $table->enum('status', ['normal','ask_password','pending_confirmation','banned'])->nullable()->default('ask_password'); // Obligatorio
             $table->boolean('active')->nullable()->default(0); // Obligatorio
+            if(config('customer.detect_ip')){
+                $table->string('ip')->nullable();
+            }
             if(config('customer.addresses')){
                 $table->integer('customer_address_id')->nullable();
             }
             if(config('customer.fields.country')||config('sales.delivery_country')){
                 $table->integer('country_id')->nullable();
+            }
+            if(config('customer.fields.region')||config('sales.delivery_region')){
+                $table->integer('region_id')->nullable();
+                $table->string('region_other')->nullable();
             }
             if(config('customer.fields.city')||config('sales.delivery_city')){
                 $table->integer('city_id')->nullable();
