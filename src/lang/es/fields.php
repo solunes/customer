@@ -97,4 +97,9 @@ return [
     'payment' => 'Pago',
     'payment_code' => 'Código de Pago',
     'period' => 'Periodo',
+    'country' => 'País',
+    'ip' => 'IP',
+    'region' => 'Región',
+    'region_other' => 'Otra Región',
+
 ];
