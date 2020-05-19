@@ -288,6 +288,9 @@ class Customer {
                     $sale->paid_amount = $payment->real_amount;
                     $sale->status = 'paid';
                     $sale->save();
+                    if(config('payments.notify_agency_on_payment')&&$sale->agency){
+                        \FuncNode::make_email('successful-payment', [$sale->agency->email], []);
+                    }
                     \Sales::customerSuccessfulPayment($sale, $customer);
                     if(config('payments.payment_blocks')){
                         $payment_check = \Solunes\Payments\App\Payment::where('payment_check_id',$sale_payment->payment_id)->first();
