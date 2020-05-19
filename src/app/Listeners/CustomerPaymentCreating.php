@@ -5,6 +5,7 @@ namespace Solunes\Customer\App\Listeners;
 class CustomerPaymentCreating {
 
     public function handle($event) {
+        $event->price = str_replace(',', '', $event->price);
         if(!$product_bridge = \Solunes\Business\App\ProductBridge::where('product_type','customer-payment')->where('product_id', $event->id)->first()){
             $product_bridge = new \Solunes\Business\App\ProductBridge;
             $product_bridge->product_type = 'customer-payment';

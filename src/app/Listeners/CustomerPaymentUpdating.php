@@ -47,6 +47,7 @@ class CustomerPaymentUpdating {
                 $sale->save();
             }
             if($event->isDirty('price')){
+                $event->price = str_replace(',', '', $event->price);
                 $payment->real_amount = $event->price;
                 $payment->save();
                 $payment_item = $payment->payment_item;
