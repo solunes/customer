@@ -306,9 +306,10 @@ class ProcessController extends Controller {
     public function postEditCustomer(Request $request) {
       $user = \Auth::user();
       $customer = $user->customer;
-      if($customer&&$request->has('first_name')&&$request->has('last_name')){ 
+      if($customer&&$request->has('first_name')&&$request->has('last_name')&&$request->has('cellphone_name')){ 
         $customer->first_name = $request->input('first_name');
         $customer->last_name = $request->input('last_name');
+        $customer->cellphone = $request->input('cellphone');
         if(config('customer.fields.city')){
           $customer->city_id = $request->input('city_id');
         }

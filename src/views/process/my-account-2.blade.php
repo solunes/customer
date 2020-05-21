@@ -122,6 +122,21 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="col-12">
+                                                    <div class="form-group row">
+                                                        <div class="col-md-4">
+                                                            <span>Teléfono / Celular:</span>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <div class="position-relative has-icon-left">
+                                                                <input type="text" class="form-control" name="cellphone" id="cellphone" value="{{ $customer->cellphone }}">
+                                                                <div class="form-control-position">
+                                                                    <i class="feather icon-user"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 @if(config('customer.fields.city'))
                                                 <div class="col-12">
                                                     <div class="form-group row">
