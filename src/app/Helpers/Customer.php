@@ -250,7 +250,7 @@ class Customer {
                     }
                 }
                 if(count($receipt_payments)>0){
-                    if($receipt_payment = \Solunes\Payments\App\Payment::where('invoice',0)->whereNotNull('receipt_code')->orderBy('receipt_code','DESC')->first()){
+                    if($receipt_payment = \Solunes\Payments\App\Payment::whereNotNull('receipt_code')->orderBy('receipt_code','DESC')->first()){
                         $receipt_number = $receipt_payment->receipt_code + 1;
                     }
                     $receipt_file = \Payments::generateReceipt($transaction->customer, $receipt_number, $receipt_payments);
@@ -266,9 +266,11 @@ class Customer {
                     if($payment->invoice){
                         $payment->invoice_url = $transaction_invoice->invoice_url;
                     } else if($receipt_file) {
+                        $payment->receipt_code = $receipt_number;
                         $payment->receipt_url = $receipt_file;
                     }
                 } else if($receipt_file){
+                    $payment->receipt_code = $receipt_number;
                     $payment->receipt_url = $receipt_file;
                 }
                 $payment->status = 'paid';

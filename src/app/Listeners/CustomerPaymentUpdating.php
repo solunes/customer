@@ -12,7 +12,9 @@ class CustomerPaymentUpdating {
         } else {
             $customer = NULL;
         }
-        if($customer&&$event->sale_id&&$event->payment_id&&$event->payment->status=='holding'&&$event->sale->status=='holding'){
+        $event->load('sale');
+        $event->load('payment');
+        if($customer&&$event->sale_id&&$event->payment_id&&$event->payment&&$event->sale&&$event->payment->status=='holding'&&$event->sale->status=='holding'){
             $sale = $event->sale;
             $payment = \Payments::generatePayment($sale);
             $product_bridge = \Solunes\Business\App\ProductBridge::where('product_type','customer-payment')->where('product_id', $event->id)->first();
