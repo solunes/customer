@@ -14,7 +14,7 @@ class CustomerPaymentUpdating {
         }
         if($customer&&$event->sale_id&&$event->payment_id&&$event->payment->status=='holding'&&$event->sale->status=='holding'){
             $sale = $event->sale;
-            $payment = $event->payment;
+            $payment = \Payments::generatePayment($sale);
             $product_bridge = \Solunes\Business\App\ProductBridge::where('product_type','customer-payment')->where('product_id', $event->id)->first();
             if($event->isDirty('message_block')){
                 $payment->message_block = $event->message_block;
@@ -27,9 +27,10 @@ class CustomerPaymentUpdating {
                 $sub_name = $event->name.' - '.$event->payment_code.' - '.$event->period;
                 $payment->name = $sub_name;
                 $payment->save();
-                $payment_item = $payment->payment_item;
-                $payment_item->name = $sub_name;
-                $payment_item->save();
+                if($payment_item = $payment->payment_item){
+                    $payment_item->name = $sub_name;
+                    $payment_item->save();
+                }
                 $sale->name = $sub_name;
                 $sale->save();
                 $sale_item = $sale->sale_item;
@@ -50,10 +51,11 @@ class CustomerPaymentUpdating {
                 $event->price = str_replace(',', '', $event->price);
                 $payment->real_amount = $event->price;
                 $payment->save();
-                $payment_item = $payment->payment_item;
-                $payment_item->price = $event->price;
-                $payment_item->amount = $event->price;
-                $payment_item->save();
+                if($payment_item = $payment->payment_item){
+                    $payment_item->price = $event->price;
+                    $payment_item->amount = $event->price;
+                    $payment_item->save();                    
+                }
                 $sale->amount = $event->price;
                 $sale->save();
                 $sale_item = $sale->sale_item;
@@ -64,9 +66,11 @@ class CustomerPaymentUpdating {
                 $sale_payment->amount = $event->price;
                 $sale_payment->pending_amount = $event->price;
                 $sale_payment->save();
-                $sale_payment_item = $sale_payment->sale_payment_item;
-                $sale_payment_item->amount = $event->price;
-                $sale_payment_item->save();
+                if($sale_payment_item = $sale_payment->sale_payment_item){
+                    $sale_payment_item = $sale_payment->sale_payment_item;
+                    $sale_payment_item->amount = $event->price;
+                    $sale_payment_item->save();
+                }
                 if($product_bridge){
                     $product_bridge->price = $event->price;
                     $product_bridge->save();
