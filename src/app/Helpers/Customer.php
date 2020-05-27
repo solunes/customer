@@ -122,6 +122,7 @@ class Customer {
             // Consultar y obtener los pagos pendientes del cliente en formato PagosTT: concepto, cantidad, costo_unitario
             $pending_payments = [];
             $payment = NULL;
+            $invoice = false;
             if($get_pending_payments&&config('payments.pagostt_params.customer_all_payments')){
                 foreach($customer->pending_payments as $payment){
                     if($for_api){
@@ -132,6 +133,9 @@ class Customer {
                         $pending_payments[$payment->id]['amount'] = count($payment->payment_items);
                     } else {
                         $pending_payments[$payment->id]['amount'] = $payment->amount;
+                    }
+                    if($payment->invoice){
+                        $invoice = true;
                     }
                     foreach($payment->payment_items as $payment_item){
                         if(config('customer.enable_test')==1){
@@ -148,7 +152,7 @@ class Customer {
                     return [];
                 }
                 $array['payment']['name'] = 'Múltiples Pagos';
-                $array['payment']['has_invoice'] = $payment->invoice;
+                $array['payment']['has_invoice'] = $invoice;
                 //$array['payment']['metadata'][] = \Pagostt::generatePaymentMetadata('Tipo de Cambio', $payment->exchange);
                 $array['payment'] = \Pagostt::paymentAddPaymentInvoice($array['payment'], $payment);
             }
@@ -199,6 +203,7 @@ class Customer {
     public static function getCheckboxPayments($customer_id, $payments_array, $custom_app_key) {
         \Log::info('getCheckboxPayments'.json_encode($payments_array));
         $payments = \Solunes\Payments\App\Payment::whereIn('id', $payments_array)->get();
+        $invoice = 0;
         if(count($payments)>0){
             $items = [];
             foreach($payments as $payment){
@@ -207,6 +212,9 @@ class Customer {
                 $item['id'] = $payment->id;
                 $item['name'] = $payment->name;
                 $subitems_array = [];
+                if($payment->invoice){
+                    $invoice = 1;
+                }
                 foreach($payment->payment_items as $payment_item){
                     if(config('customer.enable_test')==1){
                         $amount = 1;
@@ -226,7 +234,7 @@ class Customer {
             }
             $array['pending_payments'] = $items;
             $array['payment']['name'] = 'Múltiples pagos seleccionados';
-            $array['payment']['has_invoice'] = $payment->invoice;
+            $array['payment']['has_invoice'] = $invoice;
             //$array['payment']['metadata'][] = \Pagostt::generatePaymentMetadata('Tipo de Cambio', $payment->exchange);
             $array['payment'] = \Pagostt::paymentAddPaymentInvoice($array['payment'], $payment);
             return $array;
