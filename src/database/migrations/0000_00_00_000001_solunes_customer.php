@@ -122,6 +122,9 @@ class SolunesCustomer extends Migration
                 $table->increments('id');
                 $table->integer('customer_id')->nullable();
                 $table->string('name')->nullable();
+                if(config('customer.dependant_fields.user_id')){
+                    $table->integer('user_id')->nullable();
+                }
                 if(config('customer.dependant_fields.email')){
                     $table->string('email')->nullable();
                 }

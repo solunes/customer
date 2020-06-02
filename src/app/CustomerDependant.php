@@ -25,11 +25,16 @@ class CustomerDependant extends Model {
 	);
     
     public function parent() {
-        return $this->belongsTo('Solunes\Customer\App\Customer');
+        return $this->belongsTo('Solunes\Customer\App\Customer','customer_id');
     }
 
     public function customer() {
-        return $this->belongsTo('Solunes\Customer\App\Customer', 'parent_id');
+        return $this->belongsTo('Solunes\Customer\App\Customer');
     }
+
+    public function user() {
+        return $this->belongsTo('App\User');
+    }
+
 
 }
