@@ -11,7 +11,7 @@ class CustomerDependant extends Model {
 
 	/* Creating rules */
 	public static $rules_create = array(
-		'parent_id'=>'required',
+		'customer_id'=>'required',
 		'name'=>'required',
 		'active'=>'required',
 	);
@@ -19,7 +19,7 @@ class CustomerDependant extends Model {
 	/* Updating rules */
 	public static $rules_edit = array(
 		'id'=>'required',
-		'parent_id'=>'required',
+		'customer_id'=>'required',
 		'name'=>'required',
 		'active'=>'required',
 	);
