@@ -337,6 +337,9 @@ class Customer {
                     \CustomFunc::customer_successful_payment($payment);
                 }
             }
+            if(config('customer.custom_successful_transaction')){
+                \CustomFunc::customer_successful_transaction($transaction);
+            }
             return true;
         } else {
             return false;
