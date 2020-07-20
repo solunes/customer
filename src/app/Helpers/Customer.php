@@ -125,6 +125,7 @@ class Customer {
             $invoice = false;
             $currency = NULL;
             if($get_pending_payments&&config('payments.pagostt_params.customer_all_payments')){
+                $discount_amount = 0;
                 foreach($customer->pending_payments as $payment){
                     if($for_api){
                         $pending_payments[$payment->id]['name'] = $payment->name;
@@ -155,6 +156,10 @@ class Customer {
                             $extra_parameters = \Pagostt::getItemExtraParameters($payment_item);
                             $pending_payment = \Pagostt::generatePaymentItem($payment_item->name, $payment_item->quantity, $amount, $payment->invoice, $extra_parameters);
                             $pending_payments[$payment->id]['items'][] = $pending_payment;
+
+                        }
+                        if($payment->discount_amount>0){
+                            $discount_amount += $payment->discount_amount;
                         }
                     }
                 }
@@ -164,6 +169,9 @@ class Customer {
                 $array['payment']['name'] = 'Múltiples Pagos';
                 $array['payment']['has_invoice'] = $invoice;
                 $array['payment']['currency'] = $currency->code;
+                if($discount_amount>0){
+                    $item['discount_amount'] = $discount_amount;
+                }
                 //$array['payment']['metadata'][] = \Pagostt::generatePaymentMetadata('Tipo de Cambio', $payment->exchange);
                 $array['payment'] = \Pagostt::paymentAddPaymentInvoice($array['payment'], $payment);
             }
@@ -204,12 +212,17 @@ class Customer {
             } else if($currency->code==$payment->currency->code) {
                 $item['amount'] = $payment->amount;
             } else {
-                $item['amount'] = \Pagostt::transformCurrency($payment->amount, $currency->main_exchange);
+                $item['amount'] = \Pagostt::discount_amount($payment->amount, $currency->main_exchange);
             }
             $item['currency_exchange'] = $payment->currency->main_exchange;
             $item['items'] = $subitems_array;
             $item['has_invoice'] = $payment->invoice;
             $item['currency'] = $payment->currency->code;
+            \Log::info('1: '.$payment->real_amount);
+            \Log::info('2: '.$item['amount']);
+            if($payment->discount_amount>0){
+                $item['discount_amount'] = $payment->discount_amount;
+            }
             //$item['metadata'][] = \Pagostt::generatePaymentMetadata('Tipo de Cambio', $payment->exchange);
             $item = \Pagostt::paymentAddPaymentInvoice($item, $payment);
             return $item;
@@ -226,6 +239,8 @@ class Customer {
         if(count($payments)>0){
             $items = [];
             $currency = NULL;
+            $total = 0;
+            $discount_amount = 0;
             foreach($payments as $payment){
                 // Definir variables de pago en formato PagosTT: name, items[concepto, cantidad, costo_unitario]
                 $item = [];
@@ -258,6 +273,10 @@ class Customer {
                 } else {
                     $item['amount'] = \Pagostt::transformCurrency($payment->amount, $currency->main_exchange);
                 }
+                if($payment->discount_amount>0){
+                    $discount_amount += $payment->discount_amount;
+                }
+                $total += $item['amount'];
                 $item['items'] = $subitems_array;
                 $items[$payment->id] = $item;
             }
@@ -266,6 +285,9 @@ class Customer {
             $array['payment']['has_invoice'] = $invoice;
             if($currency){
                 $array['payment']['currency'] = $currency->code;
+            }
+            if($discount_amount>0){
+                $item['discount_amount'] = $discount_amount;
             }
             //$array['payment']['metadata'][] = \Pagostt::generatePaymentMetadata('Tipo de Cambio', $payment->exchange);
             $array['payment'] = \Pagostt::paymentAddPaymentInvoice($array['payment'], $payment);
