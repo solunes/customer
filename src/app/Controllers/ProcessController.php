@@ -84,7 +84,11 @@ class ProcessController extends Controller {
         }
         \Auth::login($customer->user);
         //\Customer::sendConfirmationEmail($customer);
-        return redirect(config('customer.redirect_after_login'))->with('message_success', 'Felicidades, su registro fue realizado correctamente.');
+        if($request->has('redirect_url')){
+          return redirect($request->input('redirect_url')))->with('message_success', 'Felicidades, su registro fue realizado correctamente.');
+        } else {
+          return redirect(config('customer.redirect_after_login'))->with('message_success', 'Felicidades, su registro fue realizado correctamente.');
+        }
       } else {
         return redirect($this->prev)->with(array('message_error' => 'Debe llenar todos los campos para finalizar'))->withErrors($validator)->withInput();
       }

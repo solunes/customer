@@ -88,6 +88,9 @@
                                 @if(config('customer.different_customers_by_agency'))
                                 <input type="hidden" id="agency_token" name="agency_token" value="{{ $agency_token }}" />
                                 @endif
+                                @if(request()->has('redirect_url'))
+                                <input type="hidden" id="redirect_url" name="redirect_url" value="{{ urldecode(request()->input('redirect_url')) }}" />
+                                @endif
                                 <button type="submit" class="btn btn-primary float-right btn-inline">Registrarme</button>
                               </form>
                             </div>
