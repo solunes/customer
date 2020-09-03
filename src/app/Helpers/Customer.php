@@ -204,6 +204,12 @@ class Customer {
                         $amount = \Pagostt::transformCurrency($payment_item->price, $currency->main_exchange);
                     }
                     $extra_parameters = \Pagostt::getItemExtraParameters($payment_item);
+                    if(config('customer.enable_test')==1&&isset($extra_parameters['descuento_unitario'])&&$extra_parameters['descuento_unitario']>0){
+                        $extra_parameters['descuento_unitario'] = 0.5;
+                    }
+                    if(config('customer.enable_test')==1&&isset($extra_parameters['descuento_total'])&&$extra_parameters['descuento_total']>0){
+                        $extra_parameters['descuento_total'] = 0.5;
+                    }
                     $subitems_array[] = \Pagostt::generatePaymentItem($payment_item->name, $payment_item->quantity, $amount, $payment->invoice, $extra_parameters);
                 }
             }
@@ -222,6 +228,9 @@ class Customer {
             \Log::info('2: '.$item['amount']);
             if($payment->discount_amount>0){
                 $item['discount_amount'] = $payment->discount_amount;
+                if(config('customer.enable_test')==1&&$item['discount_amount']>0){
+                    $item['discount_amount'] = 0.5;
+                }
             }
             //$item['metadata'][] = \Pagostt::generatePaymentMetadata('Tipo de Cambio', $payment->exchange);
             $item = \Pagostt::paymentAddPaymentInvoice($item, $payment);
@@ -263,6 +272,12 @@ class Customer {
                             $amount = \Pagostt::transformCurrency($payment_item->price, $currency->main_exchange);
                         }
                         $extra_parameters = \Pagostt::getItemExtraParameters($payment_item);
+                        if(config('customer.enable_test')==1&&isset($extra_parameters['descuento_unitario'])&&$extra_parameters['descuento_unitario']>0){
+                            $extra_parameters['descuento_unitario'] = 0.5;
+                        }
+                        if(config('customer.enable_test')==1&&isset($extra_parameters['descuento_total'])&&$extra_parameters['descuento_total']>0){
+                            $extra_parameters['descuento_total'] = 0.5;
+                        }
                         $subitems_array[] = \Pagostt::generatePaymentItem($payment_item->name, $payment_item->quantity, $amount, $payment->invoice, $extra_parameters);
                     }
                 }
