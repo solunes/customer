@@ -24,7 +24,7 @@ return [
     'seller_user' => false,
     'detect_ip' => false,
     'after_seed' => true,
-    'custom_successful_payment' => false,
+    'custom_successful_payment' => true,
     'global_email' => 'edumejia30@gmail.com',
     'after_login_no_password' => 'account/change-password/gLW2fAst39MV',
     'redirect_after_login' => 'inicio',
