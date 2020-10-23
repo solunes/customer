@@ -145,7 +145,7 @@ class Customer {
                         $invoice = true;
                     }
                     foreach($payment->payment_items as $payment_item){
-                        if($payment_item->amount>0){
+                        //if($payment_item->amount>0){
                             if(config('customer.enable_test')==1){
                                 $amount = 1;
                             } else if($currency->code==$payment_item->currency->code) {
@@ -157,7 +157,7 @@ class Customer {
                             $pending_payment = \Pagostt::generatePaymentItem($payment_item->name, $payment_item->quantity, $amount, $payment->invoice, $extra_parameters);
                             $pending_payments[$payment->id]['items'][] = $pending_payment;
 
-                        }
+                        //}
                         if($payment->discount_amount>0){
                             $discount_amount += $payment->discount_amount;
                         }
@@ -195,7 +195,7 @@ class Customer {
             $subitems_array = [];
             $currency = $payment->currency;
             foreach($payment->payment_items as $payment_item){
-                if($payment_item->amount>0){
+                //if($payment_item->amount>0){
                     if(config('customer.enable_test')==1){
                         $amount = 1;
                     } else if($currency->code==$payment->currency->code) {
@@ -211,7 +211,7 @@ class Customer {
                         $extra_parameters['descuento_total'] = 0.5;
                     }
                     $subitems_array[] = \Pagostt::generatePaymentItem($payment_item->name, $payment_item->quantity, $amount, $payment->invoice, $extra_parameters);
-                }
+                //}
             }
             if(config('customer.enable_test')==1){
                 $item['amount'] = count($payment->payment_items);
@@ -263,7 +263,7 @@ class Customer {
                     $currency = $payment->currency;
                 }
                 foreach($payment->payment_items as $payment_item){
-                    if($payment_item->amount>0){
+                    //if($payment_item->amount>0){
                         if(config('customer.enable_test')==1){
                             $amount = 1;
                         } else if($currency==$payment_item->currency->code) {
@@ -279,7 +279,7 @@ class Customer {
                             $extra_parameters['descuento_total'] = 0.5;
                         }
                         $subitems_array[] = \Pagostt::generatePaymentItem($payment_item->name, $payment_item->quantity, $amount, $payment->invoice, $extra_parameters);
-                    }
+                    //}
                 }
                 if(config('services.enable_test')==1){
                     $item['amount'] = 1;
